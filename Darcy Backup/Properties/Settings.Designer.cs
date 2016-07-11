@@ -49,7 +49,7 @@ namespace Darcy_Backup.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("610")]
+        [global::System.Configuration.DefaultSettingValueAttribute("830")]
         public int Height {
             get {
                 return ((int)(this["Height"]));
@@ -61,7 +61,7 @@ namespace Darcy_Backup.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1200")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1480")]
         public int Width {
             get {
                 return ((int)(this["Width"]));

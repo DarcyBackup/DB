@@ -23,13 +23,13 @@ namespace Darcy_Backup
 
             Pen pen = new Pen(Color.FromArgb(130, 135, 144));
 
-            e.Graphics.DrawLine(pen, 0, 38, Width, 38);
+            e.Graphics.DrawLine(pen, 0, 25, Width, 25);
 
             pen.Dispose();
 
             pen = new Pen(Color.FromArgb(254, 253, 255));
 
-            e.Graphics.FillRectangle(pen.Brush, new Rectangle(0, 0, Width, 38));
+            e.Graphics.FillRectangle(pen.Brush, new Rectangle(0, 0, Width, 25));
 
             pen.Dispose();
         }
@@ -96,8 +96,11 @@ namespace Darcy_Backup
 
         }
 
-        private void Button_Load_Click(object sender, EventArgs e)
+        private void Button_Activate_Click(object sender, EventArgs e)
         {
+
+            //OLD CODE FOR BUTTON_LOAD
+            /*
             int index = 0;
             if (List_Backup.SelectedItems.Count > 0)
             {
@@ -124,9 +127,9 @@ namespace Darcy_Backup
             changes = false;
             loaded = index;
 
-
+            */
         }
-        private void Button_Remove_Click(object sender, EventArgs e)
+        private void Button_Delete_Click(object sender, EventArgs e)
         {
             int index = 0;
             if (List_Backup.SelectedItems.Count > 0)
@@ -157,13 +160,24 @@ namespace Darcy_Backup
             {
                 int senderHeight = ((Control)sender).ClientRectangle.Height;
                 int senderWidth = ((Control)sender).ClientRectangle.Width;
+
+
                 for (int i = 0; i < RESIZE_ARRAY_SIZE; i++)
                 {
                     Rectangle rect = ResizeArray[i].control.Bounds;
-                    int newHeight = (senderHeight - ResizeArray[i].height) - rect.Y;
-                    int newWidth = (senderWidth - ResizeArray[i].width) - rect.X;
+                    int newX = 0, newY = 0, newHeight = 0, newWidth = 0;
 
-                    int newX = 0, newY = 0;
+                    if (ResizeArray[i].height != -1)
+                        newHeight = (senderHeight - ResizeArray[i].height) - rect.Y;
+                    else
+                        newHeight = rect.Height;
+
+                    if (ResizeArray[i].width != -1)
+                        newWidth = (senderWidth - ResizeArray[i].width) - rect.X;
+                    else
+                        newWidth = rect.Width;
+
+                    
                     if (ResizeArray[i].stayX == true)
                         newX = rect.X;
                     else

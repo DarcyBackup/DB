@@ -89,7 +89,15 @@ namespace Darcy_Backup
             }
             if (Directory.Exists(entries[entry].destination) == false)
             {
-                System.IO.Directory.CreateDirectory(entries[entry].destination);
+                try
+                {
+                    System.IO.Directory.CreateDirectory(entries[entry].destination);
+                }
+                catch (IOException error)
+                {
+                    MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                    throw;
+                }
             }
             
             if (file)
@@ -102,12 +110,29 @@ namespace Darcy_Backup
                     bool different = Different(source, destination);
                     if (different)
                     {
-                        System.IO.File.Copy(source, destination, true);
+                        try
+                        {
+                            System.IO.File.Copy(source, destination, true);
+                        }
+                        catch (IOException error)
+                        {
+                            MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                            throw;
+                        }
+                        
                     }
                 }
                 else
                 {
-                    System.IO.File.Copy(source, destination, true);
+                    try
+                    {
+                        System.IO.File.Copy(source, destination, true);
+                    }
+                    catch (IOException error)
+                    {
+                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        throw;
+                    }
                 }
             }
             else if (directory)
@@ -123,7 +148,17 @@ namespace Darcy_Backup
                         string destFile = System.IO.Path.Combine(destination, fileName);
 
                         if (Different(source + "\\" + fileName, destFile))
-                            System.IO.File.Copy(s, destFile, true);
+                        {
+                            try
+                            {
+                                System.IO.File.Copy(s, destFile, true);
+                            }
+                            catch (IOException error)
+                            {
+                                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                                throw;
+                            }
+                        }
                     }
                 }
                 else
@@ -135,7 +170,15 @@ namespace Darcy_Backup
                     {
                         string fileName = System.IO.Path.GetFileName(s);
                         string destFile = System.IO.Path.Combine(destination, fileName);
-                        System.IO.File.Copy(s, destFile, true);
+                        try
+                        {
+                            System.IO.File.Copy(s, destFile, true);
+                        }
+                        catch (IOException error)
+                        {
+                            MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                            throw;
+                        }
                     }
                 }
             }

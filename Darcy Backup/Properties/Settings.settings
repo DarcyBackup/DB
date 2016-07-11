@@ -9,10 +9,10 @@
       <Value Profile="(Default)">English</Value>
     </Setting>
     <Setting Name="Height" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">610</Value>
+      <Value Profile="(Default)">830</Value>
     </Setting>
     <Setting Name="Width" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1200</Value>
+      <Value Profile="(Default)">1480</Value>
     </Setting>
     <Setting Name="List_Entry" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>

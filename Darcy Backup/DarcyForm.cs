@@ -289,6 +289,7 @@ namespace Darcy_Backup
         private void Label_About_Click(object sender, EventArgs e)
         {
             Settings_Language_Panel.Visible = false;
+            Label_Settings.Font = new Font(Label_Settings.Font, FontStyle.Regular);
             Settings_Panel.Visible = false;
 
             bool visible = About_Panel.Visible;
@@ -299,7 +300,7 @@ namespace Darcy_Backup
                 About_Panel.Visible = true;
         }
         
-        private void Language_Label_CLick(object sender, EventArgs e)
+        private void Language_Label_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Language = ((Control)sender).Text;
             Properties.Settings.Default.Save();
@@ -383,6 +384,7 @@ namespace Darcy_Backup
         private void Label_Settings_Click(object sender, EventArgs e)
         {
             About_Panel.Visible = false;
+            Label_About.Font = new Font(Label_About.Font, FontStyle.Regular);
 
             bool visible = Settings_Panel.Visible;
 

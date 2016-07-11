@@ -60,18 +60,21 @@ namespace Darcy_Backup
 
         //  RESIZEARRAY CONSTANTS
         private static int BUTTON_PERFORM = 0;
-        private static int BUTTON_LOAD = 1;
-        private static int BUTTON_REMOVE = 2;
+        private static int BUTTON_ACTIVATE = 1;
+        private static int BUTTON_DELETE = 2;
         private static int LIST_BACKUP = 3;
+        private static int BUTTON_NEW = 4;
+        private static int BUTTON_EDIT = 5;
+        private static int LABEL_TOGGLE = 6;
 
-        private static int RESIZE_ARRAY_SIZE = 4;
+        private static int RESIZE_ARRAY_SIZE = 7;
 
         private void InitializeResize()
         {
              /*  Add controls to scale with resize, here
             //
             //  Button_Perform
-            //  Button_Load
+            //  Button_Activaate
             //  Button_Remove
             //  List_Backup
             //
@@ -81,28 +84,46 @@ namespace Darcy_Backup
             ResizeArray = new resizeStruct[RESIZE_ARRAY_SIZE];
 
             ResizeArray[BUTTON_PERFORM].control = Button_Perform;
-            ResizeArray[BUTTON_PERFORM].width = 189;
+            ResizeArray[BUTTON_PERFORM].width = 12;
             ResizeArray[BUTTON_PERFORM].height = 10;
             ResizeArray[BUTTON_PERFORM].stayX = false;
             ResizeArray[BUTTON_PERFORM].stayY = false;
         
-            ResizeArray[BUTTON_LOAD].control = Button_Load;
-            ResizeArray[BUTTON_LOAD].width = 96;
-            ResizeArray[BUTTON_LOAD].height = 10;
-            ResizeArray[BUTTON_LOAD].stayX = false;
-            ResizeArray[BUTTON_LOAD].stayY = false;
+            ResizeArray[BUTTON_ACTIVATE].control = Button_Activate;
+            ResizeArray[BUTTON_ACTIVATE].width = 132;
+            ResizeArray[BUTTON_ACTIVATE].height = 10;
+            ResizeArray[BUTTON_ACTIVATE].stayX = false;
+            ResizeArray[BUTTON_ACTIVATE].stayY = false;
 
-            ResizeArray[BUTTON_REMOVE].control = Button_Remove;
-            ResizeArray[BUTTON_REMOVE].width = 12;
-            ResizeArray[BUTTON_REMOVE].height = 10;
-            ResizeArray[BUTTON_REMOVE].stayX = false;
-            ResizeArray[BUTTON_REMOVE].stayY = false;
+            ResizeArray[BUTTON_DELETE].control = Button_Delete;
+            ResizeArray[BUTTON_DELETE].width = -1;
+            ResizeArray[BUTTON_DELETE].height = 10;
+            ResizeArray[BUTTON_DELETE].stayX = true;
+            ResizeArray[BUTTON_DELETE].stayY = false;
 
             ResizeArray[LIST_BACKUP].control = List_Backup;
             ResizeArray[LIST_BACKUP].width = 12;
             ResizeArray[LIST_BACKUP].height = 42;
             ResizeArray[LIST_BACKUP].stayX = true;
             ResizeArray[LIST_BACKUP].stayY = true;
+
+            ResizeArray[BUTTON_NEW].control = Button_New2;
+            ResizeArray[BUTTON_NEW].width = -1;
+            ResizeArray[BUTTON_NEW].height = 10;
+            ResizeArray[BUTTON_NEW].stayX = true;
+            ResizeArray[BUTTON_NEW].stayY = false;
+
+            ResizeArray[BUTTON_EDIT].control = Button_Edit;
+            ResizeArray[BUTTON_EDIT].width = -1;
+            ResizeArray[BUTTON_EDIT].height = 10;
+            ResizeArray[BUTTON_EDIT].stayX = true;
+            ResizeArray[BUTTON_EDIT].stayY = false;
+
+            ResizeArray[LABEL_TOGGLE].control = Label_Toggle;
+            ResizeArray[LABEL_TOGGLE].width = 216;
+            ResizeArray[LABEL_TOGGLE].height = 10;
+            ResizeArray[LABEL_TOGGLE].stayX = false;
+            ResizeArray[LABEL_TOGGLE].stayY = false;
 
             //SET FORM TO LAST VALUE
 

@@ -41,8 +41,8 @@
             this.Label_Frequency = new System.Windows.Forms.Label();
             this.Check_Differential = new System.Windows.Forms.CheckBox();
             this.List_Backup = new System.Windows.Forms.ListView();
-            this.Button_Remove = new System.Windows.Forms.Button();
-            this.Button_Load = new System.Windows.Forms.Button();
+            this.Button_Delete = new System.Windows.Forms.Button();
+            this.Button_Activate = new System.Windows.Forms.Button();
             this.Label_Backup = new System.Windows.Forms.Label();
             this.Button_Destination = new System.Windows.Forms.Button();
             this.Button_New = new System.Windows.Forms.Button();
@@ -54,6 +54,9 @@
             this.Label_Settings = new System.Windows.Forms.Label();
             this.Label_About = new System.Windows.Forms.Label();
             this.Pick_Panel = new System.Windows.Forms.Panel();
+            this.Button_Edit = new System.Windows.Forms.Button();
+            this.Button_New2 = new System.Windows.Forms.Button();
+            this.Label_Toggle = new System.Windows.Forms.Label();
             this.Button_Perform = new Darcy_Backup.DarcyButton();
             this.Button_Save = new Darcy_Backup.DarcyButton();
             this.Settings_Language_Panel = new Darcy_Backup.DarcySettingsLanguagePanel();
@@ -163,46 +166,46 @@
             // 
             this.List_Backup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(253)))), ((int)(((byte)(255)))));
             this.List_Backup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.List_Backup.Location = new System.Drawing.Point(428, 85);
+            this.List_Backup.Location = new System.Drawing.Point(450, 85);
             this.List_Backup.MultiSelect = false;
             this.List_Backup.Name = "List_Backup";
-            this.List_Backup.Size = new System.Drawing.Size(685, 425);
+            this.List_Backup.Size = new System.Drawing.Size(663, 425);
             this.List_Backup.TabIndex = 10;
             this.List_Backup.UseCompatibleStateImageBehavior = false;
             // 
-            // Button_Remove
+            // Button_Delete
             // 
-            this.Button_Remove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
-            this.Button_Remove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Remove.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button_Remove.Location = new System.Drawing.Point(1035, 516);
-            this.Button_Remove.Name = "Button_Remove";
-            this.Button_Remove.Size = new System.Drawing.Size(78, 25);
-            this.Button_Remove.TabIndex = 11;
-            this.Button_Remove.Text = "Remove";
-            this.Button_Remove.UseVisualStyleBackColor = false;
-            this.Button_Remove.Click += new System.EventHandler(this.Button_Remove_Click);
+            this.Button_Delete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.Button_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_Delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button_Delete.Location = new System.Drawing.Point(690, 516);
+            this.Button_Delete.Name = "Button_Delete";
+            this.Button_Delete.Size = new System.Drawing.Size(92, 25);
+            this.Button_Delete.TabIndex = 11;
+            this.Button_Delete.Text = "Delete";
+            this.Button_Delete.UseVisualStyleBackColor = false;
+            this.Button_Delete.Click += new System.EventHandler(this.Button_Delete_Click);
             // 
-            // Button_Load
+            // Button_Activate
             // 
-            this.Button_Load.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
-            this.Button_Load.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Load.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button_Load.Location = new System.Drawing.Point(975, 516);
-            this.Button_Load.Name = "Button_Load";
-            this.Button_Load.Size = new System.Drawing.Size(54, 25);
-            this.Button_Load.TabIndex = 12;
-            this.Button_Load.Text = "Load";
-            this.Button_Load.UseVisualStyleBackColor = false;
-            this.Button_Load.Click += new System.EventHandler(this.Button_Load_Click);
+            this.Button_Activate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.Button_Activate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_Activate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button_Activate.Location = new System.Drawing.Point(936, 516);
+            this.Button_Activate.Name = "Button_Activate";
+            this.Button_Activate.Size = new System.Drawing.Size(79, 25);
+            this.Button_Activate.TabIndex = 12;
+            this.Button_Activate.Text = "Activate";
+            this.Button_Activate.UseVisualStyleBackColor = false;
+            this.Button_Activate.Click += new System.EventHandler(this.Button_Activate_Click);
             // 
             // Label_Backup
             // 
             this.Label_Backup.AutoSize = true;
-            this.Label_Backup.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Backup.Location = new System.Drawing.Point(425, 62);
+            this.Label_Backup.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Backup.Location = new System.Drawing.Point(445, 51);
             this.Label_Backup.Name = "Label_Backup";
-            this.Label_Backup.Size = new System.Drawing.Size(85, 18);
+            this.Label_Backup.Size = new System.Drawing.Size(136, 29);
             this.Label_Backup.TabIndex = 13;
             this.Label_Backup.Text = "Backup List";
             // 
@@ -279,12 +282,14 @@
             // 
             this.Label_Settings.AutoSize = true;
             this.Label_Settings.BackColor = System.Drawing.Color.Transparent;
-            this.Label_Settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Settings.Location = new System.Drawing.Point(5, 15);
+            this.Label_Settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Settings.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Label_Settings.Location = new System.Drawing.Point(5, 6);
             this.Label_Settings.Name = "Label_Settings";
-            this.Label_Settings.Size = new System.Drawing.Size(61, 18);
+            this.Label_Settings.Size = new System.Drawing.Size(56, 16);
             this.Label_Settings.TabIndex = 21;
             this.Label_Settings.Text = "Settings";
+            this.Label_Settings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Label_Settings.Click += new System.EventHandler(this.Label_Settings_Click);
             this.Label_Settings.DoubleClick += new System.EventHandler(this.Label_Settings_Click);
             this.Label_Settings.MouseEnter += new System.EventHandler(this.MouseEnter_Bold);
@@ -294,10 +299,11 @@
             // 
             this.Label_About.AutoSize = true;
             this.Label_About.BackColor = System.Drawing.Color.Transparent;
-            this.Label_About.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_About.Location = new System.Drawing.Point(80, 15);
+            this.Label_About.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_About.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Label_About.Location = new System.Drawing.Point(80, 6);
             this.Label_About.Name = "Label_About";
-            this.Label_About.Size = new System.Drawing.Size(46, 18);
+            this.Label_About.Size = new System.Drawing.Size(43, 16);
             this.Label_About.TabIndex = 22;
             this.Label_About.Text = "About";
             this.Label_About.Click += new System.EventHandler(this.Label_About_Click);
@@ -307,10 +313,45 @@
             // 
             // Pick_Panel
             // 
-            this.Pick_Panel.Location = new System.Drawing.Point(13, 62);
+            this.Pick_Panel.Location = new System.Drawing.Point(20, 32);
             this.Pick_Panel.Name = "Pick_Panel";
             this.Pick_Panel.Size = new System.Drawing.Size(395, 447);
             this.Pick_Panel.TabIndex = 26;
+            // 
+            // Button_Edit
+            // 
+            this.Button_Edit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.Button_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_Edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button_Edit.Location = new System.Drawing.Point(570, 516);
+            this.Button_Edit.Name = "Button_Edit";
+            this.Button_Edit.Size = new System.Drawing.Size(92, 25);
+            this.Button_Edit.TabIndex = 27;
+            this.Button_Edit.Text = "Edit";
+            this.Button_Edit.UseVisualStyleBackColor = false;
+            // 
+            // Button_New2
+            // 
+            this.Button_New2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.Button_New2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_New2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button_New2.Location = new System.Drawing.Point(450, 516);
+            this.Button_New2.Name = "Button_New2";
+            this.Button_New2.Size = new System.Drawing.Size(92, 25);
+            this.Button_New2.TabIndex = 28;
+            this.Button_New2.Text = "New";
+            this.Button_New2.UseVisualStyleBackColor = false;
+            // 
+            // Label_Toggle
+            // 
+            this.Label_Toggle.BackColor = System.Drawing.Color.Transparent;
+            this.Label_Toggle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Toggle.Location = new System.Drawing.Point(830, 518);
+            this.Label_Toggle.Name = "Label_Toggle";
+            this.Label_Toggle.Size = new System.Drawing.Size(100, 23);
+            this.Label_Toggle.TabIndex = 29;
+            this.Label_Toggle.Text = "Toggle Timer:";
+            this.Label_Toggle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Button_Perform
             // 
@@ -318,7 +359,7 @@
             this.Button_Perform.DarcyDisabled = false;
             this.Button_Perform.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Perform.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button_Perform.Location = new System.Drawing.Point(844, 516);
+            this.Button_Perform.Location = new System.Drawing.Point(1021, 516);
             this.Button_Perform.Name = "Button_Perform";
             this.Button_Perform.Size = new System.Drawing.Size(92, 25);
             this.Button_Perform.TabIndex = 9;
@@ -346,7 +387,7 @@
             this.Settings_Language_Panel.Controls.Add(this.Language_Label_Finnish);
             this.Settings_Language_Panel.Controls.Add(this.Language_Label_Swedish);
             this.Settings_Language_Panel.Controls.Add(this.Language_Label_English);
-            this.Settings_Language_Panel.Location = new System.Drawing.Point(139, 127);
+            this.Settings_Language_Panel.Location = new System.Drawing.Point(139, 114);
             this.Settings_Language_Panel.Name = "Settings_Language_Panel";
             this.Settings_Language_Panel.Size = new System.Drawing.Size(94, 106);
             this.Settings_Language_Panel.TabIndex = 24;
@@ -361,7 +402,7 @@
             this.Language_Label_Finnish.TabIndex = 2;
             this.Language_Label_Finnish.Text = "Finnish";
             this.Language_Label_Finnish.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Language_Label_Finnish.Click += new System.EventHandler(this.Language_Label_CLick);
+            this.Language_Label_Finnish.Click += new System.EventHandler(this.Language_Label_Click);
             this.Language_Label_Finnish.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
             this.Language_Label_Finnish.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
             // 
@@ -374,7 +415,7 @@
             this.Language_Label_Swedish.TabIndex = 1;
             this.Language_Label_Swedish.Text = "Swedish";
             this.Language_Label_Swedish.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Language_Label_Swedish.Click += new System.EventHandler(this.Language_Label_CLick);
+            this.Language_Label_Swedish.Click += new System.EventHandler(this.Language_Label_Click);
             this.Language_Label_Swedish.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
             this.Language_Label_Swedish.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
             // 
@@ -387,7 +428,7 @@
             this.Language_Label_English.TabIndex = 0;
             this.Language_Label_English.Text = "English";
             this.Language_Label_English.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Language_Label_English.Click += new System.EventHandler(this.Language_Label_CLick);
+            this.Language_Label_English.Click += new System.EventHandler(this.Language_Label_Click);
             this.Language_Label_English.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
             this.Language_Label_English.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
             // 
@@ -397,7 +438,7 @@
             this.Settings_Panel.Controls.Add(this.Settings_Check_Minimized);
             this.Settings_Panel.Controls.Add(this.Settings_Check_Autorun);
             this.Settings_Panel.Controls.Add(this.Settings_Label_Language);
-            this.Settings_Panel.Location = new System.Drawing.Point(0, 38);
+            this.Settings_Panel.Location = new System.Drawing.Point(0, 25);
             this.Settings_Panel.Name = "Settings_Panel";
             this.Settings_Panel.Size = new System.Drawing.Size(140, 139);
             this.Settings_Panel.TabIndex = 23;
@@ -454,7 +495,7 @@
             this.About_Panel.Controls.Add(this.About_Label_Authors);
             this.About_Panel.Controls.Add(this.About_Label_Version);
             this.About_Panel.Controls.Add(this.About_Label_Title);
-            this.About_Panel.Location = new System.Drawing.Point(80, 38);
+            this.About_Panel.Location = new System.Drawing.Point(80, 25);
             this.About_Panel.Name = "About_Panel";
             this.About_Panel.Size = new System.Drawing.Size(308, 260);
             this.About_Panel.TabIndex = 25;
@@ -516,7 +557,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1125, 551);
+            this.ClientSize = new System.Drawing.Size(1164, 701);
+            this.Controls.Add(this.Label_Toggle);
+            this.Controls.Add(this.Button_New2);
+            this.Controls.Add(this.Button_Edit);
             this.Controls.Add(this.Pick_Panel);
             this.Controls.Add(this.Label_About);
             this.Controls.Add(this.Label_Settings);
@@ -526,8 +570,8 @@
             this.Controls.Add(this.Button_New);
             this.Controls.Add(this.Button_Destination);
             this.Controls.Add(this.Label_Backup);
-            this.Controls.Add(this.Button_Load);
-            this.Controls.Add(this.Button_Remove);
+            this.Controls.Add(this.Button_Activate);
+            this.Controls.Add(this.Button_Delete);
             this.Controls.Add(this.List_Backup);
             this.Controls.Add(this.Button_Perform);
             this.Controls.Add(this.Button_Save);
@@ -543,6 +587,7 @@
             this.Controls.Add(this.Settings_Panel);
             this.Controls.Add(this.About_Panel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(1180, 740);
             this.Name = "Form_Darcy_Panel";
             this.Text = "Darcy Backup";
             this.Resize += new System.EventHandler(this.Form_Darcy_Resize);
@@ -568,8 +613,8 @@
         private DarcyButton Button_Save;
         private DarcyButton Button_Perform;
         private System.Windows.Forms.ListView List_Backup;
-        private System.Windows.Forms.Button Button_Remove;
-        private System.Windows.Forms.Button Button_Load;
+        private System.Windows.Forms.Button Button_Delete;
+        private System.Windows.Forms.Button Button_Activate;
         private System.Windows.Forms.Label Label_Backup;
         private System.Windows.Forms.Button Button_Destination;
         private System.Windows.Forms.Button Button_New;
@@ -595,6 +640,9 @@
         private System.Windows.Forms.LinkLabel About_LinkLabel_Website;
         private System.Windows.Forms.Label About_Label_License;
         private System.Windows.Forms.Panel Pick_Panel;
+        private System.Windows.Forms.Button Button_Edit;
+        private System.Windows.Forms.Button Button_New2;
+        private System.Windows.Forms.Label Label_Toggle;
     }
 }
 
