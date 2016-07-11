@@ -34,6 +34,7 @@ namespace Darcy_Backup
             newEntries[newEntries.Length - 1] = entry;
 
             entries = newEntries;
+            int b = 0;
         }
 
         private void RemoveEntry(int index)
