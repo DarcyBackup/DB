@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Darcy_Backup
 {
-    public partial class Form_Darcy
+    public partial class Form_Darcy_Panel
     {
         
     }

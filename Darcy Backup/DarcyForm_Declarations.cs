@@ -5,10 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Darcy_Backup
 {
-    public partial class Form_Darcy
+    public partial class Form_Darcy_Panel
     {
         private int loaded = -1;
         private bool changes = false;
@@ -18,6 +19,19 @@ namespace Darcy_Backup
         private string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\db.dbss";
 
         private entryStruct[] entries;
+
+        private resizeStruct[] ResizeArray;
+
+        private struct resizeStruct
+        {
+            public Control control;
+            public int width;
+            public int height;
+            public bool stayX;
+            public bool stayY;
+        }
+
+
 
         private buttonEnabledStruct buttonEnabled;
         private struct buttonEnabledStruct

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Darcy_Backup
 {
-    public partial class Form_Darcy
+    public partial class Form_Darcy_Panel
     {
         
         private bool Different(string path1, string path2)
@@ -64,11 +64,9 @@ namespace Darcy_Backup
         private void Perform(int entry)
         {
 
-
             entries[entry].lastPerformed = "In Progress";
 
             Save();
-
 
             RemoveFromList(entry);
             AddToList(entries[entry], entry);

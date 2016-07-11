@@ -16,7 +16,7 @@ namespace Darcy_Backup
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form_Darcy());
+            Application.Run(new Form_Darcy_Panel());
         }
     }
 }

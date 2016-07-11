@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Darcy_Backup
 {
-    public partial class Form_Darcy
+    public partial class Form_Darcy_Panel
     {
 
         
@@ -23,7 +23,14 @@ namespace Darcy_Backup
 
             Pen pen = new Pen(Color.FromArgb(130, 135, 144));
 
-            e.Graphics.DrawLine(pen, 4, 38, Width, 38);
+            e.Graphics.DrawLine(pen, 0, 38, Width, 38);
+
+            pen.Dispose();
+
+            pen = new Pen(Color.FromArgb(254, 253, 255));
+
+            e.Graphics.FillRectangle(pen.Brush, new Rectangle(0, 0, Width, 38));
+
             pen.Dispose();
         }
 
@@ -136,56 +143,6 @@ namespace Darcy_Backup
 
             LoadNew();
         }
-        private void Button_Save_Click(object sender, EventArgs e)
-        {
-            if (buttonEnabled.Button_Save == false)
-                return;
-
-            if (changes == false)
-                return;
-
-
-            entryStruct entry;
-            if (ValidateInput(out entry) == true)
-            {
-                if (loaded == -1)
-                {
-
-                    lastLine++;
-                    entry.entry = lastLine;
-                    entry.lastPerformed = "Never";
-
-                    AddEntry(entry);
-                    AddToList(entry, -1);
-                    Save();
-                }
-                else
-                {
-                    entries[loaded].source = entry.source;
-                    entries[loaded].destination = entry.destination;
-                    entries[loaded].frequency = entry.frequency;
-                    entries[loaded].differential = entry.differential;
-
-
-                    buttonEnabled.Button_Save = false;
-                    Button_Save.BackColor = Color.FromArgb(248, 244, 255);
-                    Button_Save.ForeColor = Color.FromArgb(0, 0, 0);
-
-                    buttonEnabled.Button_Discard = false;
-                    Button_Discard.BackColor = Color.FromArgb(248, 244, 255);
-                    Button_Discard.ForeColor = Color.FromArgb(0, 0, 0);
-
-                    Dynamic_Entry.Font = new Font(Dynamic_Entry.Font, FontStyle.Regular);
-
-                    changes = false;
-
-                    RemoveFromList(loaded);
-                    AddToList(entries[loaded], loaded);
-
-                    Save();
-                }
-            }
-        }
         private void Form_Darcy_OnPaint(PaintEventArgs e)
         {
             int i = 0;
@@ -198,7 +155,46 @@ namespace Darcy_Backup
             }
             else if (WindowState == FormWindowState.Normal)
             {
+                int senderHeight = ((Control)sender).ClientRectangle.Height;
+                int senderWidth = ((Control)sender).ClientRectangle.Width;
+                for (int i = 0; i < RESIZE_ARRAY_SIZE; i++)
+                {
+                    Rectangle rect = ResizeArray[i].control.Bounds;
+                    int newHeight = (senderHeight - ResizeArray[i].height) - rect.Y;
+                    int newWidth = (senderWidth - ResizeArray[i].width) - rect.X;
+
+                    int newX = 0, newY = 0;
+                    if (ResizeArray[i].stayX == true)
+                        newX = rect.X;
+                    else
+                    {
+                        newX = rect.X + newWidth - rect.Width;
+                        newWidth = rect.Width;
+                    }
+                    if (ResizeArray[i].stayY == true)
+                        newY = rect.Y;
+                    else
+                    {
+                        newY = rect.Y + newHeight - rect.Height;
+                        newHeight = rect.Height;
+                    }
+                    ResizeArray[i].control.SetBounds(newX, newY, newWidth, newHeight);
+                }
+                Properties.Settings.Default.Height = ((Control)sender).Bounds.Height;
+                Properties.Settings.Default.Width = ((Control)sender).Bounds.Width;
+                Properties.Settings.Default.Save();
             }
+        }
+        private void List_Backup_ColumnWidthChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.List_Entry = List_Backup.Columns[0].Width;
+            Properties.Settings.Default.List_Source = List_Backup.Columns[1].Width;
+            Properties.Settings.Default.List_Destination = List_Backup.Columns[2].Width;
+            Properties.Settings.Default.List_Frequency = List_Backup.Columns[3].Width;
+            Properties.Settings.Default.List_Differential = List_Backup.Columns[4].Width;
+            Properties.Settings.Default.List_Performed = List_Backup.Columns[5].Width;
+
+            Properties.Settings.Default.Save();
         }
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -230,26 +226,6 @@ namespace Darcy_Backup
         private void Check_Differential_CheckedChanged(object sender, EventArgs e)
         {
             ChangesMade();
-        }
-        private void Button_Perform_Click(object sender, EventArgs e)
-        {
-
-            int index = 0;
-            if (List_Backup.SelectedItems.Count > 0)
-            {
-                index = List_Backup.Items.IndexOf(List_Backup.SelectedItems[0]);
-            }
-            else
-                return;
-
-
-            entries[index].lastPerformed = "In Queue";
-
-            Save();
-            
-            RemoveFromList(index);
-            AddToList(entries[index], index);
-
         }
     }
 }

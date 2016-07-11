@@ -43,7 +43,7 @@
     <AssemblyFileVersionSettings>None.None.None.Increment</AssemblyFileVersionSettings>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>test4.ico</ApplicationIcon>
+    <ApplicationIcon>icon 128x128.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -122,6 +122,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="icon 128x128.ico" />
+    <Content Include="icon 256x256.ico" />
     <Content Include="test4.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

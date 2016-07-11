@@ -9,8 +9,8 @@ namespace Darcy_Backup
 {
     class WorkerClass 
     {
-        Form_Darcy obj;
-        public WorkerClass(Form_Darcy fd)
+        Form_Darcy_Panel obj;
+        public WorkerClass(Form_Darcy_Panel fd)
         {
             obj = fd;
         }

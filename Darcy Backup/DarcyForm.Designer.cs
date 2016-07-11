@@ -2,7 +2,7 @@
 {
 
     using System.Drawing;
-    partial class Form_Darcy
+    partial class Form_Darcy_Panel
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Darcy));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Darcy_Panel));
             this.Text_Source = new System.Windows.Forms.TextBox();
             this.Label_Source = new System.Windows.Forms.Label();
             this.Button_Source = new System.Windows.Forms.Button();
@@ -278,6 +278,7 @@
             // Label_Settings
             // 
             this.Label_Settings.AutoSize = true;
+            this.Label_Settings.BackColor = System.Drawing.Color.Transparent;
             this.Label_Settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label_Settings.Location = new System.Drawing.Point(5, 15);
             this.Label_Settings.Name = "Label_Settings";
@@ -292,6 +293,7 @@
             // Label_About
             // 
             this.Label_About.AutoSize = true;
+            this.Label_About.BackColor = System.Drawing.Color.Transparent;
             this.Label_About.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label_About.Location = new System.Drawing.Point(80, 15);
             this.Label_About.Name = "Label_About";
@@ -344,7 +346,7 @@
             this.Settings_Language_Panel.Controls.Add(this.Language_Label_Finnish);
             this.Settings_Language_Panel.Controls.Add(this.Language_Label_Swedish);
             this.Settings_Language_Panel.Controls.Add(this.Language_Label_English);
-            this.Settings_Language_Panel.Location = new System.Drawing.Point(142, 127);
+            this.Settings_Language_Panel.Location = new System.Drawing.Point(139, 127);
             this.Settings_Language_Panel.Name = "Settings_Language_Panel";
             this.Settings_Language_Panel.Size = new System.Drawing.Size(94, 106);
             this.Settings_Language_Panel.TabIndex = 24;
@@ -395,7 +397,7 @@
             this.Settings_Panel.Controls.Add(this.Settings_Check_Minimized);
             this.Settings_Panel.Controls.Add(this.Settings_Check_Autorun);
             this.Settings_Panel.Controls.Add(this.Settings_Label_Language);
-            this.Settings_Panel.Location = new System.Drawing.Point(3, 38);
+            this.Settings_Panel.Location = new System.Drawing.Point(0, 38);
             this.Settings_Panel.Name = "Settings_Panel";
             this.Settings_Panel.Size = new System.Drawing.Size(140, 139);
             this.Settings_Panel.TabIndex = 23;
@@ -509,7 +511,7 @@
             this.About_Label_Title.TabIndex = 0;
             this.About_Label_Title.Text = "Darcy Backup";
             // 
-            // Form_Darcy
+            // Form_Darcy_Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -541,7 +543,7 @@
             this.Controls.Add(this.Settings_Panel);
             this.Controls.Add(this.About_Panel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form_Darcy";
+            this.Name = "Form_Darcy_Panel";
             this.Text = "Darcy Backup";
             this.Resize += new System.EventHandler(this.Form_Darcy_Resize);
             this.Settings_Language_Panel.ResumeLayout(false);

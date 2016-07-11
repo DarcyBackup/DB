@@ -17,8 +17,9 @@ namespace Darcy_Backup
 {
    
     
-    public partial class Form_Darcy : Form
+    public partial class Form_Darcy_Panel : Form
     {
+        
 
 
         private void AddEntry(entryStruct entry)
@@ -34,7 +35,6 @@ namespace Darcy_Backup
             newEntries[newEntries.Length - 1] = entry;
 
             entries = newEntries;
-            int b = 0;
         }
 
         private void RemoveEntry(int index)
@@ -285,7 +285,7 @@ namespace Darcy_Backup
 
             return minutes;
         }
-
+        
         private void Label_About_Click(object sender, EventArgs e)
         {
             Settings_Language_Panel.Visible = false;
@@ -357,6 +357,12 @@ namespace Darcy_Backup
 
         private void MouseLeave_Regular(object sender, EventArgs e)
         {
+            if (sender ==  Label_Settings)
+                if (Settings_Panel.Visible == true)
+                    return;
+            if (sender == Label_About)
+                if (About_Panel.Visible == true)
+                    return;
             ((Control)sender).Font = new Font(((Control)sender).Font, FontStyle.Regular);
         }
 
@@ -402,6 +408,75 @@ namespace Darcy_Backup
                 rkApp.DeleteValue("DarcyBackup", false);
             }
         }
-        
+
+        private void Button_Perform_Click(object sender, EventArgs e)
+        {
+            int index = 0;
+            if (List_Backup.SelectedItems.Count > 0)
+            {
+                index = List_Backup.Items.IndexOf(List_Backup.SelectedItems[0]);
+            }
+            else
+                return;
+
+
+            entries[index].lastPerformed = "In Queue";
+
+            Save();
+
+            RemoveFromList(index);
+            AddToList(entries[index], index);
+        }
+
+        private void Button_Save_Click(object sender, EventArgs e)
+        {
+            if (buttonEnabled.Button_Save == false)
+                return;
+
+            if (changes == false)
+                return;
+
+
+            entryStruct entry;
+            if (ValidateInput(out entry) == true)
+            {
+                if (loaded == -1)
+                {
+
+                    lastLine++;
+                    entry.entry = lastLine;
+                    entry.lastPerformed = "Never";
+
+                    AddEntry(entry);
+                    AddToList(entry, -1);
+                    Save();
+                }
+                else
+                {
+                    entries[loaded].source = entry.source;
+                    entries[loaded].destination = entry.destination;
+                    entries[loaded].frequency = entry.frequency;
+                    entries[loaded].differential = entry.differential;
+
+
+                    buttonEnabled.Button_Save = false;
+                    Button_Save.BackColor = Color.FromArgb(248, 244, 255);
+                    Button_Save.ForeColor = Color.FromArgb(0, 0, 0);
+
+                    buttonEnabled.Button_Discard = false;
+                    Button_Discard.BackColor = Color.FromArgb(248, 244, 255);
+                    Button_Discard.ForeColor = Color.FromArgb(0, 0, 0);
+
+                    Dynamic_Entry.Font = new Font(Dynamic_Entry.Font, FontStyle.Regular);
+
+                    changes = false;
+
+                    RemoveFromList(loaded);
+                    AddToList(entries[loaded], loaded);
+
+                    Save();
+                }
+            }
+        }
     }
 }
