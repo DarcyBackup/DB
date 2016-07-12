@@ -289,7 +289,7 @@ namespace Darcy_Backup
         private void Label_About_Click(object sender, EventArgs e)
         {
             Settings_Language_Panel.Visible = false;
-            Label_Settings.Font = new Font(Label_Settings.Font, FontStyle.Regular);
+            Label_Settings.ForeColor = Color.FromArgb(66, 66, 66);
             Settings_Panel.Visible = false;
 
             bool visible = About_Panel.Visible;
@@ -302,26 +302,23 @@ namespace Darcy_Backup
         
         private void Language_Label_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.Language = ((Control)sender).Text;
-            Properties.Settings.Default.Save();
-
             if (sender == Language_Label_English)
-                Language_Label_English.Font = new Font(Language_Label_English.Font, FontStyle.Bold | FontStyle.Italic);
+                Language_Label_English.Font = new Font(Language_Label_English.Font, FontStyle.Italic);
             else
                 Language_Label_English.Font = new Font(Language_Label_English.Font, FontStyle.Regular);
 
             if (sender == Language_Label_Swedish)
-                Language_Label_Swedish.Font = new Font(Language_Label_Swedish.Font, FontStyle.Bold | FontStyle.Italic);
+                Language_Label_Swedish.Font = new Font(Language_Label_Swedish.Font, FontStyle.Italic);
             else
                 Language_Label_Swedish.Font = new Font(Language_Label_Swedish.Font, FontStyle.Regular);
 
             if (sender == Language_Label_Finnish)
-                Language_Label_Finnish.Font = new Font(Language_Label_Finnish.Font, FontStyle.Bold | FontStyle.Italic);
+                Language_Label_Finnish.Font = new Font(Language_Label_Finnish.Font, FontStyle.Italic);
             else
                 Language_Label_Finnish.Font = new Font(Language_Label_Finnish.Font, FontStyle.Regular);
-
-
-
+            
+            Properties.Settings.Default.Language = ((Control)sender).Text;
+            Properties.Settings.Default.Save();
         }
 
         private void Settings_Label_Language_Click(object sender, EventArgs e)
@@ -333,27 +330,17 @@ namespace Darcy_Backup
             else
                 Settings_Language_Panel.Visible = true;
         }
-        private void MouseEnter_Bold(object sender, EventArgs e)
+        private void MouseEnter_BlackFont(object sender, EventArgs e)
         {
-            ((Control)sender).Font = new Font(((Control)sender).Font, FontStyle.Bold);
+            ((Control)sender).ForeColor = Color.Black;
         }
         private void MouseEnter_LanguageLabels(object sender, EventArgs e)
         {
-            bool underline = ((Control)sender).Font.Italic;
-
-            if (underline == false)
-                ((Control)sender).Font = new Font(((Control)sender).Font, FontStyle.Bold);
-            else
-                ((Control)sender).Font = new Font(((Control)sender).Font, FontStyle.Bold | FontStyle.Italic);
+            ((Control)sender).ForeColor = Color.Black;
         }
         private void MouseLeave_LanguageLabels(object sender, EventArgs e)
         {
-            bool underline = ((Control)sender).Font.Italic;
-            
-            if (underline == false)
-                ((Control)sender).Font = new Font(((Control)sender).Font, FontStyle.Regular);
-            else
-                ((Control)sender).Font = new Font(((Control)sender).Font, FontStyle.Italic);
+            ((Control)sender).ForeColor = Color.FromArgb(66, 66, 66); 
         }
 
         private void MouseLeave_Regular(object sender, EventArgs e)
@@ -364,7 +351,7 @@ namespace Darcy_Backup
             if (sender == Label_About)
                 if (About_Panel.Visible == true)
                     return;
-            ((Control)sender).Font = new Font(((Control)sender).Font, FontStyle.Regular);
+            ((Control)sender).ForeColor = Color.FromArgb(66, 66, 66);
         }
 
         private void Settings_Check_Minimized_CheckedChanged(object sender, EventArgs e)
@@ -384,7 +371,7 @@ namespace Darcy_Backup
         private void Label_Settings_Click(object sender, EventArgs e)
         {
             About_Panel.Visible = false;
-            Label_About.Font = new Font(Label_About.Font, FontStyle.Regular);
+            Label_About.ForeColor = Color.FromArgb(66, 66, 66);
 
             bool visible = Settings_Panel.Visible;
 

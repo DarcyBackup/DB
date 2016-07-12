@@ -283,7 +283,7 @@
             this.Label_Settings.AutoSize = true;
             this.Label_Settings.BackColor = System.Drawing.Color.Transparent;
             this.Label_Settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Settings.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Label_Settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.Label_Settings.Location = new System.Drawing.Point(5, 6);
             this.Label_Settings.Name = "Label_Settings";
             this.Label_Settings.Size = new System.Drawing.Size(56, 16);
@@ -292,7 +292,7 @@
             this.Label_Settings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Label_Settings.Click += new System.EventHandler(this.Label_Settings_Click);
             this.Label_Settings.DoubleClick += new System.EventHandler(this.Label_Settings_Click);
-            this.Label_Settings.MouseEnter += new System.EventHandler(this.MouseEnter_Bold);
+            this.Label_Settings.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_Settings.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Label_About
@@ -300,7 +300,7 @@
             this.Label_About.AutoSize = true;
             this.Label_About.BackColor = System.Drawing.Color.Transparent;
             this.Label_About.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_About.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Label_About.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.Label_About.Location = new System.Drawing.Point(80, 6);
             this.Label_About.Name = "Label_About";
             this.Label_About.Size = new System.Drawing.Size(43, 16);
@@ -308,7 +308,7 @@
             this.Label_About.Text = "About";
             this.Label_About.Click += new System.EventHandler(this.Label_About_Click);
             this.Label_About.DoubleClick += new System.EventHandler(this.Label_About_Click);
-            this.Label_About.MouseEnter += new System.EventHandler(this.MouseEnter_Bold);
+            this.Label_About.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_About.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Pick_Panel
@@ -396,6 +396,7 @@
             // Language_Label_Finnish
             // 
             this.Language_Label_Finnish.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Language_Label_Finnish.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.Language_Label_Finnish.Location = new System.Drawing.Point(5, 71);
             this.Language_Label_Finnish.Name = "Language_Label_Finnish";
             this.Language_Label_Finnish.Size = new System.Drawing.Size(81, 23);
@@ -409,6 +410,7 @@
             // Language_Label_Swedish
             // 
             this.Language_Label_Swedish.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Language_Label_Swedish.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.Language_Label_Swedish.Location = new System.Drawing.Point(5, 41);
             this.Language_Label_Swedish.Name = "Language_Label_Swedish";
             this.Language_Label_Swedish.Size = new System.Drawing.Size(81, 23);
@@ -422,6 +424,7 @@
             // Language_Label_English
             // 
             this.Language_Label_English.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Language_Label_English.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.Language_Label_English.Location = new System.Drawing.Point(5, 11);
             this.Language_Label_English.Name = "Language_Label_English";
             this.Language_Label_English.Size = new System.Drawing.Size(81, 23);
@@ -448,6 +451,7 @@
             // 
             this.Settings_Check_Minimized.BackColor = System.Drawing.Color.Transparent;
             this.Settings_Check_Minimized.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Settings_Check_Minimized.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.Settings_Check_Minimized.Location = new System.Drawing.Point(7, 60);
             this.Settings_Check_Minimized.Name = "Settings_Check_Minimized";
             this.Settings_Check_Minimized.Size = new System.Drawing.Size(132, 24);
@@ -455,13 +459,14 @@
             this.Settings_Check_Minimized.Text = "Start Minimized";
             this.Settings_Check_Minimized.UseVisualStyleBackColor = false;
             this.Settings_Check_Minimized.CheckedChanged += new System.EventHandler(this.Settings_Check_Minimized_CheckedChanged);
-            this.Settings_Check_Minimized.MouseEnter += new System.EventHandler(this.MouseEnter_Bold);
+            this.Settings_Check_Minimized.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Settings_Check_Minimized.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Settings_Check_Autorun
             // 
             this.Settings_Check_Autorun.BackColor = System.Drawing.Color.Transparent;
             this.Settings_Check_Autorun.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Settings_Check_Autorun.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.Settings_Check_Autorun.Location = new System.Drawing.Point(7, 20);
             this.Settings_Check_Autorun.Name = "Settings_Check_Autorun";
             this.Settings_Check_Autorun.Size = new System.Drawing.Size(132, 22);
@@ -469,13 +474,14 @@
             this.Settings_Check_Autorun.Text = "Autorun";
             this.Settings_Check_Autorun.UseVisualStyleBackColor = false;
             this.Settings_Check_Autorun.CheckedChanged += new System.EventHandler(this.Settings_Check_Autorun_CheckedChanged);
-            this.Settings_Check_Autorun.MouseEnter += new System.EventHandler(this.MouseEnter_Bold);
+            this.Settings_Check_Autorun.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Settings_Check_Autorun.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Settings_Label_Language
             // 
             this.Settings_Label_Language.BackColor = System.Drawing.Color.Transparent;
             this.Settings_Label_Language.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Settings_Label_Language.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.Settings_Label_Language.Location = new System.Drawing.Point(7, 100);
             this.Settings_Label_Language.Name = "Settings_Label_Language";
             this.Settings_Label_Language.Size = new System.Drawing.Size(131, 23);
@@ -484,7 +490,7 @@
             this.Settings_Label_Language.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Settings_Label_Language.Click += new System.EventHandler(this.Settings_Label_Language_Click);
             this.Settings_Label_Language.DoubleClick += new System.EventHandler(this.Settings_Label_Language_Click);
-            this.Settings_Label_Language.MouseEnter += new System.EventHandler(this.MouseEnter_Bold);
+            this.Settings_Label_Language.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Settings_Label_Language.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // About_Panel
@@ -495,7 +501,7 @@
             this.About_Panel.Controls.Add(this.About_Label_Authors);
             this.About_Panel.Controls.Add(this.About_Label_Version);
             this.About_Panel.Controls.Add(this.About_Label_Title);
-            this.About_Panel.Location = new System.Drawing.Point(80, 25);
+            this.About_Panel.Location = new System.Drawing.Point(75, 25);
             this.About_Panel.Name = "About_Panel";
             this.About_Panel.Size = new System.Drawing.Size(308, 260);
             this.About_Panel.TabIndex = 25;
@@ -591,6 +597,7 @@
             this.Name = "Form_Darcy_Panel";
             this.Text = "Darcy Backup";
             this.Resize += new System.EventHandler(this.Form_Darcy_Resize);
+            this.ResizeEnd += new System.EventHandler(this.Form_Darcy_ResizeEnd);
             this.Settings_Language_Panel.ResumeLayout(false);
             this.Settings_Panel.ResumeLayout(false);
             this.About_Panel.ResumeLayout(false);
