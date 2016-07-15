@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -37,7 +38,19 @@ namespace Darcy_Backup
             InitializeLanguage();
 
             InitializeCache();
+
+            CheckForUpdates();
+
             InitializeWorkerThread();
+        }
+        private void CheckForUpdates()
+        {
+            WebClient client = new WebClient();
+            Stream stream = client.OpenRead("http://www.darcybackup.com/deploy/currentVersion.php");
+            StreamReader reader = new StreamReader(stream);
+            String content = reader.ReadToEnd();
+
+            int i = 0;
         }
         private void InitializeLanguage()
         {
@@ -66,8 +79,9 @@ namespace Darcy_Backup
         private static int BUTTON_NEW = 4;
         private static int BUTTON_EDIT = 5;
         private static int LABEL_TOGGLE = 6;
+        private static int PANEL_SELECTEDLOG = 7;
 
-        private static int RESIZE_ARRAY_SIZE = 7;
+        private static int RESIZE_ARRAY_SIZE = 8;
 
         private void InitializeResize()
         {
@@ -124,6 +138,12 @@ namespace Darcy_Backup
             ResizeArray[LABEL_TOGGLE].height = 10;
             ResizeArray[LABEL_TOGGLE].stayX = false;
             ResizeArray[LABEL_TOGGLE].stayY = false;
+
+            ResizeArray[PANEL_SELECTEDLOG].control = Panel_Selected_Log;
+            ResizeArray[PANEL_SELECTEDLOG].width = -1;
+            ResizeArray[PANEL_SELECTEDLOG].height = 42;
+            ResizeArray[PANEL_SELECTEDLOG].stayX = true;
+            ResizeArray[PANEL_SELECTEDLOG].stayY = true;
 
             //SET FORM TO LAST VALUE
 
@@ -221,7 +241,9 @@ namespace Darcy_Backup
         {
             List_Backup.View = View.Details;
             List_Backup.FullRowSelect = true;
+            List_Backup.MultiSelect = false;
             List_Backup.GridLines = false;
+            List_Backup.HideSelection = false;
 
             List_Backup.ColumnWidthChanged += List_Backup_ColumnWidthChanged;
 
@@ -231,6 +253,38 @@ namespace Darcy_Backup
             List_Backup.Columns.Add("Frequency", Properties.Settings.Default.List_Frequency);
             List_Backup.Columns.Add("Differential", Properties.Settings.Default.List_Differential);
             List_Backup.Columns.Add("Last Performed", Properties.Settings.Default.List_Performed);
+
+
+
+
+
+            List_Log.View = View.Details;
+            List_Log.FullRowSelect = true;
+            List_Log.GridLines = false;
+            List_Log.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+
+            List_Log.Columns.Add("", 150);
+            List_Log.Columns.Add("", 150);
+            List_Log.Columns.Add("", 150);
+
+
+
+            string[] strArr = new string[3];
+            ListViewItem item;
+            strArr[0] = "Tja";
+            strArr[1] = "Ba";
+            strArr[2] = "La";
+            item = new ListViewItem(strArr);
+
+            for (int i = 0; i < 100; i++)
+            {
+                strArr[0] = "Tja" + i;
+                item = new ListViewItem(strArr);
+                List_Log.Items.Insert(i, item);
+            }
+
+
+
 
             Settings_Panel.BringToFront();
             Settings_Language_Panel.BringToFront();

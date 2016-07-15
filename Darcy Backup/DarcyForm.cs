@@ -467,5 +467,20 @@ namespace Darcy_Backup
                 }
             }
         }
+
+        private void Pick_Panel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button_New2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

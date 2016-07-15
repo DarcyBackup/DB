@@ -146,17 +146,14 @@ namespace Darcy_Backup
 
             LoadNew();
         }
-        private void Form_Darcy_OnPaint(PaintEventArgs e)
-        {
-            int i = 0;
-        }
+        
         private void Form_Darcy_Resize(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized)
             {
                 this.ShowInTaskbar = false;
             }
-            else if (WindowState == FormWindowState.Normal)
+            else if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
             {
                 int senderHeight = ((Control)sender).ClientRectangle.Height;
                 int senderWidth = ((Control)sender).ClientRectangle.Width;
@@ -193,9 +190,19 @@ namespace Darcy_Backup
                     }
                     ResizeArray[i].control.SetBounds(newX, newY, newWidth, newHeight);
                 }
+
                 Properties.Settings.Default.Height = ((Control)sender).Bounds.Height;
                 Properties.Settings.Default.Width = ((Control)sender).Bounds.Width;
-                
+
+                /*
+                *
+                * SelectedLogPanel
+                *
+                */
+
+                Rectangle logRect = List_Log.Bounds;
+                List_Log.SetBounds(logRect.X, logRect.Y, logRect.Width, Panel_Selected_Log.Height - logRect.Y);
+
             }
         }
         private void Form_Darcy_ResizeEnd(object sender, EventArgs e)

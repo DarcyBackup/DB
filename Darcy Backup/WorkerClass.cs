@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Net;
+using System.IO;
 
 namespace Darcy_Backup
 {
@@ -17,7 +19,7 @@ namespace Darcy_Backup
 
         public void Work()
         {
-            while(true)
+            while (true)
             {
                 Thread.Sleep(10000);
                 obj.CheckAction();

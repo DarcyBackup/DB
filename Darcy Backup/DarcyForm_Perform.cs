@@ -93,26 +93,39 @@ namespace Darcy_Backup
                 {
                     System.IO.Directory.CreateDirectory(entries[entry].destination);
                 }
-                catch (IOException error)
+                catch (System.NotSupportedException)
                 {
-                    MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                    throw;
+                    MessageBox.Show("Error in backup: " + entries[entry].destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
+                    return;
                 }
             }
-            
+
+            /*
+            *
+            *MODES
+            *
+            */
+            //ONLY CHANGED FILES = 1
+            //NEW COPY = 2
+            //REPLACE = 3
+
+            int mode = 1;
+
+
             if (file)
             {
                 string[] strArray = source.Split('\\');
                 string filename = strArray[strArray.Length - 1];
-                string destination = entries[entry].destination + filename;
-                if (differential)
+                string destination = entries[entry].destination; //+ filename;
+                
+                if (mode == 1)
                 {
                     bool different = Different(source, destination);
                     if (different)
                     {
                         try
                         {
-                            System.IO.File.Copy(source, destination, true);
+                            System.IO.File.Copy(source, destination + filename, true);
                         }
                         catch (IOException error)
                         {
@@ -122,11 +135,36 @@ namespace Darcy_Backup
                         
                     }
                 }
+                else if (mode == 2)
+                {
+                    try
+                    {
+                        strArray = filename.Split('.');
+                        string extension = strArray[strArray.Length - 1];
+
+
+                        string tempString = strArray[0];
+                        for (int i = 1; i < strArray.Length-1; i++)
+                            tempString += "." + strArray[i];
+                        filename = tempString;
+
+
+                        String timestring = DateTime.Now.ToString(" (yyyyMMdd-HH.mm)");
+                        string fullDest = destination + filename + timestring + '.' + extension;
+                        System.IO.File.Copy(source, fullDest, true);
+                    }
+                    catch (IOException error)
+                    {
+                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        throw;
+                    }
+
+                }
                 else
                 {
                     try
                     {
-                        System.IO.File.Copy(source, destination, true);
+                        System.IO.File.Copy(source, destination + filename, true);
                     }
                     catch (IOException error)
                     {
@@ -137,11 +175,12 @@ namespace Darcy_Backup
             }
             else if (directory)
             {
-                if (differential)
-                {
-                    string[] files = System.IO.Directory.GetFiles(source);
-                    string destination = entries[entry].destination;
+                
+                string[] files = System.IO.Directory.GetFiles(source);
+                string destination = entries[entry].destination;
 
+                if (mode == 1)
+                {
                     foreach (string s in files)
                     {
                         string fileName = System.IO.Path.GetFileName(s);
@@ -161,11 +200,30 @@ namespace Darcy_Backup
                         }
                     }
                 }
+                else if (mode == 2)
+                {
+                    foreach (string s in files)
+                    {
+                        string fileName = System.IO.Path.GetFileName(s);
+                        string destFile = System.IO.Path.Combine(destination, fileName);
+
+                        if (Different(source + "\\" + fileName, destFile))
+                        {
+                            try
+                            {
+                                String timestring = DateTime.Now.ToString(" yyyyMMddHHmmss");
+                                System.IO.Directory.CreateDirectory(entries[entry].destination);
+                            }
+                            catch (IOException error)
+                            {
+                                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                                throw;
+                            }
+                        }
+                    }
+                }
                 else
                 {
-                    string[] files = System.IO.Directory.GetFiles(source);
-                    string destination = entries[entry].destination;
-
                     foreach (string s in files)
                     {
                         string fileName = System.IO.Path.GetFileName(s);
