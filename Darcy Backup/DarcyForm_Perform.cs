@@ -17,8 +17,7 @@ namespace Darcy_Backup
 
             if (File.Exists(path2) == false)
                 return true;
-
-
+            
 
             long length1 = new System.IO.FileInfo(path1).Length;
             long length2 = new System.IO.FileInfo(path2).Length;
@@ -53,9 +52,9 @@ namespace Darcy_Backup
         private int IndexOfEntry(int entry)
         {
 
-            for (int i = 0; i < entries.Length; i ++)
+            for (int i = 0; i < Entries.Length; i ++)
             {
-                if (entries[i].entry == entry)
+                if (Entries[i].Entry == entry)
                     return i;
             }
 
@@ -64,16 +63,16 @@ namespace Darcy_Backup
         private void Perform(int entry)
         {
 
-            entries[entry].lastPerformed = "In Progress";
+            Entries[entry].LastPerformed = "In Progress";
 
             Save();
 
             RemoveFromList(entry);
-            AddToList(entries[entry], entry);
+            AddToList(Entries[entry], entry);
 
-            bool differential = entries[entry].differential;
+            bool differential = true; //Entries[entry].differential;
 
-            string source = entries[entry].source;
+            string source = Entries[entry].Source;
             bool file = false;
             bool directory = false;
 
@@ -83,19 +82,19 @@ namespace Darcy_Backup
             {
                 if (directory == false)
                 {
-                    MessageBox.Show("Can not find " + source , "Error", MessageBoxButtons.OK);
+                    MessageBox.Show("Could not find " + source , "Error", MessageBoxButtons.OK);
                     return;
                 }
             }
-            if (Directory.Exists(entries[entry].destination) == false)
+            if (Directory.Exists(Entries[entry].Destination) == false)
             {
                 try
                 {
-                    System.IO.Directory.CreateDirectory(entries[entry].destination);
+                    System.IO.Directory.CreateDirectory(Entries[entry].Destination);
                 }
                 catch (System.NotSupportedException)
                 {
-                    MessageBox.Show("Error in backup: " + entries[entry].destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
+                    MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
                     return;
                 }
             }
@@ -116,7 +115,7 @@ namespace Darcy_Backup
             {
                 string[] strArray = source.Split('\\');
                 string filename = strArray[strArray.Length - 1];
-                string destination = entries[entry].destination; //+ filename;
+                string destination = Entries[entry].Destination; //+ filename;
                 
                 if (mode == 1)
                 {
@@ -177,7 +176,7 @@ namespace Darcy_Backup
             {
                 
                 string[] files = System.IO.Directory.GetFiles(source);
-                string destination = entries[entry].destination;
+                string destination = Entries[entry].Destination;
 
                 if (mode == 1)
                 {
@@ -212,7 +211,7 @@ namespace Darcy_Backup
                             try
                             {
                                 String timestring = DateTime.Now.ToString(" yyyyMMddHHmmss");
-                                System.IO.Directory.CreateDirectory(entries[entry].destination);
+                                System.IO.Directory.CreateDirectory(Entries[entry].Destination);
                             }
                             catch (IOException error)
                             {

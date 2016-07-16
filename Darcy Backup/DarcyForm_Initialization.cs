@@ -18,8 +18,6 @@ namespace Darcy_Backup
         public Form_Darcy_Panel()
         {
 
-            InitializeFields();
-
             InitializeComponent();
             
             if (Properties.Settings.Default.MinimizedOnStartup == true)
@@ -49,8 +47,6 @@ namespace Darcy_Backup
             Stream stream = client.OpenRead("http://www.darcybackup.com/deploy/currentVersion.php");
             StreamReader reader = new StreamReader(stream);
             String content = reader.ReadToEnd();
-
-            int i = 0;
         }
         private void InitializeLanguage()
         {
@@ -85,15 +81,11 @@ namespace Darcy_Backup
 
         private void InitializeResize()
         {
-             /*  Add controls to scale with resize, here
-            //
-            //  Button_Perform
-            //  Button_Activaate
-            //  Button_Remove
-            //  List_Backup
-            //
-            //  entries: 4
-            */
+            /*  
+           //
+           //  Add controls to scale with resize, here
+           // 
+           */
 
             ResizeArray = new resizeStruct[RESIZE_ARRAY_SIZE];
 
@@ -121,7 +113,7 @@ namespace Darcy_Backup
             ResizeArray[LIST_BACKUP].stayX = true;
             ResizeArray[LIST_BACKUP].stayY = true;
 
-            ResizeArray[BUTTON_NEW].control = Button_New2;
+            ResizeArray[BUTTON_NEW].control = Button_New;
             ResizeArray[BUTTON_NEW].width = -1;
             ResizeArray[BUTTON_NEW].height = 10;
             ResizeArray[BUTTON_NEW].stayX = true;
@@ -155,11 +147,6 @@ namespace Darcy_Backup
         /*
         //  END OF RESIZE
         */
-        private void InitializeFields()
-        {
-            buttonEnabled.Button_Discard = false;
-            buttonEnabled.Button_Save = false;
-        }
 
         private void InitializeWorkerThread()
         {
@@ -191,7 +178,9 @@ namespace Darcy_Backup
 
             string[] entryString = System.IO.File.ReadAllLines(fullPath);
 
-            entries = new entryStruct[entryString.Length];
+            Entries = new EntryClass[entryString.Length];
+            for (int i = 0; i < Entries.Length; i ++)
+                Entries[i] = new EntryClass();
 
             for (int i = 0; i < entryString.Length; i++)
             {
@@ -204,14 +193,14 @@ namespace Darcy_Backup
                 if (Int32.TryParse(temp[0], out parsed) == false)
                     continue;
 
-                entries[i].entry = parsed;
-                entries[i].source = temp[1];
-                entries[i].destination = temp[2];
+                Entries[i].Entry = parsed;
+                Entries[i].Source = temp[1];
+                Entries[i].Destination = temp[2];
 
                 if (Int32.TryParse(temp[3], out parsed) == false)
                     continue;
 
-                entries[i].frequency = parsed;
+                Entries[i].Timer = parsed;
 
                 bool readBool;
                 if (temp[4] == "True")
@@ -221,19 +210,19 @@ namespace Darcy_Backup
                 else
                     continue;
 
-                entries[i].differential = readBool;
+                if (readBool)
+                    Entries[i].Mode = 0;
+                //Entries[i].differential = readBool;
 
-                entries[i].lastPerformed = temp[5];
+                Entries[i].LastPerformed = temp[5];
+                
 
-                entries[i].validated = true;
-                entries[i].newEntry = false;
-
-                lastLine = entries[i].entry;
+                lastLine = Entries[i].Entry;
             }
 
-            for (int i = 0; i < entries.Length; i++)
+            for (int i = 0; i < Entries.Length; i++)
             {
-                AddToList(entries[i], -1);
+                AddToList(Entries[i], -1);
             }
         }
 
@@ -306,16 +295,6 @@ namespace Darcy_Backup
             {
                 Settings_Check_Minimized.Checked = true;
             }
-
-            Dynamic_Entry.Text = "New";
-
-            buttonEnabled.Button_Save = false;
-            Button_Save.BackColor = Color.FromArgb(248, 244, 255);
-            Button_Save.ForeColor = Color.FromArgb(0, 0, 0);
-
-            buttonEnabled.Button_Discard = false;
-            Button_Discard.BackColor = Color.FromArgb(248, 244, 255);
-            Button_Discard.ForeColor = Color.FromArgb(0, 0, 0);
 
         }
     }

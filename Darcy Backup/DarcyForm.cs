@@ -22,133 +22,38 @@ namespace Darcy_Backup
         
 
 
-        private void AddEntry(entryStruct entry)
+        private void AddEntry(EntryClass entry)
         {
 
-            entryStruct[] newEntries = new entryStruct[entries.Length + 1];
+            EntryClass[] newEntries = new EntryClass[Entries.Length + 1];
 
-            for (int i = 0; i < entries.Length; i ++)
+            for (int i = 0; i < Entries.Length; i ++)
             {
-                newEntries[i] = entries[i];
+                newEntries[i] = Entries[i];
             }
 
             newEntries[newEntries.Length - 1] = entry;
 
-            entries = newEntries;
+            Entries = newEntries;
         }
 
         private void RemoveEntry(int index)
         {
-            entryStruct[] newEntries = new entryStruct[entries.Length - 1];
+            EntryClass[] newEntries = new EntryClass[Entries.Length - 1];
             int addCount = 0;
-            for (int i = 0; i < entries.Length; i ++)
+            for (int i = 0; i < Entries.Length; i ++)
             {
                 if (i != index)
                 { 
-                    newEntries[addCount] = entries[i];
+                    newEntries[addCount] = Entries[i];
                     addCount ++;
                 }
             }
-            entries = newEntries;
+            Entries = newEntries;
         }
 
         
-
-        private void ChangesMade()
-        {
-            if (changes == false)
-            {
-                changes = true;
-
-                Dynamic_Entry.Font = new Font(Dynamic_Entry.Font, FontStyle.Bold);
-
-                buttonEnabled.Button_Save = true;
-                Button_Save.BackColor = Color.FromArgb(228, 213, 255);
-                Button_Save.ForeColor = Color.FromArgb(111, 111, 111);
-
-                buttonEnabled.Button_Discard = true;
-                Button_Discard.BackColor = Color.FromArgb(228, 213, 255);
-                Button_Discard.ForeColor = Color.FromArgb(111, 111, 111);
-            }
-        }
-        private void LoadNew()
-        {
-            buttonEnabled.Button_Save = false;
-            Button_Save.BackColor = Color.FromArgb(248, 244, 255);
-            Button_Save.ForeColor = Color.FromArgb(0, 0, 0);
-
-            buttonEnabled.Button_Discard = false;
-            Button_Discard.BackColor = Color.FromArgb(248, 244, 255);
-            Button_Discard.ForeColor = Color.FromArgb(0, 0, 0);
-
-            Text_Source.Text = "";
-            Text_Destination.Text = "";
-            Text_Frequency.Text = "";
-            Check_Differential.Checked = false;
-
-            Dynamic_Entry.Font = new Font(Dynamic_Entry.Font, FontStyle.Regular);
-            Dynamic_Entry.Text = "New";
-
-            changes = false;
-            loaded = -1;
-        }
-
-        private bool ValidateInput(out entryStruct entry)
-        {
-
-            entry = new entryStruct();
-            
-
-            //INPUT SOURCE
-            if (Text_Source.Text.Length == 0)
-            {
-                MessageBox.Show("Invalid input in Source", "Error", MessageBoxButtons.OK);
-                return false;
-            }
-            else if (File.Exists(Text_Source.Text) == false)
-            {
-                if (Directory.Exists(Text_Source.Text) == false)
-                {
-                    MessageBox.Show("Invalid input in Source, file or folder does not exist", "Error", MessageBoxButtons.OK);
-                    return false;
-                }
-            }
-            entry.source = Text_Source.Text;
-            
-
-            //INPUT DESTINATION
-            if (Text_Destination.Text.Length == 0)
-            {
-                MessageBox.Show("Invalid input in Destination", "Error", MessageBoxButtons.OK);
-                return false;
-            }
-            else if (Directory.Exists(Text_Destination.Text) == false)
-            {
-                DialogResult res = MessageBox.Show("The specified folder does not exist. Do you want to create it?", "Does not exist", MessageBoxButtons.YesNo);
-                if (res == DialogResult.Yes)
-                    System.IO.Directory.CreateDirectory(Text_Source.Text);
-                else
-                    return false;
-            }
-            entry.destination = Text_Destination.Text;
-
-
-            //INPUT FREQUENCY
-            int temp = 0;
-            if (Text_Frequency.Text.Length == 0 || Int32.TryParse(Text_Frequency.Text, out temp) == false)
-            {
-                MessageBox.Show("Invalid input in Frequency", "Error", MessageBoxButtons.OK);
-                return false;
-            }
-            entry.frequency = temp;
-
-
-
-            //INPUT DIFFERENTIAL
-            entry.differential = Check_Differential.Checked;
-
-            return true;
-        }
+        
         delegate void RemoveFromListCallback(int index); //for thread-safe interface actions
         private void RemoveFromList(int index)
         {
@@ -161,17 +66,17 @@ namespace Darcy_Backup
                 List_Backup.Items.RemoveAt(index);
         }
 
-        delegate void AddToListCallback(entryStruct entry, int index); //for thread-safe interface actions
-        private void AddToList(entryStruct entry, int index)
+        delegate void AddToListCallback(EntryClass entry, int index); //for thread-safe interface actions
+        private void AddToList(EntryClass entry, int index)
         {
             string[] strArr = new string[6];
             ListViewItem item;
-            strArr[0] = entry.entry.ToString();
-            strArr[1] = entry.source;
-            strArr[2] = entry.destination;
-            strArr[3] = entry.frequency.ToString();
-            strArr[4] = entry.differential.ToString();
-            strArr[5] = entry.lastPerformed;
+            strArr[0] = entry.Entry.ToString();
+            strArr[1] = entry.Source;
+            strArr[2] = entry.Destination;
+            strArr[3] = entry.Timer.ToString();
+            strArr[4] = "true";//entry.differential.ToString();
+            strArr[5] = entry.LastPerformed;
             item = new ListViewItem(strArr);
 
             if (index == -1)
@@ -201,12 +106,12 @@ namespace Darcy_Backup
             using (System.IO.StreamWriter file =
                 new System.IO.StreamWriter(fullPath, true))
             {
-                for (int i = 0; i < entries.Length; i++)
+                for (int i = 0; i < Entries.Length; i++)
                 {
 
                     string writeString = "";
 
-                    writeString += entries[i].entry + ";" + entries[i].source + ";" + entries[i].destination + ";" + entries[i].frequency + ";" + entries[i].differential + ";" + entries[i].lastPerformed;
+                    writeString += Entries[i].Entry + ";" + Entries[i].Source + ";" + Entries[i].Destination + ";" + Entries[i].Timer + ";" + "true" + ";" + Entries[i].LastPerformed;
 
                     file.WriteLine(writeString);
                 }
@@ -219,33 +124,34 @@ namespace Darcy_Backup
         
         public void CheckAction()
         {
-            for (int i = 0; i < entries.Length; i++)
+            for (int i = 0; i < Entries.Length; i++)
             {
-                if (entries[i].lastPerformed == "Never" || entries[i].lastPerformed == "In Queue" || entries[i].lastPerformed == "In Progress")
+                string lp = Entries[i].LastPerformed;
+                if (lp == "Never" || lp == "In Queue" || lp == "In Progress" || lp == "")
                 {
                 }
                 else
                 {
-                    double difference = CalculateTimeDifference(entries[i].lastPerformed);
-                    if ((int)difference >= entries[i].frequency)
+                    double difference = CalculateTimeDifference(Entries[i].LastPerformed);
+                    if ((int)difference >= Entries[i].Timer)
                     {
                     }
                     else
                         continue;
                 }
-                if (entries[i].ongoing == false)
+                if (Entries[i].Ongoing == false)
                 {
-                    entries[i].ongoing = true;
+                    Entries[i].Ongoing = true;
                     Perform(i);
                     string str = GetTimeString();
-                    entries[i].lastPerformed = str;
-                    entries[i].ongoing = false;
+                    Entries[i].LastPerformed = str;
+                    Entries[i].Ongoing = false;
 
                     Save();
 
 
                     RemoveFromList(i);
-                    AddToList(entries[i], i);
+                    AddToList(Entries[i], i);
                 }
             }
         }
@@ -409,78 +315,63 @@ namespace Darcy_Backup
                 return;
 
 
-            entries[index].lastPerformed = "In Queue";
+            Entries[index].LastPerformed = "In Queue";
 
             Save();
 
             RemoveFromList(index);
-            AddToList(entries[index], index);
+            AddToList(Entries[index], index);
         }
 
-        private void Button_Save_Click(object sender, EventArgs e)
+        public void SaveEditNew(EntryClass entry)
         {
-            if (buttonEnabled.Button_Save == false)
-                return;
-
-            if (changes == false)
-                return;
-
-
-            entryStruct entry;
-            if (ValidateInput(out entry) == true)
+            if (EditNewOngoing == true)
             {
-                if (loaded == -1)
+                if (EditNewObj != null)
                 {
+                    EditNewObj.Close();
+                    EditNewObj = null;
+                    EditNewOngoing = false;
+                    
+                    //New
+                    if (entry.Entry == Entries.Length + 1)
+                    {
+                        AddEntry(entry);
+                        AddToList(entry, -1);
+                    }
 
-                    lastLine++;
-                    entry.entry = lastLine;
-                    entry.lastPerformed = "Never";
-
-                    AddEntry(entry);
-                    AddToList(entry, -1);
-                    Save();
-                }
-                else
-                {
-                    entries[loaded].source = entry.source;
-                    entries[loaded].destination = entry.destination;
-                    entries[loaded].frequency = entry.frequency;
-                    entries[loaded].differential = entry.differential;
-
-
-                    buttonEnabled.Button_Save = false;
-                    Button_Save.BackColor = Color.FromArgb(248, 244, 255);
-                    Button_Save.ForeColor = Color.FromArgb(0, 0, 0);
-
-                    buttonEnabled.Button_Discard = false;
-                    Button_Discard.BackColor = Color.FromArgb(248, 244, 255);
-                    Button_Discard.ForeColor = Color.FromArgb(0, 0, 0);
-
-                    Dynamic_Entry.Font = new Font(Dynamic_Entry.Font, FontStyle.Regular);
-
-                    changes = false;
-
-                    RemoveFromList(loaded);
-                    AddToList(entries[loaded], loaded);
-
-                    Save();
+                    //Edit
+                    else
+                    {
+                        for (int i = 0; i < Entries.Length; i ++)
+                        {
+                            if (Entries[i].Entry == entry.Entry)
+                            {
+                                Entries[i] = entry;
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        private void Pick_Panel_Paint(object sender, PaintEventArgs e)
+        public void DiscardEditNew()
         {
-
+            if (EditNewOngoing == true)
+            {
+                if (EditNewObj != null)
+                {
+                    EditNewObj.Close();
+                    EditNewObj = null;
+                    EditNewOngoing = false;
+                }
+            }
         }
-
-        private void label5_Click(object sender, EventArgs e)
+        private void Button_New_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void Button_New2_Click(object sender, EventArgs e)
-        {
-
+            EditNewObj = new Form_New_Entry(this, 0, Entries.Length + 1);
+            EditNewObj.Show();
+            EditNewOngoing = true;
         }
     }
 }

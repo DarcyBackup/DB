@@ -74,7 +74,7 @@ namespace Darcy_Backup
         private Panel Panel_Timer;
         private Label Label_BackupTimer;
         private Label Label_Help_Text_Timer;
-        private TextBox textBox1;
+        private TextBox Text_Timer;
         private Label Label_Help_Timer;
         private Label Label_Entry;
 
@@ -142,9 +142,9 @@ namespace Darcy_Backup
             this.Button_DayAll = new System.Windows.Forms.Button();
             this.Panel_Schedule = new System.Windows.Forms.Panel();
             this.Panel_Timer = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.Label_BackupTimer = new System.Windows.Forms.Label();
             this.Label_Help_Text_Timer = new System.Windows.Forms.Label();
+            this.Text_Timer = new System.Windows.Forms.TextBox();
             this.Label_Help_Timer = new System.Windows.Forms.Label();
             this.Combo_Mode = new Darcy_Backup.DarcyComboBox();
             this.Panel_Schedule.SuspendLayout();
@@ -157,9 +157,9 @@ namespace Darcy_Backup
             this.Label_Entry.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label_Entry.Location = new System.Drawing.Point(20, 20);
             this.Label_Entry.Name = "Label_Entry";
-            this.Label_Entry.Size = new System.Drawing.Size(100, 35);
+            this.Label_Entry.Size = new System.Drawing.Size(339, 35);
             this.Label_Entry.TabIndex = 0;
-            this.Label_Entry.Text = "Entry";
+            this.Label_Entry.Text = "Entry 1";
             // 
             // Label_Source
             // 
@@ -656,24 +656,29 @@ namespace Darcy_Backup
             // 
             // Button_Discard
             // 
-            this.Button_Discard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.Button_Discard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(231)))), ((int)(((byte)(170)))));
             this.Button_Discard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_Discard.Font = new System.Drawing.Font("Calibri", 10F);
             this.Button_Discard.Location = new System.Drawing.Point(177, 600);
             this.Button_Discard.Name = "Button_Discard";
-            this.Button_Discard.Size = new System.Drawing.Size(75, 23);
+            this.Button_Discard.Size = new System.Drawing.Size(75, 25);
             this.Button_Discard.TabIndex = 42;
             this.Button_Discard.Text = "Discard";
+            this.Button_Discard.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Button_Discard.UseVisualStyleBackColor = false;
+            this.Button_Discard.Click += new System.EventHandler(this.Button_Discard_Click);
             // 
             // Button_Save
             // 
-            this.Button_Save.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.Button_Save.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(231)))), ((int)(((byte)(170)))));
             this.Button_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_Save.Font = new System.Drawing.Font("Calibri", 10F);
             this.Button_Save.Location = new System.Drawing.Point(277, 600);
             this.Button_Save.Name = "Button_Save";
-            this.Button_Save.Size = new System.Drawing.Size(75, 23);
+            this.Button_Save.Size = new System.Drawing.Size(75, 25);
             this.Button_Save.TabIndex = 43;
             this.Button_Save.Text = "Save";
+            this.Button_Save.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Button_Save.UseVisualStyleBackColor = false;
             this.Button_Save.Click += new System.EventHandler(this.Button_Save_Click);
             // 
@@ -807,9 +812,9 @@ namespace Darcy_Backup
             this.Label_Help_Text_Source.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Label_Help_Text_Source.Location = new System.Drawing.Point(94, 97);
             this.Label_Help_Text_Source.Name = "Label_Help_Text_Source";
-            this.Label_Help_Text_Source.Size = new System.Drawing.Size(171, 17);
+            this.Label_Help_Text_Source.Size = new System.Drawing.Size(162, 17);
             this.Label_Help_Text_Source.TabIndex = 56;
-            this.Label_Help_Text_Source.Text = "Source can be a File or Folder";
+            this.Label_Help_Text_Source.Text = "Select an input file or folder";
             // 
             // Label_Help_Text_Destination
             // 
@@ -818,9 +823,9 @@ namespace Darcy_Backup
             this.Label_Help_Text_Destination.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Label_Help_Text_Destination.Location = new System.Drawing.Point(121, 163);
             this.Label_Help_Text_Destination.Name = "Label_Help_Text_Destination";
-            this.Label_Help_Text_Destination.Size = new System.Drawing.Size(161, 17);
+            this.Label_Help_Text_Destination.Size = new System.Drawing.Size(136, 17);
             this.Label_Help_Text_Destination.TabIndex = 57;
-            this.Label_Help_Text_Destination.Text = "Destination can be a Folder";
+            this.Label_Help_Text_Destination.Text = "Select an output folder";
             // 
             // Label_Help_Mode
             // 
@@ -922,19 +927,12 @@ namespace Darcy_Backup
             // 
             this.Panel_Timer.Controls.Add(this.Label_BackupTimer);
             this.Panel_Timer.Controls.Add(this.Label_Help_Text_Timer);
-            this.Panel_Timer.Controls.Add(this.textBox1);
+            this.Panel_Timer.Controls.Add(this.Text_Timer);
             this.Panel_Timer.Controls.Add(this.Label_Help_Timer);
             this.Panel_Timer.Location = new System.Drawing.Point(388, 317);
             this.Panel_Timer.Name = "Panel_Timer";
             this.Panel_Timer.Size = new System.Drawing.Size(335, 317);
             this.Panel_Timer.TabIndex = 63;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(13, 60);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(174, 20);
-            this.textBox1.TabIndex = 0;
             // 
             // Label_BackupTimer
             // 
@@ -942,27 +940,34 @@ namespace Darcy_Backup
             this.Label_BackupTimer.Font = new System.Drawing.Font("Calibri", 10F);
             this.Label_BackupTimer.Location = new System.Drawing.Point(10, 35);
             this.Label_BackupTimer.Name = "Label_BackupTimer";
-            this.Label_BackupTimer.Size = new System.Drawing.Size(85, 17);
+            this.Label_BackupTimer.Size = new System.Drawing.Size(141, 17);
             this.Label_BackupTimer.TabIndex = 62;
-            this.Label_BackupTimer.Text = "Backup Timer";
+            this.Label_BackupTimer.Text = "Backup Timer (minutes)";
             // 
             // Label_Help_Text_Timer
             // 
             this.Label_Help_Text_Timer.AutoSize = true;
             this.Label_Help_Text_Timer.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
             this.Label_Help_Text_Timer.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Label_Help_Text_Timer.Location = new System.Drawing.Point(121, 35);
+            this.Label_Help_Text_Timer.Location = new System.Drawing.Point(180, 35);
             this.Label_Help_Text_Timer.Name = "Label_Help_Text_Timer";
             this.Label_Help_Text_Timer.Size = new System.Drawing.Size(155, 17);
             this.Label_Help_Text_Timer.TabIndex = 64;
             this.Label_Help_Text_Timer.Text = "Minutes between backups";
+            // 
+            // Text_Timer
+            // 
+            this.Text_Timer.Location = new System.Drawing.Point(13, 60);
+            this.Text_Timer.Name = "Text_Timer";
+            this.Text_Timer.Size = new System.Drawing.Size(174, 20);
+            this.Text_Timer.TabIndex = 0;
             // 
             // Label_Help_Timer
             // 
             this.Label_Help_Timer.AutoSize = true;
             this.Label_Help_Timer.Font = new System.Drawing.Font("Calibri", 10F);
             this.Label_Help_Timer.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Label_Help_Timer.Location = new System.Drawing.Point(101, 35);
+            this.Label_Help_Timer.Location = new System.Drawing.Point(157, 35);
             this.Label_Help_Timer.Name = "Label_Help_Timer";
             this.Label_Help_Timer.Size = new System.Drawing.Size(14, 17);
             this.Label_Help_Timer.TabIndex = 63;
@@ -977,7 +982,7 @@ namespace Darcy_Backup
             this.Combo_Mode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Combo_Mode.FormattingEnabled = true;
             this.Combo_Mode.Items.AddRange(new object[] {
-            "Only Changed Files",
+            "Changed Files Only",
             "Make New Copies",
             "Replace All Files"});
             this.Combo_Mode.Location = new System.Drawing.Point(25, 250);
@@ -1027,8 +1032,15 @@ namespace Darcy_Backup
 
         }
 
-        public Form_New_Entry()
+        private int Type;
+        private int Id;
+        private Form_Darcy_Panel Main;
+        public Form_New_Entry(Form_Darcy_Panel main, int type, int id)
         {
+            Main = main;
+            Type = type;
+            Id = id;
+
             InitializeComponent();
 
             InitializeGUI();
@@ -1147,7 +1159,13 @@ namespace Darcy_Backup
         Button[] ButtonDayArray = new Button[31];
         private void InitializeGUI()
         {
-            this.SetBounds(0, 0, 400, 674);
+            this.SetBounds(0, 0, 397, 676);
+
+            if (Type == 0)
+                this.Text = "New Entry";
+            else if (Type == 1)
+                this.Text = "Edit Entry";
+            Label_Entry.Text = "Entry " + Id.ToString();
 
 
             Label_Error.Visible = false;
@@ -1272,27 +1290,11 @@ namespace Darcy_Backup
 
         }
 
-        private struct entryStruct
-        {
-
-            public int entry;
-            public string source;
-            public string destination;
-            public int frequency;
-            public bool differential;
-
-            public string lastPerformed;
-
-            public bool ongoing;
-
-            public bool validated;
-            public bool newEntry;
-
-        }
+        EntryClass entry;
         private bool ValidateInput()
         {
             
-            entryStruct entry = new entryStruct();
+            entry = new EntryClass();
 
 
             //INPUT SOURCE
@@ -1309,7 +1311,7 @@ namespace Darcy_Backup
                     return false;
                 }
             }
-            entry.source = Text_Source.Text;
+            entry.Source = Text_Source.Text;
 
             
             //INPUT DESTINATION
@@ -1318,14 +1320,17 @@ namespace Darcy_Backup
                 Label_Error.Text = "Invalid input in Destination";
                 return false;
             }
-            else if (Directory.Exists(Text_Destination.Text) == false)
+            String destination = Text_Destination.Text;
+            if (destination.Last() != '\\')
+                destination += "\\";
+            if (Directory.Exists(destination) == false)
             {
                 DialogResult res = MessageBox.Show("The specified destination folder does not exist. Do you want to create it?", "Folder does not exist", MessageBoxButtons.YesNo);
                 if (res == DialogResult.Yes)
                 {
                     try
                     {
-                        System.IO.Directory.CreateDirectory(Text_Destination.Text);
+                        System.IO.Directory.CreateDirectory(destination);
                         MessageBox.Show("Folder created successfully", "", MessageBoxButtons.OK);
                     }
                     catch (System.NotSupportedException)
@@ -1338,30 +1343,130 @@ namespace Darcy_Backup
                 else
                     return false;
             }
-            entry.destination = Text_Destination.Text;
+            entry.Destination = destination;
 
 
+            //INPUT MODE
 
-
-
-            /*
-            //INPUT FREQUENCY
-            int temp = 0;
-            if (Text_Frequency.Text.Length == 0 || Int32.TryParse(Text_Frequency.Text, out temp) == false)
+            if (Combo_Mode.SelectedIndex == -1)
             {
-                MessageBox.Show("Invalid input in Frequency", "Error", MessageBoxButtons.OK);
+                Label_Error.Text = "No mode selected";
                 return false;
             }
-            entry.frequency = temp;
+
+            entry.Mode = Combo_Mode.SelectedIndex;
 
 
 
-            //INPUT DIFFERENTIAL
-            entry.differential = Check_Differential.Checked;*/
+            //INPUT PROCESS
+
+
+
+                //SCHEDULE
+            if (Radio_Schedule.Checked == true)
+            {
+                entry.Process = 0;
+
+                bool noDays = true;
+                for (int i = 0; i < 31; i ++)
+                {
+                    if (ArrayDays[i] == true)
+                        noDays = false;
+                    entry.Days[i] = ArrayDays[i];
+                }
+                if (noDays == true)
+                {
+                    Label_Error.Text = "No days selected";
+                    return false;
+                }
+
+                bool timeSuccess = false;
+                if (Text_TimeOfDay.Text.Length == 5)
+                {
+                    string[] time = Text_TimeOfDay.Text.Split(':');
+
+                    if (time.Length == 2)
+                    {
+                        if (time[0].Length == 2 && time[1].Length == 2)
+                        {
+                            int temp = 0;
+                            if (Int32.TryParse(time[0], out temp) == true)
+                            {
+                                if (Int32.TryParse(time[1], out temp) == true)
+                                {
+                                    entry.TimeOfDay = Text_TimeOfDay.Text;
+                                    timeSuccess = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (timeSuccess == false)
+                {
+                    Label_Error.Text = "Illegal Time of day (24-hour format)";
+                    return false;
+                }
+            }
+
+                //TIMER
+            else if (Radio_Timer.Checked == true)
+            {
+                entry.Process = 1;
+
+                if (Text_Timer.Text.Length == 0)
+                {
+                    Label_Error.Text = "Invalid timer input";
+                    return false;
+                }
+
+                int temp = 0;
+                if (Int32.TryParse(Text_Timer.Text, out temp) == true)
+                {
+                    if (temp > 144000)
+                    {
+                        Label_Error.Text = "Timer too long";
+                        return false;
+                    }
+
+                    entry.Timer = temp;
+                }
+                else
+                {
+                    Label_Error.Text = "Invalid timer input";
+                    return false;
+                }
+            }
+                
+                //MANUAL
+            else if (Radio_Manual.Checked == true)
+            {
+                entry.Process = 2;
+            }
+            else
+            {
+                Label_Error.Text = "No process selected";
+                return false;
+            }
+
+            entry.Entry = this.Id;
 
             return true;
         }
 
+        private void Button_Save_Click(object sender, EventArgs e)
+        {
+            bool validated = ValidateInput();
+
+            if (validated == true)
+            {
+                Label_Error.Visible = false;
+                Main.SaveEditNew(entry);
+            }
+            else
+            {
+                Label_Error.Visible = true;
+            }
+        }
 
         private void Radio_Process_CheckedChanged(object sender, EventArgs e)
         {
@@ -1383,18 +1488,9 @@ namespace Darcy_Backup
             }
         }
 
-        private void Button_Save_Click(object sender, EventArgs e)
+        private void Button_Discard_Click(object sender, EventArgs e)
         {
-            bool validated = ValidateInput();
-
-            if (validated == true)
-            {
-                Label_Error.Visible = false;
-            }
-            else
-            {
-                Label_Error.Visible = true;
-            }
+            Main.DiscardEditNew();
         }
     }
 }
