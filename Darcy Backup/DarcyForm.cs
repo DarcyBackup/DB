@@ -65,18 +65,48 @@ namespace Darcy_Backup
             else
                 List_Backup.Items.RemoveAt(index);
         }
-
+        private string ModeToString(int mode)
+        {
+            if (mode == 0)
+                return "Changed Files";
+            if (mode == 1)
+                return "New Copies";
+            if (mode == 2)
+                return "Replace Files";
+            else
+                return "Error: Unknown Mode";
+        }
+        private string ProcessToString(int process)
+        {
+            if (process == 0)
+                return "Scheduled";
+            if (process == 1)
+                return "Timer";
+            if (process == 2)
+                return "Manual";
+            else
+                return "Error: Unknown Process";
+        }
+        private string AutomatedToString(bool automated)
+        {
+            if (automated == true)
+                return "Yes";
+            return "No";
+        }
         delegate void AddToListCallback(EntryClass entry, int index); //for thread-safe interface actions
         private void AddToList(EntryClass entry, int index)
         {
-            string[] strArr = new string[6];
+            
+            string[] strArr = new string[8];
             ListViewItem item;
             strArr[0] = entry.Entry.ToString();
             strArr[1] = entry.Source;
             strArr[2] = entry.Destination;
-            strArr[3] = entry.Timer.ToString();
-            strArr[4] = "true";//entry.differential.ToString();
+            strArr[3] = ModeToString(entry.Mode);
+            strArr[4] = ProcessToString(entry.Process);
             strArr[5] = entry.LastPerformed;
+            strArr[6] = entry.NextScheduled;
+            strArr[7] = AutomatedToString(entry.Automated);
             item = new ListViewItem(strArr);
 
             if (index == -1)
@@ -111,85 +141,346 @@ namespace Darcy_Backup
 
                     string writeString = "";
 
-                    writeString += Entries[i].Entry + ";" + Entries[i].Source + ";" + Entries[i].Destination + ";" + Entries[i].Timer + ";" + "true" + ";" + Entries[i].LastPerformed;
+                    writeString += Entries[i].Entry + ";" + Entries[i].Source + ";" + Entries[i].Destination + ";" + Entries[i].Mode + ";" + Entries[i].Process + ";" + Entries[i].NextScheduled + ";" + Entries[i].LastPerformed + ";";
+                    for (int k = 0; k < Entries[i].Days.Length; k++)
+                        writeString += Entries[i].Days[k] + ";";
+                    writeString += Entries[i].TimeOfDay + ";" + Entries[i].Timer + ";" + Entries[i].TotalSize + ";" + Entries[i].Automated;
 
                     file.WriteLine(writeString);
                 }
 
             }
         }
+        private int GetMinuteFromTimeOfDay(string timeOfDay)
+        {
+            string[] time = timeOfDay.Split(':');
 
-        
+            if (time.Length == 2)
+            {
+                if (time[0].Length == 2 && time[1].Length == 2)
+                {
+                    int minute = 0;
+                    if (Int32.TryParse(time[1], out minute) == true)
+                    {
+                        return minute;
+                    }
+                }
+            }
+            return -1;
+        }
+        private int GetHourFromTimeOfDay(string timeOfDay)
+        {
+            string[] time = timeOfDay.Split(':');
 
-        
+            if (time.Length == 2)
+            {
+                if (time[0].Length == 2 && time[1].Length == 2)
+                {
+                    int hour = 0;
+                    if (Int32.TryParse(time[0], out hour) == true)
+                    {
+                        return hour;
+                    }
+                }
+            }
+            return -1;
+        }
+        private string GetNextSchedulePerform(EntryClass entry)
+        {
+            bool[] entryDays = new bool[31];
+            entryDays[0] = true;
+            entryDays[15] = true;
+
+            entry.Days = entryDays;
+
+            DateTime lastPerformed = GetDateTimeFromString(entry.LastPerformed);
+
+            string nextPerformString = "";
+
+            int hits = 0;
+            for (int i = 0; i < 31;  i ++)
+            {
+                if (entry.Days[i] == true)
+                    hits++;
+            }
+            if (hits == 0)
+                return "No Schedule";
+
+            int[] days = new int[hits];
+            int adds = 0;
+            for (int i = 0; i < 31; i ++)
+            {
+                if (entry.Days[i] == true)
+                {
+                    days[adds] = i + 1;
+                    adds++;
+                }
+            }
+
+            int today = DateTime.Now.Day;
+            int hour = DateTime.Now.Hour;
+            int minute = DateTime.Now.Minute;
+
+            int schedHour = GetHourFromTimeOfDay(entry.TimeOfDay);
+            int schedMinute = GetMinuteFromTimeOfDay(entry.TimeOfDay);
+
+            int lastDay = lastPerformed.Day;
+            int lastHour = lastPerformed.Hour;
+            int lastMinute = lastPerformed.Minute;
+
+            int foundDay = -1;
+            int foundMonth = -1;
+            int foundYear = -1;
+            for (int i = days.Length - 1; i >= 0; i--)
+            {
+                if (days[i] == today)
+                {
+                    if (schedHour <= hour)
+                    {
+                        if (schedMinute <= minute)
+                        {
+                            if (schedHour == hour && schedMinute == minute)
+                            {
+                                if (lastDay == today && lastHour == hour && lastMinute == minute)
+                                {
+
+                                }
+                                else
+                                {
+                                    foundDay = days[i];
+                                    foundMonth = DateTime.Now.Month;
+                                    foundYear = DateTime.Now.Year;
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foundDay = days[i];
+                            foundMonth = DateTime.Now.Month;
+                            foundYear = DateTime.Now.Year;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        foundDay = days[i];
+                        foundMonth = DateTime.Now.Month;
+                        foundYear = DateTime.Now.Year;
+                        break;
+                    }
+                }
+                if (days[i] > today)
+                {
+                    if (days[i] <= DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+                    {
+                        foundDay = days[i];
+                        foundMonth = DateTime.Now.Month;
+                        foundYear = DateTime.Now.Year;
+                        break;
+                    }
+                }
+            }
+            if (foundDay == -1 || foundMonth == -1 || foundYear == -1)
+            {
+                for (int i = 0; i < days.Length; i++)
+                {
+                    if (days[i] <= today)
+                    {
+                        if (days[i] <= DateTime.DaysInMonth(DateTime.Now.Year, ((DateTime)DateTime.Now.AddMonths(1)).Month))
+                        {
+                            foundDay = days[i];
+                            foundMonth = ((DateTime)DateTime.Now.AddMonths(1)).Month;
+                            foundYear = ((DateTime)DateTime.Now.AddMonths(1)).Year;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (foundDay == -1 || foundMonth == -1 || foundYear == -1)
+            {
+                return "error";
+            }
+            
+            return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
+        }
         public void CheckAction()
         {
             for (int i = 0; i < Entries.Length; i++)
             {
+                string process = ProcessToString(Entries[i].Process);
+                if (process == "Manual")
+                    continue;
+
                 string lp = Entries[i].LastPerformed;
-                if (lp == "Never" || lp == "In Queue" || lp == "In Progress" || lp == "")
+                if (process == "Scheduled" || process == "Timer")
                 {
-                }
-                else
-                {
-                    double difference = CalculateTimeDifference(Entries[i].LastPerformed);
-                    if ((int)difference >= Entries[i].Timer)
+
+                    if (Entries[i].Automated == false)
                     {
-                    }
-                    else
+                        if (lp == "In Queue" || lp == "In Progress" || lp == "")
+                            Entries[i].LastPerformed = "Manual Mode";
+
+                        Entries[i].NextScheduled = "Manual Mode";
+                        Save();
+
+                        RemoveFromList(i);
+                        AddToList(Entries[i], i);
                         continue;
+                    }
                 }
-                if (Entries[i].Ongoing == false)
+
+                if (process == "Scheduled")
                 {
-                    Entries[i].Ongoing = true;
-                    Perform(i);
-                    string str = GetTimeString();
-                    Entries[i].LastPerformed = str;
-                    Entries[i].Ongoing = false;
+                    DateTime now = DateTime.Now;
+                    DateTime lastPerformed = GetDateTimeFromString(Entries[i].LastPerformed);
 
+                    string nextPerform = GetNextSchedulePerform(Entries[i]);
+                    Entries[i].NextScheduled = nextPerform;
                     Save();
-
 
                     RemoveFromList(i);
                     AddToList(Entries[i], i);
+
+                    int today = now.Day - 1;
+                    
+                    bool found = false;
+                    int lastScheduledDay = today;
+                    for (; lastScheduledDay >= 0; lastScheduledDay --)
+                    {
+                        if (Entries[i].Days[lastScheduledDay] == true)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found == false)
+                    {
+                        lastScheduledDay = 30;
+                        for (; lastScheduledDay >= 0; lastScheduledDay --)
+                        {
+                            if (Entries[i].Days[lastScheduledDay] == true)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                        
+                    if (lastPerformed.Day - 1 <= lastScheduledDay)
+                    {
+                        if (lastPerformed.Hour >= GetHourFromTimeOfDay(Entries[i].TimeOfDay))
+                        {
+                            if (lastPerformed.Minute >= GetMinuteFromTimeOfDay(Entries[i].TimeOfDay))
+                                continue;
+                        }
+                    }
+
+                    if (Entries[i].Ongoing == false)
+                    {
+                        Entries[i].Ongoing = true;
+                        Perform(i);
+                        string str = GetTimeString(DateTime.Now);
+                        Entries[i].LastPerformed = str;
+                        Entries[i].Ongoing = false;
+
+                        nextPerform = GetNextSchedulePerform(Entries[i]);
+                            
+                        Entries[i].NextScheduled = nextPerform;
+
+                        Save();
+
+                        RemoveFromList(i);
+                        AddToList(Entries[i], i);
+                    }
+                }
+
+                if (process == "Timer")
+                {
+                    if (lp == "Never" || lp == "In Queue" || lp == "In Progress" || lp == "")
+                    {
+                    }
+                    else
+                    {
+                        string nextPerform = "";
+                        bool perform = CalculateTimeDifference(Entries[i].LastPerformed, Entries[i].Timer, out nextPerform);
+                        if (Entries[i].NextScheduled != nextPerform)
+                        {
+                            Entries[i].NextScheduled = nextPerform;
+
+                            Save();
+
+                            RemoveFromList(i);
+                            AddToList(Entries[i], i);
+                        }
+
+                        if (perform == false)
+                            continue;
+                    }
+
+                    if (Entries[i].Ongoing == false)
+                    {
+                        Entries[i].Ongoing = true;
+                        Perform(i);
+                        string str = GetTimeString(DateTime.Now);
+                        Entries[i].LastPerformed = str;
+                        Entries[i].Ongoing = false;
+
+                        string nextPerform = "";
+                        CalculateTimeDifference(Entries[i].LastPerformed, Entries[i].Timer, out nextPerform);
+                        Entries[i].NextScheduled = nextPerform;
+
+                        Save();
+
+                        RemoveFromList(i);
+                        AddToList(Entries[i], i);
+                    }
                 }
             }
         }
-        private string GetTimeString()
+        private string GetTimeString(DateTime dt)
         {
             string str = "";
 
-            string hour = DateTime.Now.Hour.ToString();
+            string hour = dt.Hour.ToString();
             if (hour.Length == 1)
                 hour = "0" + hour;
-            string minute = DateTime.Now.Minute.ToString();
+            string minute = dt.Minute.ToString();
             if (minute.Length == 1)
                 minute = "0" + minute;
             
-            str += DateTime.Now.Day + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year + "-" + hour + ":" + minute;
+            str += dt.Day + "/" + dt.Month + "/" + dt.Year + "-" + hour + ":" + minute;
 
             return str;
         }
-        private double CalculateTimeDifference(String timeString)
+        private DateTime GetDateTimeFromString(string dateString)
         {
-
-            string[] slashSplit = timeString.Split('/');
+            string[] slashSplit = dateString.Split('/');
             string[] minusSplit = slashSplit[2].Split('-');
             string[] colonSplit = minusSplit[1].Split(':');
 
-            
+
             int day = Int32.Parse(slashSplit[0]);
             int month = Int32.Parse(slashSplit[1]);
             int year = Int32.Parse(minusSplit[0]);
             int hour = Int32.Parse(colonSplit[0]);
             int minute = Int32.Parse(colonSplit[1]);
 
+            return new DateTime(year, month, day, hour, minute, 0);
+        }
+        private bool CalculateTimeDifference(String lastTime, int timer, out string nextPerform)
+        {
             DateTime currentTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
-            DateTime timeToCheck = new DateTime(year, month, day, hour, minute, 0);
+            DateTime lastDate = GetDateTimeFromString(lastTime);
 
-            double minutes = currentTime.Subtract(timeToCheck).TotalMinutes;
+            DateTime nextDate = lastDate.AddMinutes(timer);
+            nextPerform = GetTimeString(nextDate);
 
-            return minutes;
+            double minutes = currentTime.Subtract(lastDate).TotalMinutes;
+
+            if ((int)minutes >= timer)
+                return true;
+            return false;
         }
         
         private void Label_About_Click(object sender, EventArgs e)

@@ -11,7 +11,6 @@ namespace Darcy_Backup
 {
     public partial class Form_Darcy_Panel
     {
-        private int lastLine = -1;
 
         private string currPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\db.dbss";

@@ -732,7 +732,7 @@ namespace Darcy_Backup
             this.Label_Help_Text_Time.Name = "Label_Help_Text_Time";
             this.Label_Help_Text_Time.Size = new System.Drawing.Size(162, 17);
             this.Label_Help_Text_Time.TabIndex = 48;
-            this.Label_Help_Text_Time.Text = "24-hour format (e.g. 22.00)";
+            this.Label_Help_Text_Time.Text = "24-hour format (e.g. 22:00)";
             // 
             // Label_Help_Days
             // 

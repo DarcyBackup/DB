@@ -37,7 +37,7 @@ namespace Darcy_Backup
 
             InitializeCache();
 
-            CheckForUpdates();
+            //CheckForUpdates();
 
             InitializeWorkerThread();
         }
@@ -175,7 +175,6 @@ namespace Darcy_Backup
 
             }
 
-
             string[] entryString = System.IO.File.ReadAllLines(fullPath);
 
             Entries = new EntryClass[entryString.Length];
@@ -186,7 +185,7 @@ namespace Darcy_Backup
             {
                 string[] temp = entryString[i].Split(';');
 
-                if (temp.Length != 6)
+                if (temp.Length != 42)
                     continue;
 
                 int parsed = 0;
@@ -200,24 +199,59 @@ namespace Darcy_Backup
                 if (Int32.TryParse(temp[3], out parsed) == false)
                     continue;
 
-                Entries[i].Timer = parsed;
+                if (parsed != 0 && parsed != 1 && parsed != 2)
+                    continue;
+                Entries[i].Mode = parsed;
+
+                if (Int32.TryParse(temp[4], out parsed) == false)
+                    continue;
+
+                if (parsed != 0 && parsed != 1 && parsed != 2)
+                    continue;
+                Entries[i].Process = parsed;
+
+                Entries[i].NextScheduled = temp[5];
+                Entries[i].LastPerformed = temp[6];
 
                 bool readBool;
-                if (temp[4] == "True")
+                bool failed = true;
+                for (int k = 0; k < 31; k ++)
+                {
+                    if (temp[k + 7] == "True" || temp[k + 7] == "true")
+                    {
+                        readBool = true;
+                        failed = false;
+                    }
+                    else if (temp[k + 7] == "False" || temp[k + 7] == "false")
+                    {
+                        readBool = false;
+                        failed = false;
+                    }
+                    else
+                        break;
+                    Entries[i].Days[k] = readBool;
+                }
+                if (failed == true)
+                    continue;
+
+
+                Entries[i].TimeOfDay = temp[38];
+
+                if (Int32.TryParse(temp[39], out parsed) == false)
+                    continue;
+                Entries[i].Timer = parsed;
+
+                Entries[i].TotalSize = temp[40];
+
+                if (temp[41] == "True" || temp[41] == "true")
                     readBool = true;
-                else if (temp[4] == "False")
+                else if (temp[41] == "False" || temp[41] == "false")
                     readBool = false;
                 else
                     continue;
+                Entries[i].Automated = readBool;
 
-                if (readBool)
-                    Entries[i].Mode = 0;
-                //Entries[i].differential = readBool;
-
-                Entries[i].LastPerformed = temp[5];
-                
-
-                lastLine = Entries[i].Entry;
+                Entries[i].Validated = true;
             }
 
             for (int i = 0; i < Entries.Length; i++)
@@ -239,9 +273,11 @@ namespace Darcy_Backup
             List_Backup.Columns.Add("Entry", Properties.Settings.Default.List_Entry);
             List_Backup.Columns.Add("Source", Properties.Settings.Default.List_Source);
             List_Backup.Columns.Add("Destination", Properties.Settings.Default.List_Destination);
-            List_Backup.Columns.Add("Frequency", Properties.Settings.Default.List_Frequency);
-            List_Backup.Columns.Add("Differential", Properties.Settings.Default.List_Differential);
+            List_Backup.Columns.Add("Mode", Properties.Settings.Default.List_Differential);
+            List_Backup.Columns.Add("Process", 100);
             List_Backup.Columns.Add("Last Performed", Properties.Settings.Default.List_Performed);
+            List_Backup.Columns.Add("Next Backup", Properties.Settings.Default.List_Performed);
+            List_Backup.Columns.Add("Automated", 80);
 
 
 
