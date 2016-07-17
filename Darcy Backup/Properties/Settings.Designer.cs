@@ -110,24 +110,24 @@ namespace Darcy_Backup.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("90")]
-        public int List_Frequency {
+        public int List_Mode {
             get {
-                return ((int)(this["List_Frequency"]));
+                return ((int)(this["List_Mode"]));
             }
             set {
-                this["List_Frequency"] = value;
+                this["List_Mode"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("90")]
-        public int List_Differential {
+        public int List_Process {
             get {
-                return ((int)(this["List_Differential"]));
+                return ((int)(this["List_Process"]));
             }
             set {
-                this["List_Differential"] = value;
+                this["List_Process"] = value;
             }
         }
         
@@ -140,6 +140,42 @@ namespace Darcy_Backup.Properties {
             }
             set {
                 this["List_Performed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FullScreenOnStartup {
+            get {
+                return ((bool)(this["FullScreenOnStartup"]));
+            }
+            set {
+                this["FullScreenOnStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        public int List_Next {
+            get {
+                return ((int)(this["List_Next"]));
+            }
+            set {
+                this["List_Next"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        public int List_Automated {
+            get {
+                return ((int)(this["List_Automated"]));
+            }
+            set {
+                this["List_Automated"] = value;
             }
         }
     }

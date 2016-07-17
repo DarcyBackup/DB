@@ -12,15 +12,17 @@ namespace Darcy_Backup
     public partial class Form_Darcy_Panel
     {
 
-        private string currPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-        private string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\db.dbss";
+        private string _currPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        private string _fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\db.dbss";
 
         private EntryClass[] Entries;
 
-        private resizeStruct[] ResizeArray;
+        private resizeStruct[] _resizeArray;
 
-        private bool EditNewOngoing = false;
-        private Form_New_Entry EditNewObj;
+        private int _currentListSel = -1;
+
+        private bool _editNewOngoing = false;
+        private Form_New_Entry _editNewObj;
 
         private struct resizeStruct
         {

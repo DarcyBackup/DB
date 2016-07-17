@@ -87,55 +87,55 @@ namespace Darcy_Backup
            // 
            */
 
-            ResizeArray = new resizeStruct[RESIZE_ARRAY_SIZE];
+            _resizeArray = new resizeStruct[RESIZE_ARRAY_SIZE];
 
-            ResizeArray[BUTTON_PERFORM].control = Button_Perform;
-            ResizeArray[BUTTON_PERFORM].width = 12;
-            ResizeArray[BUTTON_PERFORM].height = 10;
-            ResizeArray[BUTTON_PERFORM].stayX = false;
-            ResizeArray[BUTTON_PERFORM].stayY = false;
+            _resizeArray[BUTTON_PERFORM].control = Button_Perform;
+            _resizeArray[BUTTON_PERFORM].width = 12;
+            _resizeArray[BUTTON_PERFORM].height = 10;
+            _resizeArray[BUTTON_PERFORM].stayX = false;
+            _resizeArray[BUTTON_PERFORM].stayY = false;
         
-            ResizeArray[BUTTON_ACTIVATE].control = Button_Activate;
-            ResizeArray[BUTTON_ACTIVATE].width = 132;
-            ResizeArray[BUTTON_ACTIVATE].height = 10;
-            ResizeArray[BUTTON_ACTIVATE].stayX = false;
-            ResizeArray[BUTTON_ACTIVATE].stayY = false;
+            _resizeArray[BUTTON_ACTIVATE].control = Button_Activate;
+            _resizeArray[BUTTON_ACTIVATE].width = 132;
+            _resizeArray[BUTTON_ACTIVATE].height = 10;
+            _resizeArray[BUTTON_ACTIVATE].stayX = false;
+            _resizeArray[BUTTON_ACTIVATE].stayY = false;
 
-            ResizeArray[BUTTON_DELETE].control = Button_Delete;
-            ResizeArray[BUTTON_DELETE].width = -1;
-            ResizeArray[BUTTON_DELETE].height = 10;
-            ResizeArray[BUTTON_DELETE].stayX = true;
-            ResizeArray[BUTTON_DELETE].stayY = false;
+            _resizeArray[BUTTON_DELETE].control = Button_Delete;
+            _resizeArray[BUTTON_DELETE].width = -1;
+            _resizeArray[BUTTON_DELETE].height = 10;
+            _resizeArray[BUTTON_DELETE].stayX = true;
+            _resizeArray[BUTTON_DELETE].stayY = false;
 
-            ResizeArray[LIST_BACKUP].control = List_Backup;
-            ResizeArray[LIST_BACKUP].width = 12;
-            ResizeArray[LIST_BACKUP].height = 42;
-            ResizeArray[LIST_BACKUP].stayX = true;
-            ResizeArray[LIST_BACKUP].stayY = true;
+            _resizeArray[LIST_BACKUP].control = List_Backup;
+            _resizeArray[LIST_BACKUP].width = 12;
+            _resizeArray[LIST_BACKUP].height = 42;
+            _resizeArray[LIST_BACKUP].stayX = true;
+            _resizeArray[LIST_BACKUP].stayY = true;
 
-            ResizeArray[BUTTON_NEW].control = Button_New;
-            ResizeArray[BUTTON_NEW].width = -1;
-            ResizeArray[BUTTON_NEW].height = 10;
-            ResizeArray[BUTTON_NEW].stayX = true;
-            ResizeArray[BUTTON_NEW].stayY = false;
+            _resizeArray[BUTTON_NEW].control = Button_New;
+            _resizeArray[BUTTON_NEW].width = -1;
+            _resizeArray[BUTTON_NEW].height = 10;
+            _resizeArray[BUTTON_NEW].stayX = true;
+            _resizeArray[BUTTON_NEW].stayY = false;
 
-            ResizeArray[BUTTON_EDIT].control = Button_Edit;
-            ResizeArray[BUTTON_EDIT].width = -1;
-            ResizeArray[BUTTON_EDIT].height = 10;
-            ResizeArray[BUTTON_EDIT].stayX = true;
-            ResizeArray[BUTTON_EDIT].stayY = false;
+            _resizeArray[BUTTON_EDIT].control = Button_Edit;
+            _resizeArray[BUTTON_EDIT].width = -1;
+            _resizeArray[BUTTON_EDIT].height = 10;
+            _resizeArray[BUTTON_EDIT].stayX = true;
+            _resizeArray[BUTTON_EDIT].stayY = false;
 
-            ResizeArray[LABEL_TOGGLE].control = Label_Toggle;
-            ResizeArray[LABEL_TOGGLE].width = 216;
-            ResizeArray[LABEL_TOGGLE].height = 10;
-            ResizeArray[LABEL_TOGGLE].stayX = false;
-            ResizeArray[LABEL_TOGGLE].stayY = false;
+            _resizeArray[LABEL_TOGGLE].control = Label_Toggle;
+            _resizeArray[LABEL_TOGGLE].width = 216;
+            _resizeArray[LABEL_TOGGLE].height = 10;
+            _resizeArray[LABEL_TOGGLE].stayX = false;
+            _resizeArray[LABEL_TOGGLE].stayY = false;
 
-            ResizeArray[PANEL_SELECTEDLOG].control = Panel_Selected_Log;
-            ResizeArray[PANEL_SELECTEDLOG].width = -1;
-            ResizeArray[PANEL_SELECTEDLOG].height = 42;
-            ResizeArray[PANEL_SELECTEDLOG].stayX = true;
-            ResizeArray[PANEL_SELECTEDLOG].stayY = true;
+            _resizeArray[PANEL_SELECTEDLOG].control = Panel_Selected_Log;
+            _resizeArray[PANEL_SELECTEDLOG].width = -1;
+            _resizeArray[PANEL_SELECTEDLOG].height = 42;
+            _resizeArray[PANEL_SELECTEDLOG].stayX = true;
+            _resizeArray[PANEL_SELECTEDLOG].stayY = true;
 
             //SET FORM TO LAST VALUE
 
@@ -158,14 +158,14 @@ namespace Darcy_Backup
 
         private void InitializeCache()
         {
-            bool exists = File.Exists(fullPath);
+            bool exists = File.Exists(_fullPath);
 
             if (exists == false)
             {
-                FileStream fs = File.Create(fullPath);
+                FileStream fs = File.Create(_fullPath);
                 fs.Close();
 
-                exists = File.Exists(fullPath);
+                exists = File.Exists(_fullPath);
                 if (exists == false)
                 {
                     MessageBox.Show("Can not create dbss file in this folder", "Error", MessageBoxButtons.OK);
@@ -175,7 +175,7 @@ namespace Darcy_Backup
 
             }
 
-            string[] entryString = System.IO.File.ReadAllLines(fullPath);
+            string[] entryString = System.IO.File.ReadAllLines(_fullPath);
 
             Entries = new EntryClass[entryString.Length];
             for (int i = 0; i < Entries.Length; i ++)
@@ -256,12 +256,19 @@ namespace Darcy_Backup
 
             for (int i = 0; i < Entries.Length; i++)
             {
-                AddToList(Entries[i], -1);
+                AddToList(Entries[i], -1, -1);
             }
         }
 
         private void InitializeGUI()
         {
+
+            Settings_Panel.SetBounds(0, 25, Settings_Panel.Width, Settings_Panel.Height);
+            Settings_Language_Panel.SetBounds(139, 114, Settings_Language_Panel.Width, Settings_Language_Panel.Height);
+            About_Panel.SetBounds(75, 25, About_Panel.Width, About_Panel.Height);
+
+
+
             List_Backup.View = View.Details;
             List_Backup.FullRowSelect = true;
             List_Backup.MultiSelect = false;
@@ -273,14 +280,12 @@ namespace Darcy_Backup
             List_Backup.Columns.Add("Entry", Properties.Settings.Default.List_Entry);
             List_Backup.Columns.Add("Source", Properties.Settings.Default.List_Source);
             List_Backup.Columns.Add("Destination", Properties.Settings.Default.List_Destination);
-            List_Backup.Columns.Add("Mode", Properties.Settings.Default.List_Differential);
-            List_Backup.Columns.Add("Process", 100);
+            List_Backup.Columns.Add("Mode", Properties.Settings.Default.List_Mode);
+            List_Backup.Columns.Add("Process", Properties.Settings.Default.List_Process);
             List_Backup.Columns.Add("Last Performed", Properties.Settings.Default.List_Performed);
-            List_Backup.Columns.Add("Next Backup", Properties.Settings.Default.List_Performed);
-            List_Backup.Columns.Add("Automated", 80);
-
-
-
+            List_Backup.Columns.Add("Next Backup", Properties.Settings.Default.List_Next);
+            List_Backup.Columns.Add("Automated", Properties.Settings.Default.List_Automated);
+            
 
 
             List_Log.View = View.Details;
@@ -288,26 +293,9 @@ namespace Darcy_Backup
             List_Log.GridLines = false;
             List_Log.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 
-            List_Log.Columns.Add("", 150);
-            List_Log.Columns.Add("", 150);
-            List_Log.Columns.Add("", 150);
-
-
-
-            string[] strArr = new string[3];
-            ListViewItem item;
-            strArr[0] = "Tja";
-            strArr[1] = "Ba";
-            strArr[2] = "La";
-            item = new ListViewItem(strArr);
-
-            for (int i = 0; i < 100; i++)
-            {
-                strArr[0] = "Tja" + i;
-                item = new ListViewItem(strArr);
-                List_Log.Items.Insert(i, item);
-            }
-
+            List_Log.Columns.Add("", 89);
+            List_Log.Columns.Add("", 108);
+            List_Log.Columns.Add("", 140);
 
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ionic.Utils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -693,6 +694,7 @@ namespace Darcy_Backup
             this.Button_PickSource.TabIndex = 44;
             this.Button_PickSource.Text = "...";
             this.Button_PickSource.UseVisualStyleBackColor = false;
+            this.Button_PickSource.Click += new System.EventHandler(this.Button_PickSource_Click);
             // 
             // Button_PickFolder
             // 
@@ -705,6 +707,7 @@ namespace Darcy_Backup
             this.Button_PickFolder.TabIndex = 45;
             this.Button_PickFolder.Text = "...";
             this.Button_PickFolder.UseVisualStyleBackColor = false;
+            this.Button_PickFolder.Click += new System.EventHandler(this.Button_PickFolder_Click);
             // 
             // Label_Time
             // 
@@ -1035,17 +1038,21 @@ namespace Darcy_Backup
         private int Type;
         private int Id;
         private Form_Darcy_Panel Main;
+        private EntryClass Entry;
         public Form_New_Entry(Form_Darcy_Panel main, int type, int id)
         {
             Main = main;
             Type = type;
             Id = id;
+            if (type == 1)
+                Entry = main.GetEntry(id);
 
             InitializeComponent();
 
+            InitializeFields();
+
             InitializeGUI();
 
-            InitializeFields();
         }
 
         private bool[] ArrayDays;
@@ -1200,7 +1207,103 @@ namespace Darcy_Backup
             Panel_Timer.Bounds = Panel_Schedule.Bounds;
 
 
-    }
+
+            if (Type == 1)
+            {
+                Text_Source.Text = Entry.Source;
+                Text_Destination.Text = Entry.Destination;
+
+                Combo_Mode.SelectedIndex = Entry.Mode;
+
+                if (Main.ProcessToString(Entry.Process) == "Scheduled")
+                {
+                    Panel_Schedule.Visible = true;
+                    Panel_Timer.Visible = false;
+
+                    Text_TimeOfDay.Text = Entry.TimeOfDay;
+
+                    /*
+                    //
+                    //  change this to a prettier solution
+                    //
+                    */
+
+
+                    if (Entry.Days[0] == true)
+                        Days_MouseClick(Button_Day1, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[1] == true)
+                        Days_MouseClick(Button_Day2, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[2] == true)
+                        Days_MouseClick(Button_Day3, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[3] == true)
+                        Days_MouseClick(Button_Day4, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[4] == true)
+                        Days_MouseClick(Button_Day5, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[5] == true)
+                        Days_MouseClick(Button_Day6, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[6] == true)
+                        Days_MouseClick(Button_Day7, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[7] == true)
+                        Days_MouseClick(Button_Day8, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[8] == true)
+                        Days_MouseClick(Button_Day9, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[9] == true)
+                        Days_MouseClick(Button_Day10, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+
+                    if (Entry.Days[10] == true)
+                        Days_MouseClick(Button_Day11, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[11] == true)
+                        Days_MouseClick(Button_Day12, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[12] == true)
+                        Days_MouseClick(Button_Day13, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[13] == true)
+                        Days_MouseClick(Button_Day14, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[14] == true)
+                        Days_MouseClick(Button_Day15, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[15] == true)
+                        Days_MouseClick(Button_Day16, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[16] == true)
+                        Days_MouseClick(Button_Day17, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[17] == true)
+                        Days_MouseClick(Button_Day18, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[18] == true)
+                        Days_MouseClick(Button_Day19, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[19] == true)
+                        Days_MouseClick(Button_Day20, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+
+                    if (Entry.Days[20] == true)
+                        Days_MouseClick(Button_Day21, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[21] == true)
+                        Days_MouseClick(Button_Day22, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[22] == true)
+                        Days_MouseClick(Button_Day23, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[23] == true)
+                        Days_MouseClick(Button_Day24, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[24] == true)
+                        Days_MouseClick(Button_Day25, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[25] == true)
+                        Days_MouseClick(Button_Day26, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[26] == true)
+                        Days_MouseClick(Button_Day27, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[27] == true)
+                        Days_MouseClick(Button_Day28, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[28] == true)
+                        Days_MouseClick(Button_Day29, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    if (Entry.Days[29] == true)
+                        Days_MouseClick(Button_Day30, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+
+                    if (Entry.Days[30] == true)
+                        Days_MouseClick(Button_Day31, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                }
+                else if (Main.ProcessToString(Entry.Process) == "Timer")
+                {
+                    Panel_Schedule.Visible = false;
+                    Panel_Timer.Visible = true;
+
+                    Text_Timer.Text = Entry.Timer.ToString();
+                }
+            }
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -1212,8 +1315,6 @@ namespace Darcy_Backup
 
             pen.Dispose();
         }
-
-        
 
         private void Days_MouseClick(object sender, MouseEventArgs e)
         {
@@ -1295,7 +1396,7 @@ namespace Darcy_Backup
         {
             
             entry = new EntryClass();
-
+            
 
             //INPUT SOURCE
             if (Text_Source.Text.Length == 0)
@@ -1362,7 +1463,9 @@ namespace Darcy_Backup
 
 
 
-                //SCHEDULE
+            entry.Automated = true;
+
+            //SCHEDULE
             if (Radio_Schedule.Checked == true)
             {
                 entry.Process = 0;
@@ -1436,11 +1539,11 @@ namespace Darcy_Backup
                     return false;
                 }
             }
-                
                 //MANUAL
             else if (Radio_Manual.Checked == true)
             {
                 entry.Process = 2;
+                entry.Automated = false;
             }
             else
             {
@@ -1449,6 +1552,12 @@ namespace Darcy_Backup
             }
 
             entry.Entry = this.Id;
+
+            if (Type == 1)
+            {
+                entry.Entry = Entry.Entry;
+                entry.LastPerformed = Entry.LastPerformed;
+            }
 
             return true;
         }
@@ -1491,6 +1600,34 @@ namespace Darcy_Backup
         private void Button_Discard_Click(object sender, EventArgs e)
         {
             Main.DiscardEditNew();
+        }
+
+        private void Button_PickSource_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialogEx source = new Ionic.Utils.FolderBrowserDialogEx();
+            source.Description = "Select a file or folder to backup";
+            source.ShowNewFolderButton = true;
+            source.ShowEditBox = true;
+            source.ShowFullPathInEditBox = true;
+            source.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            source.ShowBothFilesAndFolders = true;
+
+            if (source.ShowDialog() == DialogResult.OK)
+                Text_Source.Text = source.SelectedPath;
+        }
+
+        private void Button_PickFolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialogEx destination = new Ionic.Utils.FolderBrowserDialogEx();
+            destination.Description = "Select an output folder";
+            destination.ShowNewFolderButton = true;
+            destination.ShowEditBox = true;
+            destination.ShowFullPathInEditBox = true;
+            destination.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            destination.ShowBothFilesAndFolders = true;
+
+            if (destination.ShowDialog() == DialogResult.OK)
+                Text_Destination.Text = destination.SelectedPath;
         }
     }
 }

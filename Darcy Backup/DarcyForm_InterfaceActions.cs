@@ -38,8 +38,8 @@ namespace Darcy_Backup
             }
             else
                 return;
-
-            RemoveFromList(index);
+            
+            RemoveFromList(new EntryClass(), index);
             RemoveEntry(index);
 
             Save();
@@ -59,35 +59,35 @@ namespace Darcy_Backup
 
                 for (int i = 0; i < RESIZE_ARRAY_SIZE; i++)
                 {
-                    Rectangle rect = ResizeArray[i].control.Bounds;
+                    Rectangle rect = _resizeArray[i].control.Bounds;
                     int newX = 0, newY = 0, newHeight = 0, newWidth = 0;
 
-                    if (ResizeArray[i].height != -1)
-                        newHeight = (senderHeight - ResizeArray[i].height) - rect.Y;
+                    if (_resizeArray[i].height != -1)
+                        newHeight = (senderHeight - _resizeArray[i].height) - rect.Y;
                     else
                         newHeight = rect.Height;
 
-                    if (ResizeArray[i].width != -1)
-                        newWidth = (senderWidth - ResizeArray[i].width) - rect.X;
+                    if (_resizeArray[i].width != -1)
+                        newWidth = (senderWidth - _resizeArray[i].width) - rect.X;
                     else
                         newWidth = rect.Width;
 
 
-                    if (ResizeArray[i].stayX == true)
+                    if (_resizeArray[i].stayX == true)
                         newX = rect.X;
                     else
                     {
                         newX = rect.X + newWidth - rect.Width;
                         newWidth = rect.Width;
                     }
-                    if (ResizeArray[i].stayY == true)
+                    if (_resizeArray[i].stayY == true)
                         newY = rect.Y;
                     else
                     {
                         newY = rect.Y + newHeight - rect.Height;
                         newHeight = rect.Height;
                     }
-                    ResizeArray[i].control.SetBounds(newX, newY, newWidth, newHeight);
+                    _resizeArray[i].control.SetBounds(newX, newY, newWidth, newHeight);
                 }
 
                 Properties.Settings.Default.Height = ((Control)sender).Bounds.Height;
@@ -118,35 +118,35 @@ namespace Darcy_Backup
 
                 for (int i = 0; i < RESIZE_ARRAY_SIZE; i++)
                 {
-                    Rectangle rect = ResizeArray[i].control.Bounds;
+                    Rectangle rect = _resizeArray[i].control.Bounds;
                     int newX = 0, newY = 0, newHeight = 0, newWidth = 0;
 
-                    if (ResizeArray[i].height != -1)
-                        newHeight = (senderHeight - ResizeArray[i].height) - rect.Y;
+                    if (_resizeArray[i].height != -1)
+                        newHeight = (senderHeight - _resizeArray[i].height) - rect.Y;
                     else
                         newHeight = rect.Height;
 
-                    if (ResizeArray[i].width != -1)
-                        newWidth = (senderWidth - ResizeArray[i].width) - rect.X;
+                    if (_resizeArray[i].width != -1)
+                        newWidth = (senderWidth - _resizeArray[i].width) - rect.X;
                     else
                         newWidth = rect.Width;
 
                     
-                    if (ResizeArray[i].stayX == true)
+                    if (_resizeArray[i].stayX == true)
                         newX = rect.X;
                     else
                     {
                         newX = rect.X + newWidth - rect.Width;
                         newWidth = rect.Width;
                     }
-                    if (ResizeArray[i].stayY == true)
+                    if (_resizeArray[i].stayY == true)
                         newY = rect.Y;
                     else
                     {
                         newY = rect.Y + newHeight - rect.Height;
                         newHeight = rect.Height;
                     }
-                    ResizeArray[i].control.SetBounds(newX, newY, newWidth, newHeight);
+                    _resizeArray[i].control.SetBounds(newX, newY, newWidth, newHeight);
                 }
                 Properties.Settings.Default.Height = ((Control)sender).Bounds.Height;
                 Properties.Settings.Default.Width = ((Control)sender).Bounds.Width;
@@ -158,9 +158,11 @@ namespace Darcy_Backup
             Properties.Settings.Default.List_Entry = List_Backup.Columns[0].Width;
             Properties.Settings.Default.List_Source = List_Backup.Columns[1].Width;
             Properties.Settings.Default.List_Destination = List_Backup.Columns[2].Width;
-            Properties.Settings.Default.List_Frequency = List_Backup.Columns[3].Width;
-            Properties.Settings.Default.List_Differential = List_Backup.Columns[4].Width;
+            Properties.Settings.Default.List_Mode = List_Backup.Columns[3].Width;
+            Properties.Settings.Default.List_Process = List_Backup.Columns[4].Width;
             Properties.Settings.Default.List_Performed = List_Backup.Columns[5].Width;
+            Properties.Settings.Default.List_Next = List_Backup.Columns[6].Width;
+            Properties.Settings.Default.List_Automated = List_Backup.Columns[7].Width;
 
             Properties.Settings.Default.Save();
         }

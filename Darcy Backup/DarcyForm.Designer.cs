@@ -44,14 +44,14 @@
             this.Button_New = new System.Windows.Forms.Button();
             this.Label_Toggle = new System.Windows.Forms.Label();
             this.Button_Perform = new Darcy_Backup.DarcyButton();
-            this.Settings_Language_Panel = new Darcy_Backup.DarcySettingsLanguagePanel();
-            this.Language_Label_Finnish = new System.Windows.Forms.Label();
-            this.Language_Label_Swedish = new System.Windows.Forms.Label();
-            this.Language_Label_English = new System.Windows.Forms.Label();
             this.Settings_Panel = new Darcy_Backup.DarcySettingsPanel();
             this.Settings_Check_Minimized = new System.Windows.Forms.CheckBox();
             this.Settings_Check_Autorun = new System.Windows.Forms.CheckBox();
             this.Settings_Label_Language = new System.Windows.Forms.Label();
+            this.Settings_Language_Panel = new Darcy_Backup.DarcySettingsLanguagePanel();
+            this.Language_Label_Finnish = new System.Windows.Forms.Label();
+            this.Language_Label_Swedish = new System.Windows.Forms.Label();
+            this.Language_Label_English = new System.Windows.Forms.Label();
             this.About_Panel = new Darcy_Backup.DarcyAboutPanel();
             this.About_LinkLabel_Website = new System.Windows.Forms.LinkLabel();
             this.About_Label_License = new System.Windows.Forms.Label();
@@ -59,25 +59,25 @@
             this.About_Label_Version = new System.Windows.Forms.Label();
             this.About_Label_Title = new System.Windows.Forms.Label();
             this.Panel_Selected_Log = new Darcy_Backup.DarcySelectedLogPanel();
-            this.Dynamic_Automated = new System.Windows.Forms.Label();
             this.Dynamic_Mode = new System.Windows.Forms.Label();
-            this.Dynamic_Frequency = new System.Windows.Forms.Label();
+            this.Label_Mode = new System.Windows.Forms.Label();
+            this.Dynamic_Process_Specific2 = new System.Windows.Forms.Label();
+            this.Label_Process_Specific2 = new System.Windows.Forms.Label();
+            this.Dynamic_Process_Specific1 = new System.Windows.Forms.Label();
+            this.Label_Process_Specific1 = new System.Windows.Forms.Label();
+            this.Dynamic_Automated = new System.Windows.Forms.Label();
+            this.Dynamic_Process = new System.Windows.Forms.Label();
             this.Dynamic_Destination = new System.Windows.Forms.Label();
             this.Dynamic_Source = new System.Windows.Forms.Label();
-            this.Dynamic_LastBackup = new System.Windows.Forms.Label();
-            this.Dynamic_NextBackup = new System.Windows.Forms.Label();
             this.Label_Automated = new System.Windows.Forms.Label();
-            this.Label_Mode = new System.Windows.Forms.Label();
-            this.Label_Frequency2 = new System.Windows.Forms.Label();
-            this.Label_Destination2 = new System.Windows.Forms.Label();
-            this.Label_Source2 = new System.Windows.Forms.Label();
-            this.Label_LastBackup = new System.Windows.Forms.Label();
-            this.Label_NextBackup = new System.Windows.Forms.Label();
+            this.Label_Process = new System.Windows.Forms.Label();
+            this.Label_Destination = new System.Windows.Forms.Label();
+            this.Label_Source = new System.Windows.Forms.Label();
             this.List_Log = new System.Windows.Forms.ListView();
             this.Label_HeaderLog = new System.Windows.Forms.Label();
             this.Label_HeaderSelected = new System.Windows.Forms.Label();
-            this.Settings_Language_Panel.SuspendLayout();
             this.Settings_Panel.SuspendLayout();
+            this.Settings_Language_Panel.SuspendLayout();
             this.About_Panel.SuspendLayout();
             this.Panel_Selected_Log.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +92,7 @@
             this.List_Backup.Size = new System.Drawing.Size(663, 425);
             this.List_Backup.TabIndex = 10;
             this.List_Backup.UseCompatibleStateImageBehavior = false;
+            this.List_Backup.SelectedIndexChanged += new System.EventHandler(this.List_Backup_Selection_Changed);
             // 
             // Button_Delete
             // 
@@ -119,6 +120,7 @@
             this.Button_Activate.Text = "Activate";
             this.Button_Activate.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Button_Activate.UseVisualStyleBackColor = false;
+            this.Button_Activate.Click += new System.EventHandler(this.Button_Activate_Click);
             // 
             // Label_Backup
             // 
@@ -185,6 +187,7 @@
             this.Button_Edit.Text = "Edit";
             this.Button_Edit.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Button_Edit.UseVisualStyleBackColor = false;
+            this.Button_Edit.Click += new System.EventHandler(this.Button_Edit_Click);
             // 
             // Button_New
             // 
@@ -226,67 +229,14 @@
             this.Button_Perform.UseVisualStyleBackColor = false;
             this.Button_Perform.Click += new System.EventHandler(this.Button_Perform_Click);
             // 
-            // Settings_Language_Panel
-            // 
-            this.Settings_Language_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(253)))), ((int)(((byte)(255)))));
-            this.Settings_Language_Panel.Controls.Add(this.Language_Label_Finnish);
-            this.Settings_Language_Panel.Controls.Add(this.Language_Label_Swedish);
-            this.Settings_Language_Panel.Controls.Add(this.Language_Label_English);
-            this.Settings_Language_Panel.Location = new System.Drawing.Point(139, 114);
-            this.Settings_Language_Panel.Name = "Settings_Language_Panel";
-            this.Settings_Language_Panel.Size = new System.Drawing.Size(94, 106);
-            this.Settings_Language_Panel.TabIndex = 24;
-            this.Settings_Language_Panel.Visible = false;
-            // 
-            // Language_Label_Finnish
-            // 
-            this.Language_Label_Finnish.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Language_Label_Finnish.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Language_Label_Finnish.Location = new System.Drawing.Point(5, 71);
-            this.Language_Label_Finnish.Name = "Language_Label_Finnish";
-            this.Language_Label_Finnish.Size = new System.Drawing.Size(81, 23);
-            this.Language_Label_Finnish.TabIndex = 2;
-            this.Language_Label_Finnish.Text = "Finnish";
-            this.Language_Label_Finnish.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Language_Label_Finnish.Click += new System.EventHandler(this.Language_Label_Click);
-            this.Language_Label_Finnish.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
-            this.Language_Label_Finnish.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
-            // 
-            // Language_Label_Swedish
-            // 
-            this.Language_Label_Swedish.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Language_Label_Swedish.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Language_Label_Swedish.Location = new System.Drawing.Point(5, 41);
-            this.Language_Label_Swedish.Name = "Language_Label_Swedish";
-            this.Language_Label_Swedish.Size = new System.Drawing.Size(81, 23);
-            this.Language_Label_Swedish.TabIndex = 1;
-            this.Language_Label_Swedish.Text = "Swedish";
-            this.Language_Label_Swedish.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Language_Label_Swedish.Click += new System.EventHandler(this.Language_Label_Click);
-            this.Language_Label_Swedish.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
-            this.Language_Label_Swedish.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
-            // 
-            // Language_Label_English
-            // 
-            this.Language_Label_English.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Language_Label_English.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Language_Label_English.Location = new System.Drawing.Point(5, 11);
-            this.Language_Label_English.Name = "Language_Label_English";
-            this.Language_Label_English.Size = new System.Drawing.Size(81, 23);
-            this.Language_Label_English.TabIndex = 0;
-            this.Language_Label_English.Text = "English";
-            this.Language_Label_English.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Language_Label_English.Click += new System.EventHandler(this.Language_Label_Click);
-            this.Language_Label_English.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
-            this.Language_Label_English.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
-            // 
             // Settings_Panel
             // 
             this.Settings_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(253)))), ((int)(((byte)(255)))));
             this.Settings_Panel.Controls.Add(this.Settings_Check_Minimized);
             this.Settings_Panel.Controls.Add(this.Settings_Check_Autorun);
             this.Settings_Panel.Controls.Add(this.Settings_Label_Language);
-            this.Settings_Panel.Location = new System.Drawing.Point(0, 25);
+            this.Settings_Panel.Controls.Add(this.Settings_Language_Panel);
+            this.Settings_Panel.Location = new System.Drawing.Point(1164, 39);
             this.Settings_Panel.Name = "Settings_Panel";
             this.Settings_Panel.Size = new System.Drawing.Size(140, 139);
             this.Settings_Panel.TabIndex = 23;
@@ -338,6 +288,60 @@
             this.Settings_Label_Language.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Settings_Label_Language.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
+            // Settings_Language_Panel
+            // 
+            this.Settings_Language_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(253)))), ((int)(((byte)(255)))));
+            this.Settings_Language_Panel.Controls.Add(this.Language_Label_Finnish);
+            this.Settings_Language_Panel.Controls.Add(this.Language_Label_Swedish);
+            this.Settings_Language_Panel.Controls.Add(this.Language_Label_English);
+            this.Settings_Language_Panel.Location = new System.Drawing.Point(144, 90);
+            this.Settings_Language_Panel.Name = "Settings_Language_Panel";
+            this.Settings_Language_Panel.Size = new System.Drawing.Size(94, 106);
+            this.Settings_Language_Panel.TabIndex = 24;
+            this.Settings_Language_Panel.Visible = false;
+            // 
+            // Language_Label_Finnish
+            // 
+            this.Language_Label_Finnish.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Language_Label_Finnish.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Language_Label_Finnish.Location = new System.Drawing.Point(5, 71);
+            this.Language_Label_Finnish.Name = "Language_Label_Finnish";
+            this.Language_Label_Finnish.Size = new System.Drawing.Size(81, 23);
+            this.Language_Label_Finnish.TabIndex = 2;
+            this.Language_Label_Finnish.Text = "Finnish";
+            this.Language_Label_Finnish.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Language_Label_Finnish.Click += new System.EventHandler(this.Language_Label_Click);
+            this.Language_Label_Finnish.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
+            this.Language_Label_Finnish.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
+            // 
+            // Language_Label_Swedish
+            // 
+            this.Language_Label_Swedish.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Language_Label_Swedish.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Language_Label_Swedish.Location = new System.Drawing.Point(5, 41);
+            this.Language_Label_Swedish.Name = "Language_Label_Swedish";
+            this.Language_Label_Swedish.Size = new System.Drawing.Size(81, 23);
+            this.Language_Label_Swedish.TabIndex = 1;
+            this.Language_Label_Swedish.Text = "Swedish";
+            this.Language_Label_Swedish.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Language_Label_Swedish.Click += new System.EventHandler(this.Language_Label_Click);
+            this.Language_Label_Swedish.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
+            this.Language_Label_Swedish.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
+            // 
+            // Language_Label_English
+            // 
+            this.Language_Label_English.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Language_Label_English.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Language_Label_English.Location = new System.Drawing.Point(5, 11);
+            this.Language_Label_English.Name = "Language_Label_English";
+            this.Language_Label_English.Size = new System.Drawing.Size(81, 23);
+            this.Language_Label_English.TabIndex = 0;
+            this.Language_Label_English.Text = "English";
+            this.Language_Label_English.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Language_Label_English.Click += new System.EventHandler(this.Language_Label_Click);
+            this.Language_Label_English.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
+            this.Language_Label_English.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
+            // 
             // About_Panel
             // 
             this.About_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(253)))), ((int)(((byte)(255)))));
@@ -346,7 +350,7 @@
             this.About_Panel.Controls.Add(this.About_Label_Authors);
             this.About_Panel.Controls.Add(this.About_Label_Version);
             this.About_Panel.Controls.Add(this.About_Label_Title);
-            this.About_Panel.Location = new System.Drawing.Point(75, 25);
+            this.About_Panel.Location = new System.Drawing.Point(1239, 39);
             this.About_Panel.Name = "About_Panel";
             this.About_Panel.Size = new System.Drawing.Size(308, 260);
             this.About_Panel.TabIndex = 25;
@@ -406,20 +410,20 @@
             // Panel_Selected_Log
             // 
             this.Panel_Selected_Log.BackColor = System.Drawing.Color.Transparent;
-            this.Panel_Selected_Log.Controls.Add(this.Dynamic_Automated);
             this.Panel_Selected_Log.Controls.Add(this.Dynamic_Mode);
-            this.Panel_Selected_Log.Controls.Add(this.Dynamic_Frequency);
+            this.Panel_Selected_Log.Controls.Add(this.Label_Mode);
+            this.Panel_Selected_Log.Controls.Add(this.Dynamic_Process_Specific2);
+            this.Panel_Selected_Log.Controls.Add(this.Label_Process_Specific2);
+            this.Panel_Selected_Log.Controls.Add(this.Dynamic_Process_Specific1);
+            this.Panel_Selected_Log.Controls.Add(this.Label_Process_Specific1);
+            this.Panel_Selected_Log.Controls.Add(this.Dynamic_Automated);
+            this.Panel_Selected_Log.Controls.Add(this.Dynamic_Process);
             this.Panel_Selected_Log.Controls.Add(this.Dynamic_Destination);
             this.Panel_Selected_Log.Controls.Add(this.Dynamic_Source);
-            this.Panel_Selected_Log.Controls.Add(this.Dynamic_LastBackup);
-            this.Panel_Selected_Log.Controls.Add(this.Dynamic_NextBackup);
             this.Panel_Selected_Log.Controls.Add(this.Label_Automated);
-            this.Panel_Selected_Log.Controls.Add(this.Label_Mode);
-            this.Panel_Selected_Log.Controls.Add(this.Label_Frequency2);
-            this.Panel_Selected_Log.Controls.Add(this.Label_Destination2);
-            this.Panel_Selected_Log.Controls.Add(this.Label_Source2);
-            this.Panel_Selected_Log.Controls.Add(this.Label_LastBackup);
-            this.Panel_Selected_Log.Controls.Add(this.Label_NextBackup);
+            this.Panel_Selected_Log.Controls.Add(this.Label_Process);
+            this.Panel_Selected_Log.Controls.Add(this.Label_Destination);
+            this.Panel_Selected_Log.Controls.Add(this.Label_Source);
             this.Panel_Selected_Log.Controls.Add(this.List_Log);
             this.Panel_Selected_Log.Controls.Add(this.Label_HeaderLog);
             this.Panel_Selected_Log.Controls.Add(this.Label_HeaderSelected);
@@ -427,6 +431,75 @@
             this.Panel_Selected_Log.Name = "Panel_Selected_Log";
             this.Panel_Selected_Log.Size = new System.Drawing.Size(436, 664);
             this.Panel_Selected_Log.TabIndex = 26;
+            // 
+            // Dynamic_Mode
+            // 
+            this.Dynamic_Mode.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Dynamic_Mode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Dynamic_Mode.Location = new System.Drawing.Point(224, 153);
+            this.Dynamic_Mode.Name = "Dynamic_Mode";
+            this.Dynamic_Mode.Size = new System.Drawing.Size(209, 17);
+            this.Dynamic_Mode.TabIndex = 22;
+            this.Dynamic_Mode.Text = "dyn mode";
+            this.Dynamic_Mode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Label_Mode
+            // 
+            this.Label_Mode.AutoSize = true;
+            this.Label_Mode.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Mode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Label_Mode.Location = new System.Drawing.Point(26, 153);
+            this.Label_Mode.Name = "Label_Mode";
+            this.Label_Mode.Size = new System.Drawing.Size(41, 17);
+            this.Label_Mode.TabIndex = 21;
+            this.Label_Mode.Text = "Mode";
+            this.Label_Mode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Dynamic_Process_Specific2
+            // 
+            this.Dynamic_Process_Specific2.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Dynamic_Process_Specific2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Dynamic_Process_Specific2.Location = new System.Drawing.Point(224, 253);
+            this.Dynamic_Process_Specific2.Name = "Dynamic_Process_Specific2";
+            this.Dynamic_Process_Specific2.Size = new System.Drawing.Size(209, 17);
+            this.Dynamic_Process_Specific2.TabIndex = 20;
+            this.Dynamic_Process_Specific2.Text = "dyn process";
+            this.Dynamic_Process_Specific2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Label_Process_Specific2
+            // 
+            this.Label_Process_Specific2.AutoSize = true;
+            this.Label_Process_Specific2.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Process_Specific2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Label_Process_Specific2.Location = new System.Drawing.Point(26, 253);
+            this.Label_Process_Specific2.Name = "Label_Process_Specific2";
+            this.Label_Process_Specific2.Size = new System.Drawing.Size(54, 17);
+            this.Label_Process_Specific2.TabIndex = 19;
+            this.Label_Process_Specific2.Text = "Process:";
+            this.Label_Process_Specific2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Dynamic_Process_Specific1
+            // 
+            this.Dynamic_Process_Specific1.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Dynamic_Process_Specific1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Dynamic_Process_Specific1.Location = new System.Drawing.Point(224, 223);
+            this.Dynamic_Process_Specific1.Name = "Dynamic_Process_Specific1";
+            this.Dynamic_Process_Specific1.Size = new System.Drawing.Size(209, 17);
+            this.Dynamic_Process_Specific1.TabIndex = 18;
+            this.Dynamic_Process_Specific1.Text = "dyn process";
+            this.Dynamic_Process_Specific1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Label_Process_Specific1
+            // 
+            this.Label_Process_Specific1.AutoSize = true;
+            this.Label_Process_Specific1.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Process_Specific1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Label_Process_Specific1.Location = new System.Drawing.Point(26, 223);
+            this.Label_Process_Specific1.Name = "Label_Process_Specific1";
+            this.Label_Process_Specific1.Size = new System.Drawing.Size(54, 17);
+            this.Label_Process_Specific1.TabIndex = 17;
+            this.Label_Process_Specific1.Text = "Process:";
+            this.Label_Process_Specific1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Dynamic_Automated
             // 
@@ -436,36 +509,25 @@
             this.Dynamic_Automated.Name = "Dynamic_Automated";
             this.Dynamic_Automated.Size = new System.Drawing.Size(209, 17);
             this.Dynamic_Automated.TabIndex = 16;
-            this.Dynamic_Automated.Text = "dyn paused";
+            this.Dynamic_Automated.Text = "dyn automated";
             this.Dynamic_Automated.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Dynamic_Mode
+            // Dynamic_Process
             // 
-            this.Dynamic_Mode.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Dynamic_Mode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Dynamic_Mode.Location = new System.Drawing.Point(224, 253);
-            this.Dynamic_Mode.Name = "Dynamic_Mode";
-            this.Dynamic_Mode.Size = new System.Drawing.Size(209, 17);
-            this.Dynamic_Mode.TabIndex = 15;
-            this.Dynamic_Mode.Text = "dyn mode";
-            this.Dynamic_Mode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Dynamic_Frequency
-            // 
-            this.Dynamic_Frequency.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Dynamic_Frequency.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Dynamic_Frequency.Location = new System.Drawing.Point(224, 223);
-            this.Dynamic_Frequency.Name = "Dynamic_Frequency";
-            this.Dynamic_Frequency.Size = new System.Drawing.Size(209, 17);
-            this.Dynamic_Frequency.TabIndex = 14;
-            this.Dynamic_Frequency.Text = "dyn freq";
-            this.Dynamic_Frequency.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Dynamic_Process.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Dynamic_Process.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Dynamic_Process.Location = new System.Drawing.Point(224, 193);
+            this.Dynamic_Process.Name = "Dynamic_Process";
+            this.Dynamic_Process.Size = new System.Drawing.Size(209, 17);
+            this.Dynamic_Process.TabIndex = 15;
+            this.Dynamic_Process.Text = "dyn process";
+            this.Dynamic_Process.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Dynamic_Destination
             // 
             this.Dynamic_Destination.Font = new System.Drawing.Font("Calibri", 10F);
             this.Dynamic_Destination.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Dynamic_Destination.Location = new System.Drawing.Point(224, 183);
+            this.Dynamic_Destination.Location = new System.Drawing.Point(224, 113);
             this.Dynamic_Destination.Name = "Dynamic_Destination";
             this.Dynamic_Destination.Size = new System.Drawing.Size(209, 17);
             this.Dynamic_Destination.TabIndex = 13;
@@ -476,34 +538,12 @@
             // 
             this.Dynamic_Source.Font = new System.Drawing.Font("Calibri", 10F);
             this.Dynamic_Source.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Dynamic_Source.Location = new System.Drawing.Point(224, 153);
+            this.Dynamic_Source.Location = new System.Drawing.Point(224, 83);
             this.Dynamic_Source.Name = "Dynamic_Source";
             this.Dynamic_Source.Size = new System.Drawing.Size(209, 17);
             this.Dynamic_Source.TabIndex = 12;
             this.Dynamic_Source.Text = "dyn source";
             this.Dynamic_Source.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Dynamic_LastBackup
-            // 
-            this.Dynamic_LastBackup.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Dynamic_LastBackup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Dynamic_LastBackup.Location = new System.Drawing.Point(224, 113);
-            this.Dynamic_LastBackup.Name = "Dynamic_LastBackup";
-            this.Dynamic_LastBackup.Size = new System.Drawing.Size(209, 17);
-            this.Dynamic_LastBackup.TabIndex = 11;
-            this.Dynamic_LastBackup.Text = "dyn last";
-            this.Dynamic_LastBackup.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Dynamic_NextBackup
-            // 
-            this.Dynamic_NextBackup.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Dynamic_NextBackup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Dynamic_NextBackup.Location = new System.Drawing.Point(224, 83);
-            this.Dynamic_NextBackup.Name = "Dynamic_NextBackup";
-            this.Dynamic_NextBackup.Size = new System.Drawing.Size(209, 17);
-            this.Dynamic_NextBackup.TabIndex = 10;
-            this.Dynamic_NextBackup.Text = "dyn next";
-            this.Dynamic_NextBackup.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label_Automated
             // 
@@ -512,89 +552,53 @@
             this.Label_Automated.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Label_Automated.Location = new System.Drawing.Point(26, 283);
             this.Label_Automated.Name = "Label_Automated";
-            this.Label_Automated.Size = new System.Drawing.Size(48, 17);
+            this.Label_Automated.Size = new System.Drawing.Size(72, 17);
             this.Label_Automated.TabIndex = 9;
-            this.Label_Automated.Text = "Paused";
+            this.Label_Automated.Text = "Automated";
             this.Label_Automated.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Label_Mode
+            // Label_Process
             // 
-            this.Label_Mode.AutoSize = true;
-            this.Label_Mode.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Label_Mode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Label_Mode.Location = new System.Drawing.Point(26, 253);
-            this.Label_Mode.Name = "Label_Mode";
-            this.Label_Mode.Size = new System.Drawing.Size(45, 17);
-            this.Label_Mode.TabIndex = 8;
-            this.Label_Mode.Text = "Mode:";
-            this.Label_Mode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Process.AutoSize = true;
+            this.Label_Process.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Process.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Label_Process.Location = new System.Drawing.Point(26, 193);
+            this.Label_Process.Name = "Label_Process";
+            this.Label_Process.Size = new System.Drawing.Size(54, 17);
+            this.Label_Process.TabIndex = 8;
+            this.Label_Process.Text = "Process:";
+            this.Label_Process.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Label_Frequency2
+            // Label_Destination
             // 
-            this.Label_Frequency2.AutoSize = true;
-            this.Label_Frequency2.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Label_Frequency2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Label_Frequency2.Location = new System.Drawing.Point(26, 223);
-            this.Label_Frequency2.Name = "Label_Frequency2";
-            this.Label_Frequency2.Size = new System.Drawing.Size(70, 17);
-            this.Label_Frequency2.TabIndex = 7;
-            this.Label_Frequency2.Text = "Frequency:";
-            this.Label_Frequency2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Destination.AutoSize = true;
+            this.Label_Destination.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Destination.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Label_Destination.Location = new System.Drawing.Point(26, 113);
+            this.Label_Destination.Name = "Label_Destination";
+            this.Label_Destination.Size = new System.Drawing.Size(77, 17);
+            this.Label_Destination.TabIndex = 6;
+            this.Label_Destination.Text = "Destination:";
+            this.Label_Destination.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Label_Destination2
+            // Label_Source
             // 
-            this.Label_Destination2.AutoSize = true;
-            this.Label_Destination2.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Label_Destination2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Label_Destination2.Location = new System.Drawing.Point(26, 183);
-            this.Label_Destination2.Name = "Label_Destination2";
-            this.Label_Destination2.Size = new System.Drawing.Size(77, 17);
-            this.Label_Destination2.TabIndex = 6;
-            this.Label_Destination2.Text = "Destination:";
-            this.Label_Destination2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Label_Source2
-            // 
-            this.Label_Source2.AutoSize = true;
-            this.Label_Source2.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Label_Source2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Label_Source2.Location = new System.Drawing.Point(26, 153);
-            this.Label_Source2.Name = "Label_Source2";
-            this.Label_Source2.Size = new System.Drawing.Size(50, 17);
-            this.Label_Source2.TabIndex = 5;
-            this.Label_Source2.Text = "Source:";
-            this.Label_Source2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Label_LastBackup
-            // 
-            this.Label_LastBackup.AutoSize = true;
-            this.Label_LastBackup.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Label_LastBackup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Label_LastBackup.Location = new System.Drawing.Point(26, 113);
-            this.Label_LastBackup.Name = "Label_LastBackup";
-            this.Label_LastBackup.Size = new System.Drawing.Size(79, 17);
-            this.Label_LastBackup.TabIndex = 4;
-            this.Label_LastBackup.Text = "Last Backup:";
-            this.Label_LastBackup.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Label_NextBackup
-            // 
-            this.Label_NextBackup.AutoSize = true;
-            this.Label_NextBackup.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Label_NextBackup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Label_NextBackup.Location = new System.Drawing.Point(26, 83);
-            this.Label_NextBackup.Name = "Label_NextBackup";
-            this.Label_NextBackup.Size = new System.Drawing.Size(143, 17);
-            this.Label_NextBackup.TabIndex = 3;
-            this.Label_NextBackup.Text = "Next Scheduled Backup:";
-            this.Label_NextBackup.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Source.AutoSize = true;
+            this.Label_Source.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Source.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Label_Source.Location = new System.Drawing.Point(26, 83);
+            this.Label_Source.Name = "Label_Source";
+            this.Label_Source.Size = new System.Drawing.Size(50, 17);
+            this.Label_Source.TabIndex = 5;
+            this.Label_Source.Text = "Source:";
+            this.Label_Source.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // List_Log
             // 
             this.List_Log.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.List_Log.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.List_Log.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.List_Log.Location = new System.Drawing.Point(17, 404);
+            this.List_Log.Location = new System.Drawing.Point(23, 404);
             this.List_Log.Name = "List_Log";
             this.List_Log.Size = new System.Drawing.Size(416, 243);
             this.List_Log.TabIndex = 2;
@@ -626,7 +630,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1164, 701);
+            this.ClientSize = new System.Drawing.Size(1574, 701);
             this.Controls.Add(this.Label_Toggle);
             this.Controls.Add(this.Button_New);
             this.Controls.Add(this.Button_Edit);
@@ -637,7 +641,6 @@
             this.Controls.Add(this.Button_Delete);
             this.Controls.Add(this.List_Backup);
             this.Controls.Add(this.Button_Perform);
-            this.Controls.Add(this.Settings_Language_Panel);
             this.Controls.Add(this.Settings_Panel);
             this.Controls.Add(this.About_Panel);
             this.Controls.Add(this.Panel_Selected_Log);
@@ -647,8 +650,8 @@
             this.Text = "Darcy Backup";
             this.ResizeEnd += new System.EventHandler(this.Form_Darcy_ResizeEnd);
             this.Resize += new System.EventHandler(this.Form_Darcy_Resize);
-            this.Settings_Language_Panel.ResumeLayout(false);
             this.Settings_Panel.ResumeLayout(false);
+            this.Settings_Language_Panel.ResumeLayout(false);
             this.About_Panel.ResumeLayout(false);
             this.About_Panel.PerformLayout();
             this.Panel_Selected_Log.ResumeLayout(false);
@@ -689,20 +692,20 @@
         private System.Windows.Forms.Label Label_HeaderSelected;
         private System.Windows.Forms.ListView List_Log;
         private System.Windows.Forms.Label Label_HeaderLog;
-        private System.Windows.Forms.Label Label_NextBackup;
         private System.Windows.Forms.Label Label_Automated;
-        private System.Windows.Forms.Label Label_Mode;
-        private System.Windows.Forms.Label Label_Frequency2;
-        private System.Windows.Forms.Label Label_Destination2;
-        private System.Windows.Forms.Label Label_Source2;
-        private System.Windows.Forms.Label Label_LastBackup;
+        private System.Windows.Forms.Label Label_Process;
         private System.Windows.Forms.Label Dynamic_Automated;
+        private System.Windows.Forms.Label Dynamic_Process;
+        private System.Windows.Forms.Label Dynamic_Process_Specific1;
+        private System.Windows.Forms.Label Label_Process_Specific1;
+        private System.Windows.Forms.Label Dynamic_Process_Specific2;
+        private System.Windows.Forms.Label Label_Process_Specific2;
         private System.Windows.Forms.Label Dynamic_Mode;
-        private System.Windows.Forms.Label Dynamic_Frequency;
+        private System.Windows.Forms.Label Label_Mode;
         private System.Windows.Forms.Label Dynamic_Destination;
         private System.Windows.Forms.Label Dynamic_Source;
-        private System.Windows.Forms.Label Dynamic_LastBackup;
-        private System.Windows.Forms.Label Dynamic_NextBackup;
+        private System.Windows.Forms.Label Label_Destination;
+        private System.Windows.Forms.Label Label_Source;
     }
 }
 

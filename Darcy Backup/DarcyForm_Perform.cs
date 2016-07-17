@@ -11,6 +11,19 @@ namespace Darcy_Backup
 {
     public partial class Form_Darcy_Panel
     {
+
+        private string[] AddToStringArray(string[] array, string[] addArray)
+        {
+            string[] newArray = new string[array.Length + addArray.Length];
+
+            for (int i = 0; i < array.Length; i++)
+                newArray[i] = array[i];
+
+            for (int i = 0; i < addArray.Length; i++)
+                newArray[array.Length + i] = addArray[i];
+
+            return newArray;
+        }
         
         private bool Different(string path1, string path2)
         {
@@ -64,13 +77,13 @@ namespace Darcy_Backup
         {
 
             Entries[entry].LastPerformed = "In Progress";
+            bool success = false;
 
             Save();
 
-            RemoveFromList(entry);
-            AddToList(Entries[entry], entry);
-
-            bool differential = true; //Entries[entry].differential;
+            int selectedIndex = GetSelectedListIndex(List_Backup);
+            if (RemoveFromList(Entries[entry], entry) == true)
+                AddToList(Entries[entry], entry, selectedIndex);
 
             string source = Entries[entry].Source;
             bool file = false;
@@ -98,26 +111,16 @@ namespace Darcy_Backup
                     return;
                 }
             }
-
-            /*
-            *
-            *MODES
-            *
-            */
-            //ONLY CHANGED FILES = 1
-            //NEW COPY = 2
-            //REPLACE = 3
-
-            int mode = 1;
-
+            
+            string mode = ModeToString(Entries[entry].Mode);
 
             if (file)
             {
                 string[] strArray = source.Split('\\');
                 string filename = strArray[strArray.Length - 1];
-                string destination = Entries[entry].Destination; //+ filename;
+                string destination = Entries[entry].Destination; 
                 
-                if (mode == 1)
+                if (mode == "Changed Files")
                 {
                     bool different = Different(source, destination);
                     if (different)
@@ -134,7 +137,7 @@ namespace Darcy_Backup
                         
                     }
                 }
-                else if (mode == 2)
+                else if (mode == "New Copies")
                 {
                     try
                     {
@@ -159,7 +162,7 @@ namespace Darcy_Backup
                     }
 
                 }
-                else
+                else if (mode == "Replace files")
                 {
                     try
                     {
@@ -174,71 +177,79 @@ namespace Darcy_Backup
             }
             else if (directory)
             {
+                string[] folders = new string[1];
+                folders[0] = source;
+
+                string[] subFolders = System.IO.Directory.GetDirectories(source, "*", System.IO.SearchOption.AllDirectories);
+
+                folders = AddToStringArray(folders, subFolders);
                 
                 string[] files = System.IO.Directory.GetFiles(source);
                 string destination = Entries[entry].Destination;
 
-                if (mode == 1)
+                if (mode == "Changed Files")
                 {
-                    foreach (string s in files)
-                    {
-                        string fileName = System.IO.Path.GetFileName(s);
-                        string destFile = System.IO.Path.Combine(destination, fileName);
+                    string[] split = destination.Split('\\');
+                    if (split[split.Length - 1] == "")
+                        destination = destination.Remove(destination.Length - 1, 1);
 
-                        if (Different(source + "\\" + fileName, destFile))
+                    for (int i = 0; i < folders.Length; i++)
+                    {
+                        string destAdd = folders[i].Remove(0, folders[0].Length);
+                        if (System.IO.Directory.Exists(Entries[entry].Destination + destAdd) == false)
+                            System.IO.Directory.CreateDirectory(Entries[entry].Destination + destAdd);
+
+                        files = System.IO.Directory.GetFiles(folders[i]);
+
+                        foreach (string s in files)
                         {
-                            try
+                            string fileName = System.IO.Path.GetFileName(s);
+                            string destFile = System.IO.Path.Combine(destination + destAdd + "\\", fileName);
+
+                            if (Different(source + destAdd + "\\" + fileName, destFile))
                             {
-                                System.IO.File.Copy(s, destFile, true);
-                            }
-                            catch (IOException error)
-                            {
-                                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                                throw;
+                                try
+                                {
+                                    System.IO.File.Copy(s, destFile, true);
+                                }
+                                catch (IOException error)
+                                {
+                                    MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                                    throw;
+                                }
                             }
                         }
                     }
                 }
-                else if (mode == 2)
+                else if (mode == "New Copies")
                 {
-                    foreach (string s in files)
-                    {
-                        string fileName = System.IO.Path.GetFileName(s);
-                        string destFile = System.IO.Path.Combine(destination, fileName);
+                    string[] split = destination.Split('\\');
+                    if (split[split.Length - 1] == "")
+                        destination = destination.Remove(destination.Length - 1, 1);
 
-                        if (Different(source + "\\" + fileName, destFile))
-                        {
-                            try
-                            {
-                                String timestring = DateTime.Now.ToString(" yyyyMMddHHmmss");
-                                System.IO.Directory.CreateDirectory(Entries[entry].Destination);
-                            }
-                            catch (IOException error)
-                            {
-                                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                                throw;
-                            }
-                        }
-                    }
+                    destination += DateTime.Now.ToString(" (yyyy-MM-dd HH.mm)");
+                    System.IO.Directory.CreateDirectory(destination);
+
+                    foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
+                        Directory.CreateDirectory(dirPath.Replace(source, destination));
+
+                    foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
+                        File.Copy(newPath, newPath.Replace(source, destination), true);
                 }
-                else
+                else if (mode == "Replace Files")
                 {
-                    foreach (string s in files)
-                    {
-                        string fileName = System.IO.Path.GetFileName(s);
-                        string destFile = System.IO.Path.Combine(destination, fileName);
-                        try
-                        {
-                            System.IO.File.Copy(s, destFile, true);
-                        }
-                        catch (IOException error)
-                        {
-                            MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                            throw;
-                        }
-                    }
+                    if (System.IO.Directory.Exists(Entries[entry].Destination) == false)
+                        System.IO.Directory.CreateDirectory(Entries[entry].Destination);
+
+                    foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
+                        Directory.CreateDirectory(dirPath.Replace(source, destination));
+
+                    foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
+                        File.Copy(newPath, newPath.Replace(source, destination), true);
                 }
             }
+
+            AddToLog(entry, success);
         }
     }
 }

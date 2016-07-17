@@ -71,6 +71,9 @@
     <Compile Include="Custom Controls\DarcySelectedLogPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FolderBrowserDialogEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Form_New_Entry.cs">
       <SubType>Form</SubType>
     </Compile>

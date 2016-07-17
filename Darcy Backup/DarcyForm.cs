@@ -52,20 +52,56 @@ namespace Darcy_Backup
             Entries = newEntries;
         }
 
+        delegate int GetSelectedListIndexCallback(ListView lv);
+        private int GetSelectedListIndex(ListView lv)
+        {
+            if (List_Backup.InvokeRequired == true)
+            {
+                GetSelectedListIndexCallback d = new GetSelectedListIndexCallback(GetSelectedListIndex);
+                return (int)this.Invoke(d, new object[] { lv });
+            }
+            else
+            {
+                if (lv != null)
+                    if (lv.SelectedItems.Count > 0)
+                        return lv.SelectedItems[0].Index;
+                return -1;
+            }
+        }
         
-        
-        delegate void RemoveFromListCallback(int index); //for thread-safe interface actions
-        private void RemoveFromList(int index)
+        delegate bool RemoveFromListCallback(EntryClass entry, int index); //for thread-safe interface actions
+        private bool RemoveFromList(EntryClass entry, int index)
         {
             if (List_Backup.InvokeRequired == true)
             {
                 RemoveFromListCallback d = new RemoveFromListCallback(RemoveFromList);
-                this.Invoke(d, new object[] { index });
+                return (bool)this.Invoke(d, new object[] { entry, index });
             }
             else
+            {
+                if (entry != null)
+                {
+                    var items = List_Backup.Items;
+                    var item = List_Backup.Items[index];
+                    var subitems = item.SubItems;
+                    string[] inList = new string[List_Backup.Items[index].SubItems.Count];
+
+                    for (int i = 0; i < inList.Length; i++)
+                        inList[i] = List_Backup.Items[index].SubItems[i].Text;
+
+                    if (inList[1] == entry.Source && inList[2] == entry.Destination && inList[3] == ModeToString(entry.Mode)
+                        && inList[4] == ProcessToString(entry.Process) && inList[5] == entry.LastPerformed
+                        && inList[6] == entry.NextScheduled && inList[7] == AutomatedToString(entry.Automated))
+                        return false;
+                }
+
+
+
                 List_Backup.Items.RemoveAt(index);
+                return true;
+            }
         }
-        private string ModeToString(int mode)
+        public string ModeToString(int mode)
         {
             if (mode == 0)
                 return "Changed Files";
@@ -76,7 +112,7 @@ namespace Darcy_Backup
             else
                 return "Error: Unknown Mode";
         }
-        private string ProcessToString(int process)
+        public string ProcessToString(int process)
         {
             if (process == 0)
                 return "Scheduled";
@@ -93,8 +129,137 @@ namespace Darcy_Backup
                 return "Yes";
             return "No";
         }
-        delegate void AddToListCallback(EntryClass entry, int index); //for thread-safe interface actions
-        private void AddToList(EntryClass entry, int index)
+        private string GetDaysString(EntryClass entry)
+        {
+            string days = "";
+            for (int i = 0; i < entry.Days.Length; i++)
+                if (entry.Days[i] == true)
+                    days += (i + 1) + ", ";
+
+            if (days.Length != 0)
+                days = days.Remove(days.Length - 2, 2);
+
+            return days;
+        }
+
+        private void Update_SelectedEntry()
+        {
+            if (Entries.Length == 0)
+            {
+                Label_HeaderSelected.Text = "No Entries";
+
+                Dynamic_Source.Visible = false;
+                Dynamic_Destination.Visible = false;
+                Dynamic_Mode.Visible = false;
+                Dynamic_Process.Visible = false;
+                Dynamic_Automated.Visible = false;
+                Label_Process_Specific1.Visible = false;
+                Label_Process_Specific2.Visible = false;
+                Dynamic_Process_Specific1.Visible = false;
+                Dynamic_Process_Specific2.Visible = false;
+
+                return;
+            }
+
+            int i = _currentListSel;
+
+            Dynamic_Source.Visible = true;
+            Dynamic_Destination.Visible = true;
+            Dynamic_Mode.Visible = true;
+            Dynamic_Process.Visible = true;
+            Dynamic_Automated.Visible = true;
+
+            Label_HeaderSelected.Text = "Entry " + Entries[i].Entry;
+
+            Dynamic_Source.Text = Entries[i].Source;
+            Dynamic_Destination.Text = Entries[i].Destination;
+
+            Dynamic_Mode.Text = ModeToString(Entries[i].Mode);
+
+            string process = ProcessToString(Entries[i].Process);
+            Dynamic_Process.Text = process;
+
+            if (Entries[i].Automated == true)
+                Dynamic_Automated.Text = "Yes";
+            else
+                Dynamic_Automated.Text = "No";
+            
+            if (process == "Scheduled")
+            {
+                Label_Process_Specific1.Text = "Days:";
+                Label_Process_Specific1.Visible = true;
+                Label_Process_Specific2.Text = "Time Of Day:";
+                Label_Process_Specific2.Visible = true;
+
+                Dynamic_Process_Specific1.Text = GetDaysString(Entries[i]);
+                Dynamic_Process_Specific1.Visible = true;
+                Dynamic_Process_Specific2.Text = Entries[i].TimeOfDay;
+                Dynamic_Process_Specific2.Visible = true;
+            }
+            else if (process == "Timer")
+            {
+                Label_Process_Specific1.Text = "Timer (minutes):";
+                Label_Process_Specific1.Visible = true;
+                Label_Process_Specific2.Text = "n/a";
+                Label_Process_Specific2.Visible = false;
+
+                Dynamic_Process_Specific1.Text = Entries[i].Timer.ToString();
+                Dynamic_Process_Specific1.Visible = true;
+                Dynamic_Process_Specific2.Text = "n/a";
+                Dynamic_Process_Specific2.Visible = false;
+            }
+            else if (process == "Manual")
+            {
+                Label_Process_Specific1.Text = "n/a";
+                Label_Process_Specific1.Visible = false;
+                Label_Process_Specific2.Text = "n/a";
+                Label_Process_Specific2.Visible = false;
+
+                Dynamic_Process_Specific1.Text = "n/a";
+                Dynamic_Process_Specific1.Visible = false;
+                Dynamic_Process_Specific2.Text = "n/a";
+                Dynamic_Process_Specific2.Visible = false;
+            }
+        }
+
+        private void List_Backup_Selection_Changed(object sender, EventArgs e)
+        {
+            if (List_Backup.SelectedItems.Count == 0)
+                return;
+
+            _currentListSel = List_Backup.SelectedItems[0].Index;
+            Update_SelectedEntry();
+        }
+
+
+        delegate void AddToLogCallback(int entry, bool success);
+        private void AddToLog(int entry, bool success)
+        {
+            string[] strArr = new string[3];
+            ListViewItem item;
+            strArr[0] = "Entry " + entry;
+            //if (success == true)
+            //strArr[1] = "Success";
+            //else
+            //strArr[1] = "Error";
+            strArr[1] = "Backup";
+            strArr[2] = GetTimeString(DateTime.Now);
+            item = new ListViewItem(strArr);
+
+            if (List_Log.InvokeRequired == true)
+            {
+                AddToLogCallback d = new AddToLogCallback(AddToLog);
+                this.Invoke(d, new object[] { entry, success });
+            }
+            else
+            {
+                List_Log.Items.Insert(List_Log.Items.Count, item);
+            }
+        }
+
+
+        delegate void AddToListCallback(EntryClass entry, int index, int selection); //for thread-safe interface actions
+        private void AddToList(EntryClass entry, int index, int selection)
         {
             
             string[] strArr = new string[8];
@@ -115,26 +280,35 @@ namespace Darcy_Backup
             if (List_Backup.InvokeRequired == true)
             {
                 AddToListCallback d = new AddToListCallback(AddToList);
-                this.Invoke(d, new object[] { entry, index });
+                this.Invoke(d, new object[] { entry, index, selection });
             }
             else
+            {
                 List_Backup.Items.Insert(index, item);
+                if (selection != -1)
+                {
+                    List_Backup.Items[selection].Selected = true;
+                    return;
+                }
+                if (List_Backup.Items.Count == 1)
+                    List_Backup.Items[0].Selected = true;
+            }
         }
         private void Save()
         {
 
-            File.Delete(fullPath);
+            File.Delete(_fullPath);
 
-            FileStream fs = File.Create(fullPath);
+            FileStream fs = File.Create(_fullPath);
             fs.Close();
             //File.Encrypt(fullPath); //replace this with a program specific encryption
 
-            if (File.Exists(fullPath) == false)
+            if (File.Exists(_fullPath) == false)
                 Application.Exit();
 
 
             using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(fullPath, true))
+                new System.IO.StreamWriter(_fullPath, true))
             {
                 for (int i = 0; i < Entries.Length; i++)
                 {
@@ -187,12 +361,6 @@ namespace Darcy_Backup
         }
         private string GetNextSchedulePerform(EntryClass entry)
         {
-            bool[] entryDays = new bool[31];
-            entryDays[0] = true;
-            entryDays[15] = true;
-
-            entry.Days = entryDays;
-
             DateTime lastPerformed = GetDateTimeFromString(entry.LastPerformed);
 
             string nextPerformString = "";
@@ -307,11 +475,30 @@ namespace Darcy_Backup
         }
         public void CheckAction()
         {
+            if (_editNewOngoing == true)
+                return;
             for (int i = 0; i < Entries.Length; i++)
             {
                 string process = ProcessToString(Entries[i].Process);
                 if (process == "Manual")
+                {
+                    if (Entries[i].LastPerformed == "In Queue" || Entries[i].LastPerformed == "In Progress")
+                    {
+                        Entries[i].Ongoing = true;
+                        Perform(i);
+                        string str = GetTimeString(DateTime.Now);
+                        Entries[i].LastPerformed = str;
+                        Entries[i].Ongoing = false;
+                    }
+
+                    Entries[i].NextScheduled = "Manual Mode";
+                    Save();
+
+                    int selectedIndex = GetSelectedListIndex(List_Backup);
+                    if (RemoveFromList(Entries[i], i) == true)
+                        AddToList(Entries[i], i, selectedIndex);
                     continue;
+                }
 
                 string lp = Entries[i].LastPerformed;
                 if (process == "Scheduled" || process == "Timer")
@@ -325,8 +512,9 @@ namespace Darcy_Backup
                         Entries[i].NextScheduled = "Manual Mode";
                         Save();
 
-                        RemoveFromList(i);
-                        AddToList(Entries[i], i);
+                        int selectedIndex = GetSelectedListIndex(List_Backup);
+                        if (RemoveFromList(Entries[i], i) == true)
+                            AddToList(Entries[i], i, selectedIndex);
                         continue;
                     }
                 }
@@ -334,48 +522,56 @@ namespace Darcy_Backup
                 if (process == "Scheduled")
                 {
                     DateTime now = DateTime.Now;
-                    DateTime lastPerformed = GetDateTimeFromString(Entries[i].LastPerformed);
 
-                    string nextPerform = GetNextSchedulePerform(Entries[i]);
-                    Entries[i].NextScheduled = nextPerform;
-                    Save();
-
-                    RemoveFromList(i);
-                    AddToList(Entries[i], i);
-
-                    int today = now.Day - 1;
-                    
-                    bool found = false;
-                    int lastScheduledDay = today;
-                    for (; lastScheduledDay >= 0; lastScheduledDay --)
+                    if (lp == "In Queue" || lp ==  "In Progress")
                     {
-                        if (Entries[i].Days[lastScheduledDay] == true)
-                        {
-                            found = true;
-                            break;
-                        }
+
                     }
-                    if (found == false)
+                    else
                     {
-                        lastScheduledDay = 30;
-                        for (; lastScheduledDay >= 0; lastScheduledDay --)
+                        DateTime lastPerformed = GetDateTimeFromString(Entries[i].LastPerformed);
+
+                        string nextPerform = GetNextSchedulePerform(Entries[i]);
+                        Entries[i].NextScheduled = nextPerform;
+                        Save();
+
+                        int selectedIndex = GetSelectedListIndex(List_Backup);
+                        if (RemoveFromList(Entries[i], i) == true)
+                            AddToList(Entries[i], i, selectedIndex);
+
+                        int today = now.Day - 1;
+
+                        bool found = false;
+                        int lastScheduledDay = today;
+                        for (; lastScheduledDay >= 0; lastScheduledDay--)
                         {
                             if (Entries[i].Days[lastScheduledDay] == true)
                             {
+                                found = true;
                                 break;
                             }
                         }
-                    }
-                        
-                    if (lastPerformed.Day - 1 <= lastScheduledDay)
-                    {
-                        if (lastPerformed.Hour >= GetHourFromTimeOfDay(Entries[i].TimeOfDay))
+                        if (found == false)
                         {
-                            if (lastPerformed.Minute >= GetMinuteFromTimeOfDay(Entries[i].TimeOfDay))
-                                continue;
+                            lastScheduledDay = 30;
+                            for (; lastScheduledDay >= 0; lastScheduledDay--)
+                            {
+                                if (Entries[i].Days[lastScheduledDay] == true)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (lastPerformed.Day - 1 <= lastScheduledDay)
+                        {
+                            if (lastPerformed.Hour >= GetHourFromTimeOfDay(Entries[i].TimeOfDay))
+                            {
+                                if (lastPerformed.Minute >= GetMinuteFromTimeOfDay(Entries[i].TimeOfDay))
+                                    continue;
+                            }
                         }
                     }
-
                     if (Entries[i].Ongoing == false)
                     {
                         Entries[i].Ongoing = true;
@@ -384,14 +580,15 @@ namespace Darcy_Backup
                         Entries[i].LastPerformed = str;
                         Entries[i].Ongoing = false;
 
-                        nextPerform = GetNextSchedulePerform(Entries[i]);
+                        string nextPerform = GetNextSchedulePerform(Entries[i]);
                             
                         Entries[i].NextScheduled = nextPerform;
 
                         Save();
 
-                        RemoveFromList(i);
-                        AddToList(Entries[i], i);
+                        int selectedIndex = GetSelectedListIndex(List_Backup);
+                        if (RemoveFromList(Entries[i], i) == true)
+                            AddToList(Entries[i], i, selectedIndex);
                     }
                 }
 
@@ -410,8 +607,9 @@ namespace Darcy_Backup
 
                             Save();
 
-                            RemoveFromList(i);
-                            AddToList(Entries[i], i);
+                            int selectedIndex = GetSelectedListIndex(List_Backup);
+                            if (RemoveFromList(Entries[i], i) == true)
+                                AddToList(Entries[i], i, selectedIndex);
                         }
 
                         if (perform == false)
@@ -432,8 +630,9 @@ namespace Darcy_Backup
 
                         Save();
 
-                        RemoveFromList(i);
-                        AddToList(Entries[i], i);
+                        int selectedIndex = GetSelectedListIndex(List_Backup);
+                        if (RemoveFromList(Entries[i], i) == true)
+                            AddToList(Entries[i], i, selectedIndex);
                     }
                 }
             }
@@ -609,26 +808,28 @@ namespace Darcy_Backup
             Entries[index].LastPerformed = "In Queue";
 
             Save();
-
-            RemoveFromList(index);
-            AddToList(Entries[index], index);
+            int selectedIndex = GetSelectedListIndex(List_Backup);
+            if (RemoveFromList(Entries[index], index) == true)
+                AddToList(Entries[index], index, selectedIndex);
         }
 
         public void SaveEditNew(EntryClass entry)
         {
-            if (EditNewOngoing == true)
+            if (_editNewOngoing == true)
             {
-                if (EditNewObj != null)
+                if (_editNewObj != null)
                 {
-                    EditNewObj.Close();
-                    EditNewObj = null;
-                    EditNewOngoing = false;
+                    _editNewObj.Close();
+                    _editNewObj = null;
+                    _editNewOngoing = false;
                     
                     //New
                     if (entry.Entry == Entries.Length + 1)
                     {
                         AddEntry(entry);
-                        AddToList(entry, -1);
+                        AddToList(entry, -1, -1);
+
+                        Save();
                     }
 
                     //Edit
@@ -639,6 +840,14 @@ namespace Darcy_Backup
                             if (Entries[i].Entry == entry.Entry)
                             {
                                 Entries[i] = entry;
+
+                                Save();
+
+                                int selection = GetSelectedListIndex(List_Backup);
+                                if (RemoveFromList(entry, i) == true)
+                                    AddToList(entry, i, selection);
+                                
+
                             }
                         }
                     }
@@ -648,21 +857,58 @@ namespace Darcy_Backup
 
         public void DiscardEditNew()
         {
-            if (EditNewOngoing == true)
+            if (_editNewOngoing == true)
             {
-                if (EditNewObj != null)
+                if (_editNewObj != null)
                 {
-                    EditNewObj.Close();
-                    EditNewObj = null;
-                    EditNewOngoing = false;
+                    _editNewObj.Close();
+                    _editNewObj = null;
+                    _editNewOngoing = false;
                 }
             }
         }
+
+        private void Button_Activate_Click(object sender, EventArgs e)
+        {
+            if (List_Backup.SelectedItems.Count == 0)
+                return;
+
+            int i = List_Backup.SelectedItems[0].Index;
+
+            if (ProcessToString(Entries[i].Process) == "Manual")
+                return;
+
+            if (Entries[i].Automated == true)
+                Entries[i].Automated = false;
+            else
+                Entries[i].Automated = true;
+
+            Save();
+
+            if (RemoveFromList(Entries[i], i) == true)
+                AddToList(Entries[i], i, i);
+            
+        }
+        public EntryClass GetEntry(int id)
+        {
+            return Entries[id];
+        }
         private void Button_New_Click(object sender, EventArgs e)
         {
-            EditNewObj = new Form_New_Entry(this, 0, Entries.Length + 1);
-            EditNewObj.Show();
-            EditNewOngoing = true;
+            _editNewObj = new Form_New_Entry(this, 0, Entries.Length + 1);
+            _editNewObj.Show();
+            _editNewOngoing = true;
+        }
+        private void Button_Edit_Click(object sender, EventArgs e)
+        {
+            if (List_Backup.SelectedItems.Count == 0)
+                return;
+
+            int i = List_Backup.SelectedItems[0].Index;
+
+            _editNewObj = new Form_New_Entry(this, 1, i);
+            _editNewObj.Show();
+            _editNewOngoing = true;
         }
     }
 }

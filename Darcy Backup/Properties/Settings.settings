@@ -23,14 +23,23 @@
     <Setting Name="List_Destination" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">175</Value>
     </Setting>
-    <Setting Name="List_Frequency" Type="System.Int32" Scope="User">
+    <Setting Name="List_Mode" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">90</Value>
     </Setting>
-    <Setting Name="List_Differential" Type="System.Int32" Scope="User">
+    <Setting Name="List_Process" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">90</Value>
     </Setting>
     <Setting Name="List_Performed" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">120</Value>
+    </Setting>
+    <Setting Name="FullScreenOnStartup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="List_Next" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">90</Value>
+    </Setting>
+    <Setting Name="List_Automated" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">90</Value>
     </Setting>
   </Settings>
 </SettingsFile>
