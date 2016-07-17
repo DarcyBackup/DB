@@ -320,6 +320,9 @@ namespace Darcy_Backup
                 Settings_Check_Minimized.Checked = true;
             }
 
+
+            Update_SelectedEntry();
+
         }
     }
 }

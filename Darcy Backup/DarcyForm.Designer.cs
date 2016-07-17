@@ -450,9 +450,9 @@
             this.Label_Mode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Label_Mode.Location = new System.Drawing.Point(26, 153);
             this.Label_Mode.Name = "Label_Mode";
-            this.Label_Mode.Size = new System.Drawing.Size(41, 17);
+            this.Label_Mode.Size = new System.Drawing.Size(45, 17);
             this.Label_Mode.TabIndex = 21;
-            this.Label_Mode.Text = "Mode";
+            this.Label_Mode.Text = "Mode:";
             this.Label_Mode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Dynamic_Process_Specific2
@@ -552,9 +552,9 @@
             this.Label_Automated.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Label_Automated.Location = new System.Drawing.Point(26, 283);
             this.Label_Automated.Name = "Label_Automated";
-            this.Label_Automated.Size = new System.Drawing.Size(72, 17);
+            this.Label_Automated.Size = new System.Drawing.Size(76, 17);
             this.Label_Automated.TabIndex = 9;
-            this.Label_Automated.Text = "Automated";
+            this.Label_Automated.Text = "Automated:";
             this.Label_Automated.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label_Process

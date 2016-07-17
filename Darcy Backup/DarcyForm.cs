@@ -144,7 +144,7 @@ namespace Darcy_Backup
 
         private void Update_SelectedEntry()
         {
-            if (Entries.Length == 0)
+            if (Entries == null)
             {
                 Label_HeaderSelected.Text = "No Entries";
 
@@ -162,6 +162,8 @@ namespace Darcy_Backup
             }
 
             int i = _currentListSel;
+            if (i == -1)
+                i = 0;
 
             Dynamic_Source.Visible = true;
             Dynamic_Destination.Visible = true;
@@ -237,7 +239,7 @@ namespace Darcy_Backup
         {
             string[] strArr = new string[3];
             ListViewItem item;
-            strArr[0] = "Entry " + entry;
+            strArr[0] = "Entry " + (entry + 1);
             //if (success == true)
             //strArr[1] = "Success";
             //else
@@ -571,6 +573,12 @@ namespace Darcy_Backup
                                     continue;
                             }
                         }
+
+                        if (now.Hour < GetHourFromTimeOfDay(Entries[i].TimeOfDay))
+                            continue;
+                        if (now.Hour == GetHourFromTimeOfDay(Entries[i].TimeOfDay) && now.Minute < GetMinuteFromTimeOfDay(Entries[i].TimeOfDay))
+                            continue;
+                        
                     }
                     if (Entries[i].Ongoing == false)
                     {
