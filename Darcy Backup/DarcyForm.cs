@@ -164,6 +164,8 @@ namespace Darcy_Backup
             int i = _currentListSel;
             if (i == -1)
                 i = 0;
+            
+
 
             Dynamic_Source.Visible = true;
             Dynamic_Destination.Visible = true;
@@ -182,9 +184,15 @@ namespace Darcy_Backup
             Dynamic_Process.Text = process;
 
             if (Entries[i].Automated == true)
+            {
                 Dynamic_Automated.Text = "Yes";
+                Button_Activate.Text = "Deactivate";
+            }
             else
+            {
                 Dynamic_Automated.Text = "No";
+                Button_Activate.Text = "Activate";
+            }
             
             if (process == "Scheduled")
             {
@@ -234,24 +242,20 @@ namespace Darcy_Backup
         }
 
 
-        delegate void AddToLogCallback(int entry, bool success);
-        private void AddToLog(int entry, bool success)
+        delegate void AddToLogCallback(int entry, string error);
+        private void AddToLog(int entry, string error)
         {
             string[] strArr = new string[3];
             ListViewItem item;
             strArr[0] = "Entry " + (entry + 1);
-            //if (success == true)
-            //strArr[1] = "Success";
-            //else
-            //strArr[1] = "Error";
-            strArr[1] = "Backup";
+            strArr[1] = error;
             strArr[2] = GetTimeString(DateTime.Now);
             item = new ListViewItem(strArr);
 
             if (List_Log.InvokeRequired == true)
             {
                 AddToLogCallback d = new AddToLogCallback(AddToLog);
-                this.Invoke(d, new object[] { entry, success });
+                this.Invoke(d, new object[] { entry, error });
             }
             else
             {
@@ -508,8 +512,8 @@ namespace Darcy_Backup
 
                     if (Entries[i].Automated == false)
                     {
-                        if (lp == "In Queue" || lp == "In Progress" || lp == "")
-                            Entries[i].LastPerformed = "Manual Mode";
+                        //if (lp == "In Queue" || lp == "In Progress" || lp == "")
+                            //Entries[i].LastPerformed = "Manual Mode";
 
                         Entries[i].NextScheduled = "Manual Mode";
                         Save();
@@ -525,7 +529,7 @@ namespace Darcy_Backup
                 {
                     DateTime now = DateTime.Now;
 
-                    if (lp == "In Queue" || lp ==  "In Progress")
+                    if (lp == "Never" || lp == "In Queue" || lp ==  "In Progress")
                     {
 
                     }

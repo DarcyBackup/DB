@@ -115,7 +115,7 @@
             this.Button_Activate.Font = new System.Drawing.Font("Calibri", 10F);
             this.Button_Activate.Location = new System.Drawing.Point(936, 516);
             this.Button_Activate.Name = "Button_Activate";
-            this.Button_Activate.Size = new System.Drawing.Size(79, 25);
+            this.Button_Activate.Size = new System.Drawing.Size(81, 25);
             this.Button_Activate.TabIndex = 12;
             this.Button_Activate.Text = "Activate";
             this.Button_Activate.TextAlign = System.Drawing.ContentAlignment.TopCenter;

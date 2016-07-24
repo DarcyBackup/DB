@@ -1169,10 +1169,15 @@ namespace Darcy_Backup
             this.SetBounds(0, 0, 397, 676);
 
             if (Type == 0)
+            {
                 this.Text = "New Entry";
+                Label_Entry.Text = "Entry " + Id.ToString();
+            }
             else if (Type == 1)
+            {
                 this.Text = "Edit Entry";
-            Label_Entry.Text = "Entry " + Id.ToString();
+                Label_Entry.Text = "Entry " + (Id + 1).ToString();
+            }
 
 
             Label_Error.Visible = false;

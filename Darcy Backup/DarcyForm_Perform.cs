@@ -77,7 +77,6 @@ namespace Darcy_Backup
         {
 
             Entries[entry].LastPerformed = "In Progress";
-            bool success = false;
 
             Save();
 
@@ -96,6 +95,7 @@ namespace Darcy_Backup
                 if (directory == false)
                 {
                     MessageBox.Show("Could not find " + source , "Error", MessageBoxButtons.OK);
+                    AddToLog(entry, "error 1");
                     return;
                 }
             }
@@ -108,6 +108,7 @@ namespace Darcy_Backup
                 catch (System.NotSupportedException)
                 {
                     MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
+                    AddToLog(entry, "error 2");
                     return;
                 }
             }
@@ -132,7 +133,8 @@ namespace Darcy_Backup
                         catch (IOException error)
                         {
                             MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                            throw;
+                            AddToLog(entry, "error 3");
+                            return;
                         }
                         
                     }
@@ -158,7 +160,8 @@ namespace Darcy_Backup
                     catch (IOException error)
                     {
                         MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                        throw;
+                        AddToLog(entry, "error 4");
+                        return;
                     }
 
                 }
@@ -171,7 +174,8 @@ namespace Darcy_Backup
                     catch (IOException error)
                     {
                         MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                        throw;
+                        AddToLog(entry, "error 5");
+                        return;
                     }
                 }
             }
@@ -215,7 +219,8 @@ namespace Darcy_Backup
                                 catch (IOException error)
                                 {
                                     MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                                    throw;
+                                    AddToLog(entry, "error 6");
+                                    return;
                                 }
                             }
                         }
@@ -249,7 +254,7 @@ namespace Darcy_Backup
                 }
             }
 
-            AddToLog(entry, success);
+            AddToLog(entry, "Success");
         }
     }
 }
