@@ -20,6 +20,7 @@ namespace Darcy_Backup
         //Info
         public string LastPerformed { get; set; }
         public string NextScheduled { get; set; }
+        public string Status { get; set; }
         public string TotalSize { get; set; }
         public bool Ongoing { get; set;  }
         public bool Validated { get; set; }
@@ -43,6 +44,7 @@ namespace Darcy_Backup
             Automated = false;
             LastPerformed = "Never";
             NextScheduled = "Processing";
+            Status = "Resting";
             TotalSize = "Processing";
 
             Days = new bool[31];

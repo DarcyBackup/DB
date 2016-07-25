@@ -178,5 +178,17 @@ namespace Darcy_Backup.Properties {
                 this["List_Automated"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        public int List_Status {
+            get {
+                return ((int)(this["List_Status"]));
+            }
+            set {
+                this["List_Status"] = value;
+            }
+        }
     }
 }

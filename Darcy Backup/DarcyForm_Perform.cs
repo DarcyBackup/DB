@@ -38,6 +38,16 @@ namespace Darcy_Backup
             if (length1 != length2)
                 return true;
 
+            DateTime time1 = new System.IO.FileInfo(path1).LastWriteTime;
+            DateTime time2 = new System.IO.FileInfo(path2).LastWriteTime;
+
+            if (time1 != time2)
+                return true;
+
+
+            bool checksum = false; //This will later be an option in the interface
+            if (checksum == false)
+                return false;
 
             string checksum1, checksum2;
             using (var md5 = MD5.Create())
@@ -76,9 +86,7 @@ namespace Darcy_Backup
         private void Perform(int entry)
         {
 
-            Entries[entry].LastPerformed = "In Progress";
-
-            Save();
+            Entries[entry].Status = "In Progress";
 
             int selectedIndex = GetSelectedListIndex(List_Backup);
             if (RemoveFromList(Entries[entry], entry) == true)
@@ -120,10 +128,16 @@ namespace Darcy_Backup
                 string[] strArray = source.Split('\\');
                 string filename = strArray[strArray.Length - 1];
                 string destination = Entries[entry].Destination; 
+
+
                 
                 if (mode == "Changed Files")
                 {
-                    bool different = Different(source, destination);
+                    string[] split = destination.Split('\\');
+                    if (split[split.Length - 1] == "")
+                        destination = destination.Remove(destination.Length - 1, 1);
+
+                    bool different = Different(source, destination + "\\" + filename);
                     if (different)
                     {
                         try

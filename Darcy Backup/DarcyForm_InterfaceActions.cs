@@ -12,6 +12,7 @@ namespace Darcy_Backup
     public partial class Form_Darcy_Panel
     {
         
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -162,7 +163,8 @@ namespace Darcy_Backup
             Properties.Settings.Default.List_Process = List_Backup.Columns[4].Width;
             Properties.Settings.Default.List_Performed = List_Backup.Columns[5].Width;
             Properties.Settings.Default.List_Next = List_Backup.Columns[6].Width;
-            Properties.Settings.Default.List_Automated = List_Backup.Columns[7].Width;
+            Properties.Settings.Default.List_Status = List_Backup.Columns[7].Width;
+            Properties.Settings.Default.List_Automated = List_Backup.Columns[8].Width;
 
             Properties.Settings.Default.Save();
         }

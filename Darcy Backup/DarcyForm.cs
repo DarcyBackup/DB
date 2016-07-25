@@ -19,8 +19,6 @@ namespace Darcy_Backup
     
     public partial class Form_Darcy_Panel : Form
     {
-        
-
 
         private void AddEntry(EntryClass entry)
         {
@@ -91,11 +89,9 @@ namespace Darcy_Backup
 
                     if (inList[1] == entry.Source && inList[2] == entry.Destination && inList[3] == ModeToString(entry.Mode)
                         && inList[4] == ProcessToString(entry.Process) && inList[5] == entry.LastPerformed
-                        && inList[6] == entry.NextScheduled && inList[7] == AutomatedToString(entry.Automated))
+                        && inList[6] == entry.NextScheduled && inList[7] == entry.Status && inList[8] == AutomatedToString(entry.Automated))
                         return false;
                 }
-
-
 
                 List_Backup.Items.RemoveAt(index);
                 return true;
@@ -268,7 +264,7 @@ namespace Darcy_Backup
         private void AddToList(EntryClass entry, int index, int selection)
         {
             
-            string[] strArr = new string[8];
+            string[] strArr = new string[9];
             ListViewItem item;
             strArr[0] = entry.Entry.ToString();
             strArr[1] = entry.Source;
@@ -277,8 +273,10 @@ namespace Darcy_Backup
             strArr[4] = ProcessToString(entry.Process);
             strArr[5] = entry.LastPerformed;
             strArr[6] = entry.NextScheduled;
-            strArr[7] = AutomatedToString(entry.Automated);
+            strArr[7] = entry.Status;
+            strArr[8] = AutomatedToString(entry.Automated);
             item = new ListViewItem(strArr);
+            item.ToolTipText = "test";
 
             if (index == -1)
                 index = List_Backup.Items.Count;
@@ -302,12 +300,37 @@ namespace Darcy_Backup
         }
         private void Save()
         {
+            try
+            {
+                File.Delete(_fullPath);
+            }
+            catch (IOException error)
+            {
+                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                return;
+            }
+            catch (System.NotSupportedException error)
+            {
+                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                return;
+            }
+            
 
-            File.Delete(_fullPath);
-
-            FileStream fs = File.Create(_fullPath);
-            fs.Close();
-            //File.Encrypt(fullPath); //replace this with a program specific encryption
+            try
+            {
+                FileStream fs = File.Create(_fullPath);
+                fs.Close();
+            }
+            catch (IOException error)
+            {
+                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                return;
+            }
+            catch (System.NotSupportedException error)
+            {
+                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                return;
+            }
 
             if (File.Exists(_fullPath) == false)
                 Application.Exit();
@@ -326,9 +349,21 @@ namespace Darcy_Backup
                         writeString += Entries[i].Days[k] + ";";
                     writeString += Entries[i].TimeOfDay + ";" + Entries[i].Timer + ";" + Entries[i].TotalSize + ";" + Entries[i].Automated;
 
-                    file.WriteLine(writeString);
+                    try
+                    {
+                        file.WriteLine(writeString);
+                    }
+                    catch (IOException error)
+                    {
+                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        return;
+                    }
+                    catch (System.NotSupportedException error)
+                    {
+                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        return;
+                    }
                 }
-
             }
         }
         private int GetMinuteFromTimeOfDay(string timeOfDay)
@@ -488,12 +523,13 @@ namespace Darcy_Backup
                 string process = ProcessToString(Entries[i].Process);
                 if (process == "Manual")
                 {
-                    if (Entries[i].LastPerformed == "In Queue" || Entries[i].LastPerformed == "In Progress")
+                    if (Entries[i].Status == "In Queue" || Entries[i].Status == "In Progress")
                     {
                         Entries[i].Ongoing = true;
                         Perform(i);
                         string str = GetTimeString(DateTime.Now);
                         Entries[i].LastPerformed = str;
+                        Entries[i].Status = "Resting";
                         Entries[i].Ongoing = false;
                     }
 
@@ -507,6 +543,7 @@ namespace Darcy_Backup
                 }
 
                 string lp = Entries[i].LastPerformed;
+                string status = Entries[i].Status;
                 if (process == "Scheduled" || process == "Timer")
                 {
 
@@ -529,7 +566,7 @@ namespace Darcy_Backup
                 {
                     DateTime now = DateTime.Now;
 
-                    if (lp == "Never" || lp == "In Queue" || lp ==  "In Progress")
+                    if (lp == "Never" || status == "In Queue" || status ==  "In Progress")
                     {
 
                     }
@@ -590,6 +627,7 @@ namespace Darcy_Backup
                         Perform(i);
                         string str = GetTimeString(DateTime.Now);
                         Entries[i].LastPerformed = str;
+                        Entries[i].Status = "Resting";
                         Entries[i].Ongoing = false;
 
                         string nextPerform = GetNextSchedulePerform(Entries[i]);
@@ -606,7 +644,7 @@ namespace Darcy_Backup
 
                 if (process == "Timer")
                 {
-                    if (lp == "Never" || lp == "In Queue" || lp == "In Progress" || lp == "")
+                    if (lp == "Never" || status == "In Queue" || status == "In Progress" || lp == "")
                     {
                     }
                     else
@@ -634,6 +672,7 @@ namespace Darcy_Backup
                         Perform(i);
                         string str = GetTimeString(DateTime.Now);
                         Entries[i].LastPerformed = str;
+                        Entries[i].Status = "Resting";
                         Entries[i].Ongoing = false;
 
                         string nextPerform = "";
@@ -817,7 +856,7 @@ namespace Darcy_Backup
                 return;
 
 
-            Entries[index].LastPerformed = "In Queue";
+            Entries[index].Status = "In Queue";
 
             Save();
             int selectedIndex = GetSelectedListIndex(List_Backup);
@@ -921,6 +960,13 @@ namespace Darcy_Backup
             _editNewObj = new Form_New_Entry(this, 1, i);
             _editNewObj.Show();
             _editNewOngoing = true;
+        }
+
+        private void DarcyFormClosing(object sender, FormClosingEventArgs e)
+        {
+            notifyIcon.Visible = false;
+            notifyIcon.Dispose();
+            Application.Exit();
         }
     }
 }

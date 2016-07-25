@@ -76,6 +76,7 @@
             this.List_Log = new System.Windows.Forms.ListView();
             this.Label_HeaderLog = new System.Windows.Forms.Label();
             this.Label_HeaderSelected = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.Settings_Panel.SuspendLayout();
             this.Settings_Language_Panel.SuspendLayout();
             this.About_Panel.SuspendLayout();
@@ -126,6 +127,7 @@
             // 
             this.Label_Backup.AutoSize = true;
             this.Label_Backup.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Backup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.Label_Backup.Location = new System.Drawing.Point(445, 51);
             this.Label_Backup.Name = "Label_Backup";
             this.Label_Backup.Size = new System.Drawing.Size(123, 29);
@@ -607,6 +609,7 @@
             // Label_HeaderLog
             // 
             this.Label_HeaderLog.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_HeaderLog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.Label_HeaderLog.Location = new System.Drawing.Point(12, 334);
             this.Label_HeaderLog.Name = "Label_HeaderLog";
             this.Label_HeaderLog.Size = new System.Drawing.Size(204, 33);
@@ -618,6 +621,7 @@
             // 
             this.Label_HeaderSelected.BackColor = System.Drawing.Color.Transparent;
             this.Label_HeaderSelected.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_HeaderSelected.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.Label_HeaderSelected.Location = new System.Drawing.Point(12, 24);
             this.Label_HeaderSelected.Name = "Label_HeaderSelected";
             this.Label_HeaderSelected.Size = new System.Drawing.Size(204, 33);
@@ -648,6 +652,7 @@
             this.MinimumSize = new System.Drawing.Size(1180, 740);
             this.Name = "Form_Darcy_Panel";
             this.Text = "Darcy Backup";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DarcyFormClosing);
             this.ResizeEnd += new System.EventHandler(this.Form_Darcy_ResizeEnd);
             this.Resize += new System.EventHandler(this.Form_Darcy_Resize);
             this.Settings_Panel.ResumeLayout(false);
@@ -706,6 +711,7 @@
         private System.Windows.Forms.Label Dynamic_Source;
         private System.Windows.Forms.Label Label_Destination;
         private System.Windows.Forms.Label Label_Source;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

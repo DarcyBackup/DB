@@ -162,17 +162,21 @@ namespace Darcy_Backup
 
             if (exists == false)
             {
-                FileStream fs = File.Create(_fullPath);
-                fs.Close();
-
-                exists = File.Exists(_fullPath);
-                if (exists == false)
+                try
                 {
-                    MessageBox.Show("Can not create dbss file in this folder", "Error", MessageBoxButtons.OK);
-                    Application.Exit();
+                    FileStream fs = File.Create(_fullPath);
+                    fs.Close();
                 }
-                
-
+                catch (IOException error)
+                {
+                    MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                    return;
+                }
+                catch (System.NotSupportedException error)
+                {
+                    MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                    return;
+                }
             }
 
             string[] entryString = System.IO.File.ReadAllLines(_fullPath);
@@ -284,8 +288,8 @@ namespace Darcy_Backup
             List_Backup.Columns.Add("Process", Properties.Settings.Default.List_Process);
             List_Backup.Columns.Add("Last Performed", Properties.Settings.Default.List_Performed);
             List_Backup.Columns.Add("Next Backup", Properties.Settings.Default.List_Next);
+            List_Backup.Columns.Add("Status", Properties.Settings.Default.List_Status);
             List_Backup.Columns.Add("Automated", Properties.Settings.Default.List_Automated);
-            
 
 
             List_Log.View = View.Details;
