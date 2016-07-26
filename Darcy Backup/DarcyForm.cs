@@ -550,7 +550,7 @@ namespace Darcy_Backup
             if (_editNewOngoing == true)
                 return;
 
-
+            
             for (int i = 0; i < Entries.Length; i++)
             {
                 string process = ProcessToString(Entries[i].Process);
@@ -607,21 +607,33 @@ namespace Darcy_Backup
                 {
                     DateTime now = DateTime.Now;
 
-                    if (lp == "Never" || status == "In Queue" || status ==  "In Progress")
+                    if (status == "In Queue" || status ==  "In Progress")
                     {
 
                     }
                     else
                     {
                         DateTime lastPerformed = GetDateTimeFromString(Entries[i].LastPerformed);
+                        
 
                         string nextPerform = GetNextSchedulePerform(Entries[i]);
                         Entries[i].NextScheduled = nextPerform;
+
+                        string nowString = GetTimeString(DateTime.Now);
+
+                        if (nowString == nextPerform)
+                            if (nowString != Entries[i].LastPerformed)
+                                Entries[i].Status = "In Queue";
+
                         Save();
 
                         int selectedIndex = GetSelectedListIndex(List_Backup);
                         if (RemoveFromList(Entries[i], i) == true)
                             AddToList(Entries[i], i, selectedIndex);
+
+
+
+                        /*
 
                         int today = now.Day - 1;
 
@@ -661,8 +673,14 @@ namespace Darcy_Backup
                         if (now.Hour == GetHourFromTimeOfDay(Entries[i].TimeOfDay) && now.Minute < GetMinuteFromTimeOfDay(Entries[i].TimeOfDay))
                             continue;
                         
+                        */
+
+
+                        
                     }
-                    if (Entries[i].Ongoing == false)
+
+                    bool a = false;
+                    if (Entries[i].Ongoing == false && a == true)
                     {
                         Entries[i].Ongoing = true;
                         Perform(i);
@@ -685,7 +703,16 @@ namespace Darcy_Backup
 
                 if (process == "Timer")
                 {
-                    if (lp == "Never" || status == "In Queue" || status == "In Progress" || lp == "")
+                    if (lp == "Never")
+                    {
+                        Entries[i].Status = "In Queue";
+
+                        int selectedIndex = GetSelectedListIndex(List_Backup);
+                        if (RemoveFromList(Entries[i], i) == true)
+                            AddToList(Entries[i], i, selectedIndex);
+
+                    }
+                    else if (status == "In Queue" || status == "In Progress")
                     {
                     }
                     else
@@ -693,21 +720,20 @@ namespace Darcy_Backup
                         string nextPerform = "";
                         bool perform = CalculateTimeDifference(Entries[i].LastPerformed, Entries[i].Timer, out nextPerform);
                         if (Entries[i].NextScheduled != nextPerform)
-                        {
                             Entries[i].NextScheduled = nextPerform;
 
-                            Save();
+                        if (perform == true)
+                            Entries[i].Status = "In Queue";
+                        
+                        int selectedIndex = GetSelectedListIndex(List_Backup);
+                        if (RemoveFromList(Entries[i], i) == true)
+                            AddToList(Entries[i], i, selectedIndex);
 
-                            int selectedIndex = GetSelectedListIndex(List_Backup);
-                            if (RemoveFromList(Entries[i], i) == true)
-                                AddToList(Entries[i], i, selectedIndex);
-                        }
-
-                        if (perform == false)
-                            continue;
+                        Save();
                     }
 
-                    if (Entries[i].Ongoing == false)
+                    bool b = false;
+                    if (Entries[i].Ongoing == false && b == true)
                     {
                         Entries[i].Ongoing = true;
                         Perform(i);
@@ -728,6 +754,30 @@ namespace Darcy_Backup
                     }
                 }
             }
+
+            for (int i = 0; i < Entries.Length; i++)
+            {
+                if (Entries[i].Status == "In Queue")
+                {
+                    if (Entries[i].Ongoing == false)
+                    {
+                        Entries[i].Ongoing = true;
+                        Perform(i);
+                        string str = GetTimeString(DateTime.Now);
+                        Entries[i].LastPerformed = str;
+                        Entries[i].Status = "Resting";
+                        Entries[i].Ongoing = false;
+
+                        Save();
+
+                        int selectedIndex = GetSelectedListIndex(List_Backup);
+                        if (RemoveFromList(Entries[i], i) == true)
+                            AddToList(Entries[i], i, selectedIndex);
+                    }
+                }
+            }
+
+
         }
         private string GetTimeString(DateTime dt)
         {
@@ -957,7 +1007,6 @@ namespace Darcy_Backup
             {
                 if (_editNewObj != null)
                 {
-                    _editNewObj.Close();
                     _editNewObj = null;
                     _editNewOngoing = false;
                 }

@@ -92,7 +92,7 @@
             this.Button_Delete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Delete.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Button_Delete.Location = new System.Drawing.Point(681, 516);
+            this.Button_Delete.Location = new System.Drawing.Point(672, 516);
             this.Button_Delete.Name = "Button_Delete";
             this.Button_Delete.Size = new System.Drawing.Size(92, 25);
             this.Button_Delete.TabIndex = 11;
@@ -143,7 +143,7 @@
             this.Button_Edit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Edit.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Button_Edit.Location = new System.Drawing.Point(570, 516);
+            this.Button_Edit.Location = new System.Drawing.Point(561, 516);
             this.Button_Edit.Name = "Button_Edit";
             this.Button_Edit.Size = new System.Drawing.Size(92, 25);
             this.Button_Edit.TabIndex = 27;
@@ -158,7 +158,7 @@
             this.Button_New.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_New.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_New.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Button_New.Location = new System.Drawing.Point(459, 516);
+            this.Button_New.Location = new System.Drawing.Point(450, 516);
             this.Button_New.Name = "Button_New";
             this.Button_New.Size = new System.Drawing.Size(92, 25);
             this.Button_New.TabIndex = 28;

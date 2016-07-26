@@ -155,8 +155,8 @@ namespace Darcy_Backup
             // Label_Entry
             // 
             this.Label_Entry.BackColor = System.Drawing.Color.Transparent;
-            this.Label_Entry.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Entry.Location = new System.Drawing.Point(20, 20);
+            this.Label_Entry.Font = new System.Drawing.Font("Calibri Light", 20F);
+            this.Label_Entry.Location = new System.Drawing.Point(18, 18);
             this.Label_Entry.Name = "Label_Entry";
             this.Label_Entry.Size = new System.Drawing.Size(339, 35);
             this.Label_Entry.TabIndex = 0;
@@ -166,7 +166,7 @@ namespace Darcy_Backup
             // 
             this.Label_Source.AutoSize = true;
             this.Label_Source.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Label_Source.Location = new System.Drawing.Point(22, 97);
+            this.Label_Source.Location = new System.Drawing.Point(23, 78);
             this.Label_Source.Name = "Label_Source";
             this.Label_Source.Size = new System.Drawing.Size(46, 17);
             this.Label_Source.TabIndex = 1;
@@ -174,14 +174,14 @@ namespace Darcy_Backup
             // 
             // Text_Source
             // 
-            this.Text_Source.Location = new System.Drawing.Point(25, 118);
+            this.Text_Source.Location = new System.Drawing.Point(26, 99);
             this.Text_Source.Name = "Text_Source";
             this.Text_Source.Size = new System.Drawing.Size(289, 20);
             this.Text_Source.TabIndex = 2;
             // 
             // Text_Destination
             // 
-            this.Text_Destination.Location = new System.Drawing.Point(25, 184);
+            this.Text_Destination.Location = new System.Drawing.Point(26, 165);
             this.Text_Destination.Name = "Text_Destination";
             this.Text_Destination.Size = new System.Drawing.Size(289, 20);
             this.Text_Destination.TabIndex = 4;
@@ -190,7 +190,7 @@ namespace Darcy_Backup
             // 
             this.Label_Destination.AutoSize = true;
             this.Label_Destination.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Label_Destination.Location = new System.Drawing.Point(22, 163);
+            this.Label_Destination.Location = new System.Drawing.Point(23, 144);
             this.Label_Destination.Name = "Label_Destination";
             this.Label_Destination.Size = new System.Drawing.Size(73, 17);
             this.Label_Destination.TabIndex = 3;
@@ -200,7 +200,7 @@ namespace Darcy_Backup
             // 
             this.Label_Mode.AutoSize = true;
             this.Label_Mode.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Label_Mode.Location = new System.Drawing.Point(22, 229);
+            this.Label_Mode.Location = new System.Drawing.Point(23, 210);
             this.Label_Mode.Name = "Label_Mode";
             this.Label_Mode.Size = new System.Drawing.Size(85, 17);
             this.Label_Mode.TabIndex = 5;
@@ -209,7 +209,7 @@ namespace Darcy_Backup
             // Radio_Schedule
             // 
             this.Radio_Schedule.AutoSize = true;
-            this.Radio_Schedule.Location = new System.Drawing.Point(25, 309);
+            this.Radio_Schedule.Location = new System.Drawing.Point(26, 290);
             this.Radio_Schedule.Name = "Radio_Schedule";
             this.Radio_Schedule.Size = new System.Drawing.Size(70, 17);
             this.Radio_Schedule.TabIndex = 7;
@@ -221,7 +221,7 @@ namespace Darcy_Backup
             // Radio_Timer
             // 
             this.Radio_Timer.AutoSize = true;
-            this.Radio_Timer.Location = new System.Drawing.Point(102, 309);
+            this.Radio_Timer.Location = new System.Drawing.Point(103, 290);
             this.Radio_Timer.Name = "Radio_Timer";
             this.Radio_Timer.Size = new System.Drawing.Size(51, 17);
             this.Radio_Timer.TabIndex = 8;
@@ -233,7 +233,7 @@ namespace Darcy_Backup
             // Radio_Manual
             // 
             this.Radio_Manual.AutoSize = true;
-            this.Radio_Manual.Location = new System.Drawing.Point(160, 309);
+            this.Radio_Manual.Location = new System.Drawing.Point(161, 290);
             this.Radio_Manual.Name = "Radio_Manual";
             this.Radio_Manual.Size = new System.Drawing.Size(60, 17);
             this.Radio_Manual.TabIndex = 9;
@@ -657,10 +657,11 @@ namespace Darcy_Backup
             // 
             // Button_Discard
             // 
-            this.Button_Discard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(231)))), ((int)(((byte)(170)))));
+            this.Button_Discard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.Button_Discard.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Discard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Discard.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Button_Discard.Location = new System.Drawing.Point(177, 600);
+            this.Button_Discard.Location = new System.Drawing.Point(178, 581);
             this.Button_Discard.Name = "Button_Discard";
             this.Button_Discard.Size = new System.Drawing.Size(75, 25);
             this.Button_Discard.TabIndex = 42;
@@ -671,10 +672,11 @@ namespace Darcy_Backup
             // 
             // Button_Save
             // 
-            this.Button_Save.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(231)))), ((int)(((byte)(170)))));
+            this.Button_Save.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.Button_Save.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Save.Font = new System.Drawing.Font("Calibri", 10F);
-            this.Button_Save.Location = new System.Drawing.Point(277, 600);
+            this.Button_Save.Location = new System.Drawing.Point(278, 581);
             this.Button_Save.Name = "Button_Save";
             this.Button_Save.Size = new System.Drawing.Size(75, 25);
             this.Button_Save.TabIndex = 43;
@@ -686,9 +688,10 @@ namespace Darcy_Backup
             // Button_PickSource
             // 
             this.Button_PickSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.Button_PickSource.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_PickSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_PickSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.Button_PickSource.Location = new System.Drawing.Point(320, 118);
+            this.Button_PickSource.Location = new System.Drawing.Point(321, 99);
             this.Button_PickSource.Name = "Button_PickSource";
             this.Button_PickSource.Size = new System.Drawing.Size(32, 20);
             this.Button_PickSource.TabIndex = 44;
@@ -699,9 +702,10 @@ namespace Darcy_Backup
             // Button_PickFolder
             // 
             this.Button_PickFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(244)))), ((int)(((byte)(255)))));
+            this.Button_PickFolder.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_PickFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_PickFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
-            this.Button_PickFolder.Location = new System.Drawing.Point(320, 184);
+            this.Button_PickFolder.Location = new System.Drawing.Point(321, 165);
             this.Button_PickFolder.Name = "Button_PickFolder";
             this.Button_PickFolder.Size = new System.Drawing.Size(32, 20);
             this.Button_PickFolder.TabIndex = 45;
@@ -772,7 +776,7 @@ namespace Darcy_Backup
             this.Label_Help_Source.AutoSize = true;
             this.Label_Help_Source.Font = new System.Drawing.Font("Calibri", 10F);
             this.Label_Help_Source.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Label_Help_Source.Location = new System.Drawing.Point(74, 97);
+            this.Label_Help_Source.Location = new System.Drawing.Point(75, 78);
             this.Label_Help_Source.Name = "Label_Help_Source";
             this.Label_Help_Source.Size = new System.Drawing.Size(14, 17);
             this.Label_Help_Source.TabIndex = 51;
@@ -787,7 +791,7 @@ namespace Darcy_Backup
             this.Label_Help_Destination.AutoSize = true;
             this.Label_Help_Destination.Font = new System.Drawing.Font("Calibri", 10F);
             this.Label_Help_Destination.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Label_Help_Destination.Location = new System.Drawing.Point(101, 163);
+            this.Label_Help_Destination.Location = new System.Drawing.Point(102, 144);
             this.Label_Help_Destination.Name = "Label_Help_Destination";
             this.Label_Help_Destination.Size = new System.Drawing.Size(14, 17);
             this.Label_Help_Destination.TabIndex = 52;
@@ -813,7 +817,7 @@ namespace Darcy_Backup
             this.Label_Help_Text_Source.AutoSize = true;
             this.Label_Help_Text_Source.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
             this.Label_Help_Text_Source.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Label_Help_Text_Source.Location = new System.Drawing.Point(94, 97);
+            this.Label_Help_Text_Source.Location = new System.Drawing.Point(95, 78);
             this.Label_Help_Text_Source.Name = "Label_Help_Text_Source";
             this.Label_Help_Text_Source.Size = new System.Drawing.Size(162, 17);
             this.Label_Help_Text_Source.TabIndex = 56;
@@ -824,7 +828,7 @@ namespace Darcy_Backup
             this.Label_Help_Text_Destination.AutoSize = true;
             this.Label_Help_Text_Destination.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
             this.Label_Help_Text_Destination.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Label_Help_Text_Destination.Location = new System.Drawing.Point(121, 163);
+            this.Label_Help_Text_Destination.Location = new System.Drawing.Point(122, 144);
             this.Label_Help_Text_Destination.Name = "Label_Help_Text_Destination";
             this.Label_Help_Text_Destination.Size = new System.Drawing.Size(136, 17);
             this.Label_Help_Text_Destination.TabIndex = 57;
@@ -835,7 +839,7 @@ namespace Darcy_Backup
             this.Label_Help_Mode.AutoSize = true;
             this.Label_Help_Mode.Font = new System.Drawing.Font("Calibri", 10F);
             this.Label_Help_Mode.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Label_Help_Mode.Location = new System.Drawing.Point(113, 229);
+            this.Label_Help_Mode.Location = new System.Drawing.Point(114, 210);
             this.Label_Help_Mode.Name = "Label_Help_Mode";
             this.Label_Help_Mode.Size = new System.Drawing.Size(14, 17);
             this.Label_Help_Mode.TabIndex = 58;
@@ -850,7 +854,7 @@ namespace Darcy_Backup
             this.Label_Help_Text_Mode.AutoSize = true;
             this.Label_Help_Text_Mode.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Italic);
             this.Label_Help_Text_Mode.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Label_Help_Text_Mode.Location = new System.Drawing.Point(133, 229);
+            this.Label_Help_Text_Mode.Location = new System.Drawing.Point(134, 210);
             this.Label_Help_Text_Mode.Name = "Label_Help_Text_Mode";
             this.Label_Help_Text_Mode.Size = new System.Drawing.Size(226, 17);
             this.Label_Help_Text_Mode.TabIndex = 59;
@@ -861,7 +865,7 @@ namespace Darcy_Backup
             this.Label_Error.AutoSize = true;
             this.Label_Error.Font = new System.Drawing.Font("Calibri", 10F);
             this.Label_Error.ForeColor = System.Drawing.Color.Red;
-            this.Label_Error.Location = new System.Drawing.Point(22, 577);
+            this.Label_Error.Location = new System.Drawing.Point(23, 558);
             this.Label_Error.Name = "Label_Error";
             this.Label_Error.Size = new System.Drawing.Size(64, 17);
             this.Label_Error.TabIndex = 60;
@@ -921,7 +925,7 @@ namespace Darcy_Backup
             this.Panel_Schedule.Controls.Add(this.Button_Day23);
             this.Panel_Schedule.Controls.Add(this.Button_Day25);
             this.Panel_Schedule.Controls.Add(this.Button_Day24);
-            this.Panel_Schedule.Location = new System.Drawing.Point(12, 317);
+            this.Panel_Schedule.Location = new System.Drawing.Point(13, 298);
             this.Panel_Schedule.Name = "Panel_Schedule";
             this.Panel_Schedule.Size = new System.Drawing.Size(335, 317);
             this.Panel_Schedule.TabIndex = 62;
@@ -988,7 +992,7 @@ namespace Darcy_Backup
             "Changed Files Only",
             "Make New Copies",
             "Replace All Files"});
-            this.Combo_Mode.Location = new System.Drawing.Point(25, 250);
+            this.Combo_Mode.Location = new System.Drawing.Point(26, 231);
             this.Combo_Mode.MaxDropDownItems = 3;
             this.Combo_Mode.Name = "Combo_Mode";
             this.Combo_Mode.Size = new System.Drawing.Size(146, 21);
@@ -1026,6 +1030,7 @@ namespace Darcy_Backup
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form_New_Entry";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_New_Entry_FormClosing);
             this.Panel_Schedule.ResumeLayout(false);
             this.Panel_Schedule.PerformLayout();
             this.Panel_Timer.ResumeLayout(false);
@@ -1166,7 +1171,7 @@ namespace Darcy_Backup
         Button[] ButtonDayArray = new Button[31];
         private void InitializeGUI()
         {
-            this.SetBounds(0, 0, 397, 676);
+            this.SetBounds(0, 0, 394, 671);
 
             if (Type == 0)
             {
@@ -1321,6 +1326,7 @@ namespace Darcy_Backup
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            /*
             base.OnPaint(e);
 
             Pen pen = new Pen(Color.FromArgb(130, 135, 144));
@@ -1328,6 +1334,7 @@ namespace Darcy_Backup
             e.Graphics.DrawLine(pen, 20, 52, 360, 52);
 
             pen.Dispose();
+            */
         }
 
         private void Days_MouseClick(object sender, MouseEventArgs e)
@@ -1642,6 +1649,12 @@ namespace Darcy_Backup
 
             if (destination.ShowDialog() == DialogResult.OK)
                 Text_Destination.Text = destination.SelectedPath;
+        }
+
+        private void Form_New_Entry_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Main.DiscardEditNew();
+            
         }
     }
 }

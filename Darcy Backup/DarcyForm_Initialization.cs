@@ -92,50 +92,50 @@ namespace Darcy_Backup
             _resizeArray = new resizeStruct[RESIZE_ARRAY_SIZE];
 
             _resizeArray[BUTTON_PERFORM].control = Button_Perform;
-            _resizeArray[BUTTON_PERFORM].width = 38;
-            _resizeArray[BUTTON_PERFORM].height = 15;
+            _resizeArray[BUTTON_PERFORM].width = 32;
+            _resizeArray[BUTTON_PERFORM].height = 30;
             _resizeArray[BUTTON_PERFORM].stayX = false;
             _resizeArray[BUTTON_PERFORM].stayY = false;
         
             _resizeArray[BUTTON_ACTIVATE].control = Button_Activate;
-            _resizeArray[BUTTON_ACTIVATE].width = 150;
-            _resizeArray[BUTTON_ACTIVATE].height = 15;
+            _resizeArray[BUTTON_ACTIVATE].width = 144;
+            _resizeArray[BUTTON_ACTIVATE].height = 30;
             _resizeArray[BUTTON_ACTIVATE].stayX = false;
             _resizeArray[BUTTON_ACTIVATE].stayY = false;
 
             _resizeArray[BUTTON_DELETE].control = Button_Delete;
             _resizeArray[BUTTON_DELETE].width = -1;
-            _resizeArray[BUTTON_DELETE].height = 15;
+            _resizeArray[BUTTON_DELETE].height = 30;
             _resizeArray[BUTTON_DELETE].stayX = true;
             _resizeArray[BUTTON_DELETE].stayY = false;
 
             _resizeArray[LIST_BACKUP].control = List_Backup;
-            _resizeArray[LIST_BACKUP].width = 30;
-            _resizeArray[LIST_BACKUP].height = 62;
+            _resizeArray[LIST_BACKUP].width = 32;
+            _resizeArray[LIST_BACKUP].height = 75;
             _resizeArray[LIST_BACKUP].stayX = true;
             _resizeArray[LIST_BACKUP].stayY = true;
 
             _resizeArray[BUTTON_NEW].control = Button_New;
             _resizeArray[BUTTON_NEW].width = -1;
-            _resizeArray[BUTTON_NEW].height = 15;
+            _resizeArray[BUTTON_NEW].height = 30;
             _resizeArray[BUTTON_NEW].stayX = true;
             _resizeArray[BUTTON_NEW].stayY = false;
 
             _resizeArray[BUTTON_EDIT].control = Button_Edit;
             _resizeArray[BUTTON_EDIT].width = -1;
-            _resizeArray[BUTTON_EDIT].height = 15;
+            _resizeArray[BUTTON_EDIT].height = 30;
             _resizeArray[BUTTON_EDIT].stayX = true;
             _resizeArray[BUTTON_EDIT].stayY = false;
 
             _resizeArray[LABEL_TOGGLE].control = Label_Toggle;
-            _resizeArray[LABEL_TOGGLE].width = 234;
-            _resizeArray[LABEL_TOGGLE].height = 15;
+            _resizeArray[LABEL_TOGGLE].width = 228;
+            _resizeArray[LABEL_TOGGLE].height = 30;
             _resizeArray[LABEL_TOGGLE].stayX = false;
             _resizeArray[LABEL_TOGGLE].stayY = false;
 
             _resizeArray[PANEL_SELECTEDLOG].control = Panel_Selected_Log;
             _resizeArray[PANEL_SELECTEDLOG].width = -1;
-            _resizeArray[PANEL_SELECTEDLOG].height = 42;
+            _resizeArray[PANEL_SELECTEDLOG].height = 75;
             _resizeArray[PANEL_SELECTEDLOG].stayX = true;
             _resizeArray[PANEL_SELECTEDLOG].stayY = true;
 
@@ -327,7 +327,8 @@ namespace Darcy_Backup
 
             About_Label_Version.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-
+            //for (int i = 0; i < 15; i ++)
+                //AddToLog(0, "success");
 
             if (rkApp.GetValue("DarcyBackup") == null)
             {

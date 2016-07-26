@@ -61,7 +61,7 @@ namespace Darcy_Backup.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1480")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1520")]
         public int Width {
             get {
                 return ((int)(this["Width"]));
@@ -109,7 +109,7 @@ namespace Darcy_Backup.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        [global::System.Configuration.DefaultSettingValueAttribute("110")]
         public int List_Mode {
             get {
                 return ((int)(this["List_Mode"]));
@@ -157,7 +157,7 @@ namespace Darcy_Backup.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
         public int List_Next {
             get {
                 return ((int)(this["List_Next"]));

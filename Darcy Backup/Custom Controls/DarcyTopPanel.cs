@@ -15,6 +15,7 @@ namespace Darcy_Backup
             base.OnPaint(e);
 
             Pen pen = new Pen(Color.FromArgb(175, 175, 175));
+            //pen = new Pen(Color.FromArgb(130, 145, 144));
 
             e.Graphics.DrawLine(pen, 0, 0, 0, Height);
             e.Graphics.DrawLine(pen, 0, 0, Width, 0);
