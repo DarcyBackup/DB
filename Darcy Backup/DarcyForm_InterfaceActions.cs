@@ -98,6 +98,20 @@ namespace Darcy_Backup
                 Properties.Settings.Default.Height = ((Control)sender).Bounds.Height;
                 Properties.Settings.Default.Width = ((Control)sender).Bounds.Width;
 
+                //Broken listview, hack - same function implemented in ColumnWidthChanged
+                List_Backup.Columns[List_Backup.Columns.Count - 1].Width = 0;
+                int columnWidth = 0;
+                for (int i = 0; i < List_Backup.Columns.Count; i++)
+                    columnWidth += List_Backup.Columns[i].Width;
+
+                int listWidth = List_Backup.Bounds.Width;
+                if (listWidth > columnWidth)
+                    List_Backup.Columns[List_Backup.Columns.Count - 1].Width += listWidth - columnWidth -4;
+                //Broken listview, hack
+
+
+
+
                 /*
                 *
                 * SelectedLogPanel
@@ -169,6 +183,23 @@ namespace Darcy_Backup
             Properties.Settings.Default.List_Next = List_Backup.Columns[6].Width;
             Properties.Settings.Default.List_Status = List_Backup.Columns[7].Width;
             Properties.Settings.Default.List_Automated = List_Backup.Columns[8].Width;
+
+
+            //Broken listview, hack - same function implemented in Resize
+            int index = ((System.Windows.Forms.ColumnWidthChangedEventArgs)e).ColumnIndex;
+            if (index != List_Backup.Columns.Count - 1)
+            {
+                List_Backup.Columns[List_Backup.Columns.Count - 1].Width = 0;
+                int columnWidth = 0;
+                for (int i = 0; i < List_Backup.Columns.Count; i++)
+                    columnWidth += List_Backup.Columns[i].Width;
+
+                int listWidth = List_Backup.Bounds.Width;
+                if (listWidth > columnWidth)
+                    List_Backup.Columns[List_Backup.Columns.Count - 1].Width += listWidth - columnWidth - 4;
+            }
+            //Broken listview, hack
+
 
             Properties.Settings.Default.Save();
         }

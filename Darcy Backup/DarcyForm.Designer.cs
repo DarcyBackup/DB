@@ -42,9 +42,9 @@
             this.Button_New = new System.Windows.Forms.Button();
             this.Label_Toggle = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.Darcy_Top_Panel = new Darcy_Backup.DarcyTopPanel();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.List_Backup = new Darcy_Backup.DarcyListView();
             this.Button_Perform = new Darcy_Backup.DarcyButton();
             this.Settings_Panel = new Darcy_Backup.DarcySettingsPanel();
@@ -79,7 +79,7 @@
             this.List_Log = new System.Windows.Forms.ListView();
             this.Label_HeaderLog = new System.Windows.Forms.Label();
             this.Label_HeaderSelected = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
+            this.Darcy_Top_Panel.SuspendLayout();
             this.Settings_Panel.SuspendLayout();
             this.Settings_Language_Panel.SuspendLayout();
             this.About_Panel.SuspendLayout();
@@ -89,6 +89,7 @@
             // Button_Delete
             // 
             this.Button_Delete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.Button_Delete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Delete.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.Button_Delete.Location = new System.Drawing.Point(681, 516);
@@ -103,6 +104,7 @@
             // Button_Activate
             // 
             this.Button_Activate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.Button_Activate.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Activate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Activate.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.Button_Activate.Location = new System.Drawing.Point(936, 516);
@@ -171,6 +173,7 @@
             // Button_Edit
             // 
             this.Button_Edit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.Button_Edit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Edit.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.Button_Edit.Location = new System.Drawing.Point(570, 516);
@@ -185,6 +188,7 @@
             // Button_New
             // 
             this.Button_New.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.Button_New.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_New.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_New.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.Button_New.Location = new System.Drawing.Point(459, 516);
@@ -207,31 +211,17 @@
             this.Label_Toggle.Text = "Toggle Automated:";
             this.Label_Toggle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // panel1
+            // Darcy_Top_Panel
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.Label_Settings);
-            this.panel1.Controls.Add(this.Label_About);
-            this.panel1.Location = new System.Drawing.Point(29, 30);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(366, 32);
-            this.panel1.TabIndex = 30;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Calibri", 11F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.label1.Location = new System.Drawing.Point(90, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 18);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "Languages";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Darcy_Top_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.Darcy_Top_Panel.Controls.Add(this.label2);
+            this.Darcy_Top_Panel.Controls.Add(this.label1);
+            this.Darcy_Top_Panel.Controls.Add(this.Label_Settings);
+            this.Darcy_Top_Panel.Controls.Add(this.Label_About);
+            this.Darcy_Top_Panel.Location = new System.Drawing.Point(29, 30);
+            this.Darcy_Top_Panel.Name = "Darcy_Top_Panel";
+            this.Darcy_Top_Panel.Size = new System.Drawing.Size(366, 32);
+            this.Darcy_Top_Panel.TabIndex = 30;
             // 
             // label2
             // 
@@ -246,10 +236,24 @@
             this.label2.Text = "Themes";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Calibri", 11F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.label1.Location = new System.Drawing.Point(90, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 18);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Languages";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // List_Backup
             // 
             this.List_Backup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.List_Backup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.List_Backup.ForeColor = System.Drawing.Color.Black;
             this.List_Backup.Location = new System.Drawing.Point(450, 150);
             this.List_Backup.MultiSelect = false;
             this.List_Backup.Name = "List_Backup";
@@ -262,6 +266,7 @@
             // 
             this.Button_Perform.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.Button_Perform.DarcyDisabled = false;
+            this.Button_Perform.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Perform.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Perform.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.Button_Perform.Location = new System.Drawing.Point(1021, 516);
@@ -668,7 +673,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1574, 701);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.Darcy_Top_Panel);
             this.Controls.Add(this.Label_Toggle);
             this.Controls.Add(this.Button_New);
             this.Controls.Add(this.Button_Edit);
@@ -687,8 +692,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DarcyFormClosing);
             this.ResizeEnd += new System.EventHandler(this.Form_Darcy_ResizeEnd);
             this.Resize += new System.EventHandler(this.Form_Darcy_Resize);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.Darcy_Top_Panel.ResumeLayout(false);
+            this.Darcy_Top_Panel.PerformLayout();
             this.Settings_Panel.ResumeLayout(false);
             this.Settings_Language_Panel.ResumeLayout(false);
             this.About_Panel.ResumeLayout(false);
@@ -745,7 +750,7 @@
         private System.Windows.Forms.Label Label_Destination;
         private System.Windows.Forms.Label Label_Source;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Panel panel1;
+        private DarcyTopPanel Darcy_Top_Panel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
     }

@@ -101,6 +101,9 @@
     <Compile Include="Custom Controls\DarcySelectedLogPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Custom Controls\DarcyTopPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Custom Controls\Form_Disclaimer.cs">
       <SubType>Form</SubType>
     </Compile>

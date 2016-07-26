@@ -295,8 +295,13 @@ namespace Darcy_Backup
             List_Backup.Columns.Add("Next Backup", Properties.Settings.Default.List_Next);
             List_Backup.Columns.Add("Status", Properties.Settings.Default.List_Status);
             List_Backup.Columns.Add("Automated", Properties.Settings.Default.List_Automated);
-            
-            //List_Backup.OwnerDraw = true;
+
+
+            //Broken listview, hack
+            List_Backup.Columns.Add("", 1); //Boken listview, hack
+            //Broken listview, hack
+
+            List_Backup.OwnerDraw = true;
             List_Backup.DrawItem += List_Backup_DrawItem;
             List_Backup.DrawSubItem += List_Backup_DrawSubItem;
             List_Backup.DrawColumnHeader += List_Backup_DrawColumnHeader;
@@ -346,20 +351,22 @@ namespace Darcy_Backup
 
         private void List_Backup_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
-            e.DrawBackground();
-            e.DrawText();
+            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(226, 226, 226)), e.Bounds);
+            e.Graphics.DrawString(e.Header.Text, e.Font, new SolidBrush(Color.Black), e.Bounds);
         }
 
         private void List_Backup_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
 
-            e.DrawBackground();
-            e.DrawText();
+            e.DrawDefault = true;
         }
         
         private void List_Backup_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
-            
+            e.DrawDefault = true;
+            return;
+
+
             if (e.Item.Selected)
             {
                 e.Item.ForeColor = Color.Black;
