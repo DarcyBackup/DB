@@ -269,12 +269,30 @@ namespace Darcy_Backup
         private int _automatedLabelYSchedule;
         private int _automatedLabelYTimer;
 
+        private DarcySettingsPanel[] _privateSettingsPanels;
+        private Label[] _privateSettingsLabels;
+
         private void InitializeGUI()
         {
+            
 
-            Settings_Panel.SetBounds(0, 25, Settings_Panel.Width, Settings_Panel.Height);
-            Settings_Language_Panel.SetBounds(139, 114, Settings_Language_Panel.Width, Settings_Language_Panel.Height);
-            About_Panel.SetBounds(75, 25, About_Panel.Width, About_Panel.Height);
+            Settings_Panel.SetBounds(29, 71, Settings_Panel.Width, Settings_Panel.Height);
+            Language_Panel.SetBounds(113, 71, Language_Panel.Width, Language_Panel.Height);
+            Theme_Panel.SetBounds(225, 71, Theme_Panel.Width, Theme_Panel.Height);
+            About_Panel.SetBounds(327, 71, About_Panel.Width, About_Panel.Height);
+
+            _privateSettingsPanels = new DarcySettingsPanel[4];
+            _privateSettingsPanels[0] = Settings_Panel;
+            _privateSettingsPanels[1] = Language_Panel;
+            _privateSettingsPanels[2] = Theme_Panel;
+            _privateSettingsPanels[3] = About_Panel;
+
+            _privateSettingsLabels = new Label[4];
+            _privateSettingsLabels[0] = Label_Settings;
+            _privateSettingsLabels[1] = Label_Language;
+            _privateSettingsLabels[2] = Label_Themes;
+            _privateSettingsLabels[3] = Label_About;
+
 
 
 
@@ -319,11 +337,7 @@ namespace Darcy_Backup
 
             _automatedLabelYSchedule = Label_Automated.Bounds.Y;
             _automatedLabelYTimer = Label_Process_Specific2.Bounds.Y;
-
-
-            Settings_Panel.BringToFront();
-            Settings_Language_Panel.BringToFront();
-            About_Panel.BringToFront();
+            
 
             About_Label_Version.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -341,6 +355,10 @@ namespace Darcy_Backup
             if (Properties.Settings.Default.MinimizedOnStartup == true)
             {
                 Settings_Check_Minimized.Checked = true;
+            }
+            if (Properties.Settings.Default.ToTray == true)
+            {
+                Settings_Check_Tray.Checked = true;
             }
 
 

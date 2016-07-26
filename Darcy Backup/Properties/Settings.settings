@@ -39,10 +39,13 @@
       <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="List_Automated" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">90</Value>
+      <Value Profile="(Default)">70</Value>
     </Setting>
     <Setting Name="List_Status" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">90</Value>
+    </Setting>
+    <Setting Name="ToTray" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -55,7 +55,8 @@ namespace Darcy_Backup
         {
             if (WindowState == FormWindowState.Minimized)
             {
-                this.ShowInTaskbar = false;
+                if (Properties.Settings.Default.ToTray == true)
+                    this.ShowInTaskbar = false;
             }
             else if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
             {
@@ -99,14 +100,16 @@ namespace Darcy_Backup
                 Properties.Settings.Default.Width = ((Control)sender).Bounds.Width;
 
                 //Broken listview, hack - same function implemented in ColumnWidthChanged
-                List_Backup.Columns[List_Backup.Columns.Count - 1].Width = 0;
+                //List_Backup.Columns[List_Backup.Columns.Count - 1].Width = 0;
                 int columnWidth = 0;
-                for (int i = 0; i < List_Backup.Columns.Count; i++)
+                for (int i = 0; i < List_Backup.Columns.Count - 1; i++)
                     columnWidth += List_Backup.Columns[i].Width;
 
                 int listWidth = List_Backup.Bounds.Width;
                 if (listWidth > columnWidth)
-                    List_Backup.Columns[List_Backup.Columns.Count - 1].Width += listWidth - columnWidth -4;
+                    List_Backup.Columns[List_Backup.Columns.Count - 1].Width = listWidth - columnWidth - 4;
+                else
+                    List_Backup.Columns[List_Backup.Columns.Count - 1].Width = 0;
                 //Broken listview, hack
 
 
@@ -127,7 +130,8 @@ namespace Darcy_Backup
         {
             if (WindowState == FormWindowState.Minimized)
             {
-                this.ShowInTaskbar = false;
+                if (Properties.Settings.Default.ToTray == true)
+                    this.ShowInTaskbar = false;
             }
             else if (WindowState == FormWindowState.Normal)
             {

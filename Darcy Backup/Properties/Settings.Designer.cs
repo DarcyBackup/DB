@@ -169,7 +169,7 @@ namespace Darcy_Backup.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        [global::System.Configuration.DefaultSettingValueAttribute("70")]
         public int List_Automated {
             get {
                 return ((int)(this["List_Automated"]));
@@ -188,6 +188,18 @@ namespace Darcy_Backup.Properties {
             }
             set {
                 this["List_Status"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ToTray {
+            get {
+                return ((bool)(this["ToTray"]));
+            }
+            set {
+                this["ToTray"] = value;
             }
         }
     }

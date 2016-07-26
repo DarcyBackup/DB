@@ -156,6 +156,7 @@ namespace Darcy_Backup
             // 
             this.Label_Entry.BackColor = System.Drawing.Color.Transparent;
             this.Label_Entry.Font = new System.Drawing.Font("Calibri Light", 20F);
+            this.Label_Entry.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
             this.Label_Entry.Location = new System.Drawing.Point(18, 18);
             this.Label_Entry.Name = "Label_Entry";
             this.Label_Entry.Size = new System.Drawing.Size(339, 35);
@@ -166,6 +167,7 @@ namespace Darcy_Backup
             // 
             this.Label_Source.AutoSize = true;
             this.Label_Source.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Source.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
             this.Label_Source.Location = new System.Drawing.Point(23, 78);
             this.Label_Source.Name = "Label_Source";
             this.Label_Source.Size = new System.Drawing.Size(46, 17);
@@ -190,6 +192,7 @@ namespace Darcy_Backup
             // 
             this.Label_Destination.AutoSize = true;
             this.Label_Destination.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Destination.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
             this.Label_Destination.Location = new System.Drawing.Point(23, 144);
             this.Label_Destination.Name = "Label_Destination";
             this.Label_Destination.Size = new System.Drawing.Size(73, 17);
@@ -200,6 +203,7 @@ namespace Darcy_Backup
             // 
             this.Label_Mode.AutoSize = true;
             this.Label_Mode.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Mode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
             this.Label_Mode.Location = new System.Drawing.Point(23, 210);
             this.Label_Mode.Name = "Label_Mode";
             this.Label_Mode.Size = new System.Drawing.Size(85, 17);
@@ -209,6 +213,7 @@ namespace Darcy_Backup
             // Radio_Schedule
             // 
             this.Radio_Schedule.AutoSize = true;
+            this.Radio_Schedule.ForeColor = System.Drawing.Color.Black;
             this.Radio_Schedule.Location = new System.Drawing.Point(26, 290);
             this.Radio_Schedule.Name = "Radio_Schedule";
             this.Radio_Schedule.Size = new System.Drawing.Size(70, 17);
@@ -221,6 +226,7 @@ namespace Darcy_Backup
             // Radio_Timer
             // 
             this.Radio_Timer.AutoSize = true;
+            this.Radio_Timer.ForeColor = System.Drawing.Color.Black;
             this.Radio_Timer.Location = new System.Drawing.Point(103, 290);
             this.Radio_Timer.Name = "Radio_Timer";
             this.Radio_Timer.Size = new System.Drawing.Size(51, 17);
@@ -233,6 +239,7 @@ namespace Darcy_Backup
             // Radio_Manual
             // 
             this.Radio_Manual.AutoSize = true;
+            this.Radio_Manual.ForeColor = System.Drawing.Color.Black;
             this.Radio_Manual.Location = new System.Drawing.Point(161, 290);
             this.Radio_Manual.Name = "Radio_Manual";
             this.Radio_Manual.Size = new System.Drawing.Size(60, 17);
@@ -246,6 +253,7 @@ namespace Darcy_Backup
             // 
             this.Label_Days.AutoSize = true;
             this.Label_Days.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Days.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
             this.Label_Days.Location = new System.Drawing.Point(10, 35);
             this.Label_Days.Name = "Label_Days";
             this.Label_Days.Size = new System.Drawing.Size(35, 17);
@@ -661,6 +669,7 @@ namespace Darcy_Backup
             this.Button_Discard.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Discard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Discard.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Button_Discard.ForeColor = System.Drawing.Color.Black;
             this.Button_Discard.Location = new System.Drawing.Point(178, 581);
             this.Button_Discard.Name = "Button_Discard";
             this.Button_Discard.Size = new System.Drawing.Size(75, 25);
@@ -676,6 +685,7 @@ namespace Darcy_Backup
             this.Button_Save.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Save.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Button_Save.ForeColor = System.Drawing.Color.Black;
             this.Button_Save.Location = new System.Drawing.Point(278, 581);
             this.Button_Save.Name = "Button_Save";
             this.Button_Save.Size = new System.Drawing.Size(75, 25);
@@ -717,6 +727,7 @@ namespace Darcy_Backup
             // 
             this.Label_Time.AutoSize = true;
             this.Label_Time.Font = new System.Drawing.Font("Calibri", 10F);
+            this.Label_Time.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
             this.Label_Time.Location = new System.Drawing.Point(10, 210);
             this.Label_Time.Name = "Label_Time";
             this.Label_Time.Size = new System.Drawing.Size(73, 17);
@@ -987,6 +998,7 @@ namespace Darcy_Backup
             // Combo_Mode
             // 
             this.Combo_Mode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Combo_Mode.ForeColor = System.Drawing.Color.Black;
             this.Combo_Mode.FormattingEnabled = true;
             this.Combo_Mode.Items.AddRange(new object[] {
             "Changed Files Only",

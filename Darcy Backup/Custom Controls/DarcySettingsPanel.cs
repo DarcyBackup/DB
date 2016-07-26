@@ -15,12 +15,27 @@ namespace Darcy_Backup
         {
             base.OnPaint(e);
 
-            Pen pen = new Pen(Color.FromArgb(130, 135, 144));
+            Brush brush = (new Pen(Color.FromArgb(226, 226, 226))).Brush;
+            Rectangle rect = new Rectangle(0, 12, Width, Height);
+            e.Graphics.FillRectangle(brush, rect);
 
-            //e.Graphics.DrawLine(pen, 0, 0, 0, Height);
-            //e.Graphics.DrawLine(pen, 0, 0, Width, 0);
+
+
+            Pen pen = new Pen(Color.FromArgb(175, 175, 175));
+
+            e.Graphics.DrawLine(pen, 0, 12, 0, Height);
+            e.Graphics.DrawLine(pen, Width - 1, 12, Width - 1, Height);
             e.Graphics.DrawLine(pen, 0, Height - 1, Width - 1, Height - 1);
-            e.Graphics.DrawLine(pen, Width - 1, 0, Width - 1, Height);
+
+            e.Graphics.DrawImage(Properties.Resources.SettingsArrow, new Point(21, 1));
+
+            e.Graphics.DrawLine(pen, 0, 12, 20, 12);
+            e.Graphics.DrawLine(pen, 42, 12, Width, 12);
+
+
+
+
+
             //e.Graphics.DrawLine(pen, 5, 124, Width - 16, 124);
 
             pen.Dispose();

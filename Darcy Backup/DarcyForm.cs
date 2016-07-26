@@ -768,6 +768,19 @@ namespace Darcy_Backup
                         Entries[i].Status = "Resting";
                         Entries[i].Ongoing = false;
 
+
+                        string process = ProcessToString(Entries[i].Process);
+                        if (process == "Scheduled")
+                        {
+                            string nextPerform = GetNextSchedulePerform(Entries[i]);
+                            Entries[i].NextScheduled = nextPerform;
+                        }
+                        else if (process == "Timer")
+                        {
+                            string nextPerform;
+                            CalculateTimeDifference(Entries[i].LastPerformed, Entries[i].Timer, out nextPerform);
+                            Entries[i].NextScheduled = nextPerform;
+                        }
                         Save();
 
                         int selectedIndex = GetSelectedListIndex(List_Backup);
@@ -824,21 +837,6 @@ namespace Darcy_Backup
             return false;
         }
         
-        private void Label_About_Click(object sender, EventArgs e)
-        {
-            /*
-            Settings_Language_Panel.Visible = false;
-            Label_Settings.ForeColor = Color.FromArgb(66, 66, 66);
-            Settings_Panel.Visible = false;
-
-            bool visible = About_Panel.Visible;
-
-            if (visible == true)
-                About_Panel.Visible = false;
-            else
-                About_Panel.Visible = true;
-                */
-        }
         
         private void Language_Label_Click(object sender, EventArgs e)
         {
@@ -860,16 +858,7 @@ namespace Darcy_Backup
             Properties.Settings.Default.Language = ((Control)sender).Text;
             Properties.Settings.Default.Save();
         }
-
-        private void Settings_Label_Language_Click(object sender, EventArgs e)
-        {
-            bool visible = Settings_Language_Panel.Visible;
-
-            if (visible == true)
-                Settings_Language_Panel.Visible = false;
-            else
-                Settings_Language_Panel.Visible = true;
-        }
+        
         private void MouseEnter_BlackFont(object sender, EventArgs e)
         {
             ((Control)sender).ForeColor = Color.Black;
@@ -887,6 +876,12 @@ namespace Darcy_Backup
         {
             if (sender ==  Label_Settings)
                 if (Settings_Panel.Visible == true)
+                    return;
+            if (sender == Label_Language)
+                if (Language_Panel.Visible == true)
+                    return;
+            if (sender == Label_Themes)
+                if (Theme_Panel.Visible == true)
                     return;
             if (sender == Label_About)
                 if (About_Panel.Visible == true)
@@ -910,20 +905,29 @@ namespace Darcy_Backup
 
         private void Label_Settings_Click(object sender, EventArgs e)
         {
-            /*
-            About_Panel.Visible = false;
-            Label_About.ForeColor = Color.FromArgb(66, 66, 66);
+            Color color = Color.FromArgb(66, 66, 66);
 
-            bool visible = Settings_Panel.Visible;
+            int index = 0;
+
+            for (int i = 0; i < _privateSettingsPanels.Count(); i++)
+            {
+                if (_privateSettingsPanels[i] == null)
+                    continue;
+                if (_privateSettingsLabels[i] != sender)
+                {
+                    _privateSettingsPanels[i].Visible = false;
+                    _privateSettingsLabels[i].ForeColor = color;
+                }
+                else
+                    index = i;
+            }
+            
+            bool visible = _privateSettingsPanels[index].Visible;
 
             if (visible == true)
-            {
-                Settings_Language_Panel.Visible = false;
-                Settings_Panel.Visible = false;
-            }
+                _privateSettingsPanels[index].Visible = false;
             else
-                Settings_Panel.Visible = true;
-                */
+                _privateSettingsPanels[index].Visible = true;
         }
 
         RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -1066,6 +1070,21 @@ namespace Darcy_Backup
             notifyIcon.Visible = false;
             notifyIcon.Dispose();
             Application.Exit();
+        }
+
+        private void Settings_Check_Tray_CheckedChanged(object sender, EventArgs e)
+        {
+
+            bool minimized = Settings_Check_Tray.Checked;
+            if (minimized)
+            {
+                Properties.Settings.Default.ToTray = true;
+            }
+            else
+            {
+                Properties.Settings.Default.ToTray = false;
+            }
+            Properties.Settings.Default.Save();
         }
     }
 }
