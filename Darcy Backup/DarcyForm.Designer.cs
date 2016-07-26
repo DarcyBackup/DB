@@ -344,7 +344,6 @@
             // 
             this.Settings_Check_Tray.BackColor = System.Drawing.Color.Transparent;
             this.Settings_Check_Tray.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.Settings_Check_Tray.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.Settings_Check_Tray.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Settings_Check_Tray.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Settings_Check_Tray.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
@@ -379,7 +378,6 @@
             // 
             this.Settings_Check_Autorun.BackColor = System.Drawing.Color.Transparent;
             this.Settings_Check_Autorun.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.Settings_Check_Autorun.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.Settings_Check_Autorun.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Settings_Check_Autorun.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Settings_Check_Autorun.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));

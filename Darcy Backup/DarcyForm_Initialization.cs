@@ -339,7 +339,7 @@ namespace Darcy_Backup
             _automatedLabelYTimer = Label_Process_Specific2.Bounds.Y;
             
 
-            About_Label_Version.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            About_Label_Version.Text = "Beta Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             //for (int i = 0; i < 15; i ++)
                 //AddToLog(0, "success");
