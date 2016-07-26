@@ -1302,10 +1302,19 @@ namespace Darcy_Backup
                 }
                 else if (Main.ProcessToString(Entry.Process) == "Timer")
                 {
+                    Radio_Timer.Checked = true;
+
                     Panel_Schedule.Visible = false;
                     Panel_Timer.Visible = true;
 
                     Text_Timer.Text = Entry.Timer.ToString();
+                }
+                else if (Main.ProcessToString(Entry.Process) == "Manual")
+                {
+                    Radio_Manual.Checked = true;
+
+                    Panel_Schedule.Visible = false;
+                    Panel_Timer.Visible = false;
                 }
             }
         }

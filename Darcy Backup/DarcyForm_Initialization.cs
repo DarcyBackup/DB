@@ -15,6 +15,8 @@ namespace Darcy_Backup
 {
     public partial class Form_Darcy_Panel
     {
+        
+
         public Form_Darcy_Panel()
         {
 
@@ -90,44 +92,44 @@ namespace Darcy_Backup
             _resizeArray = new resizeStruct[RESIZE_ARRAY_SIZE];
 
             _resizeArray[BUTTON_PERFORM].control = Button_Perform;
-            _resizeArray[BUTTON_PERFORM].width = 12;
-            _resizeArray[BUTTON_PERFORM].height = 10;
+            _resizeArray[BUTTON_PERFORM].width = 38;
+            _resizeArray[BUTTON_PERFORM].height = 15;
             _resizeArray[BUTTON_PERFORM].stayX = false;
             _resizeArray[BUTTON_PERFORM].stayY = false;
         
             _resizeArray[BUTTON_ACTIVATE].control = Button_Activate;
-            _resizeArray[BUTTON_ACTIVATE].width = 132;
-            _resizeArray[BUTTON_ACTIVATE].height = 10;
+            _resizeArray[BUTTON_ACTIVATE].width = 150;
+            _resizeArray[BUTTON_ACTIVATE].height = 15;
             _resizeArray[BUTTON_ACTIVATE].stayX = false;
             _resizeArray[BUTTON_ACTIVATE].stayY = false;
 
             _resizeArray[BUTTON_DELETE].control = Button_Delete;
             _resizeArray[BUTTON_DELETE].width = -1;
-            _resizeArray[BUTTON_DELETE].height = 10;
+            _resizeArray[BUTTON_DELETE].height = 15;
             _resizeArray[BUTTON_DELETE].stayX = true;
             _resizeArray[BUTTON_DELETE].stayY = false;
 
             _resizeArray[LIST_BACKUP].control = List_Backup;
-            _resizeArray[LIST_BACKUP].width = 12;
-            _resizeArray[LIST_BACKUP].height = 42;
+            _resizeArray[LIST_BACKUP].width = 30;
+            _resizeArray[LIST_BACKUP].height = 62;
             _resizeArray[LIST_BACKUP].stayX = true;
             _resizeArray[LIST_BACKUP].stayY = true;
 
             _resizeArray[BUTTON_NEW].control = Button_New;
             _resizeArray[BUTTON_NEW].width = -1;
-            _resizeArray[BUTTON_NEW].height = 10;
+            _resizeArray[BUTTON_NEW].height = 15;
             _resizeArray[BUTTON_NEW].stayX = true;
             _resizeArray[BUTTON_NEW].stayY = false;
 
             _resizeArray[BUTTON_EDIT].control = Button_Edit;
             _resizeArray[BUTTON_EDIT].width = -1;
-            _resizeArray[BUTTON_EDIT].height = 10;
+            _resizeArray[BUTTON_EDIT].height = 15;
             _resizeArray[BUTTON_EDIT].stayX = true;
             _resizeArray[BUTTON_EDIT].stayY = false;
 
             _resizeArray[LABEL_TOGGLE].control = Label_Toggle;
-            _resizeArray[LABEL_TOGGLE].width = 216;
-            _resizeArray[LABEL_TOGGLE].height = 10;
+            _resizeArray[LABEL_TOGGLE].width = 234;
+            _resizeArray[LABEL_TOGGLE].height = 15;
             _resizeArray[LABEL_TOGGLE].stayX = false;
             _resizeArray[LABEL_TOGGLE].stayY = false;
 
@@ -264,6 +266,9 @@ namespace Darcy_Backup
             }
         }
 
+        private int _automatedLabelYSchedule;
+        private int _automatedLabelYTimer;
+
         private void InitializeGUI()
         {
 
@@ -290,6 +295,11 @@ namespace Darcy_Backup
             List_Backup.Columns.Add("Next Backup", Properties.Settings.Default.List_Next);
             List_Backup.Columns.Add("Status", Properties.Settings.Default.List_Status);
             List_Backup.Columns.Add("Automated", Properties.Settings.Default.List_Automated);
+            
+            //List_Backup.OwnerDraw = true;
+            List_Backup.DrawItem += List_Backup_DrawItem;
+            List_Backup.DrawSubItem += List_Backup_DrawSubItem;
+            List_Backup.DrawColumnHeader += List_Backup_DrawColumnHeader;
 
 
             List_Log.View = View.Details;
@@ -297,13 +307,18 @@ namespace Darcy_Backup
             List_Log.GridLines = false;
             List_Log.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 
-            List_Log.Columns.Add("", 89);
-            List_Log.Columns.Add("", 108);
+            List_Log.Columns.Add("", 129);
+            List_Log.Columns.Add("", 109);
             List_Log.Columns.Add("", 140);
+            List_Log.Columns[2].TextAlign = HorizontalAlignment.Right;
+
+            AddToLog(-1, "Test func");
+
+            _automatedLabelYSchedule = Label_Automated.Bounds.Y;
+            _automatedLabelYTimer = Label_Process_Specific2.Bounds.Y;
 
 
-
-            Settings_Panel.BringToFront();
+        Settings_Panel.BringToFront();
             Settings_Language_Panel.BringToFront();
             About_Panel.BringToFront();
 
@@ -327,6 +342,53 @@ namespace Darcy_Backup
 
             Update_SelectedEntry();
 
+        }
+
+        private void List_Backup_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+            e.DrawBackground();
+            e.DrawText();
+        }
+
+        private void List_Backup_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+
+            e.DrawBackground();
+            e.DrawText();
+        }
+        
+        private void List_Backup_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            
+            if (e.Item.Selected)
+            {
+                e.Item.ForeColor = Color.Black;
+                e.Item.BackColor = Color.LightBlue;
+                var subs = e.Item.SubItems;
+                for (int i = 0; i < subs.Count; i ++)
+                {
+                    subs[i].ForeColor = Color.Black;
+                    subs[i].BackColor = Color.LightBlue;
+                }
+                    
+            }
+            else
+            {
+
+                e.Item.ForeColor = SystemColors.HighlightText;
+                e.Item.BackColor = SystemColors.Highlight;
+            
+                var subs = e.Item.SubItems;
+                for (int i = 0; i < subs.Count; i++)
+                {
+                    subs[i].ForeColor = Color.Black;
+                    subs[i].BackColor = Color.FromArgb(254, 253, 255);
+                }
+            }
+            
+
+            e.DrawBackground();
+            e.DrawText();
         }
     }
 }

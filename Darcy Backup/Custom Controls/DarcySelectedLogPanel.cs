@@ -13,7 +13,7 @@ namespace Darcy_Backup
     {
         protected override void OnPaint(PaintEventArgs e)
         {
-
+            /*
             base.OnPaint(e);
 
             Pen pen = new Pen(Color.FromArgb(130, 135, 144));
@@ -22,6 +22,7 @@ namespace Darcy_Backup
             e.Graphics.DrawLine(pen, 12, 370, 432, 370);
 
             pen.Dispose();
+            */
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,7 +17,18 @@ namespace Darcy_Backup
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form_Darcy_Panel());
+            Form_Disclaimer fd = new Form_Disclaimer();
+            if (fd.Ok == true)
+            {
+                Application.Run(new Form_Darcy_Panel());
+            }
+            else
+            {
+                Application.Run(fd);
+                fd.Dispose();
+                Application.Run(new Form_Darcy_Panel());
+                
+            }
             //Application.Run(new Form_New_Entry(0, 1));
         }
     }

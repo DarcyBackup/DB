@@ -15,6 +15,7 @@ namespace Darcy_Backup
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            /*
             base.OnPaint(e);
 
             Pen pen = new Pen(Color.FromArgb(130, 135, 144));
@@ -27,11 +28,14 @@ namespace Darcy_Backup
 
             e.Graphics.FillRectangle(pen.Brush, new Rectangle(0, 0, Width, 25));
 
-            pen.Dispose();
+            pen.Dispose();*/
         }
         
         private void Button_Delete_Click(object sender, EventArgs e)
         {
+            if (_editNewOngoing == true)
+                return;
+
             int index = 0;
             if (List_Backup.SelectedItems.Count > 0)
             {

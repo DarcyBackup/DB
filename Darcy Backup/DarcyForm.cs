@@ -13,9 +13,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Darcy_Backup
 {
-   
     
     public partial class Form_Darcy_Panel : Form
     {
@@ -183,11 +183,31 @@ namespace Darcy_Backup
             {
                 Dynamic_Automated.Text = "Yes";
                 Button_Activate.Text = "Deactivate";
+                if (process == "Manual")
+                {
+                    Label_Automated.Visible = false;
+                    Dynamic_Automated.Visible = false;
+                }
+                else
+                {
+                    Label_Automated.Visible = true;
+                    Dynamic_Automated.Visible = true;
+                }
             }
             else
             {
                 Dynamic_Automated.Text = "No";
                 Button_Activate.Text = "Activate";
+                if (process == "Manual")
+                {
+                    Label_Automated.Visible = false;
+                    Dynamic_Automated.Visible = false;
+                }
+                else
+                {
+                    Label_Automated.Visible = true;
+                    Dynamic_Automated.Visible = true;
+                }
             }
             
             if (process == "Scheduled")
@@ -201,6 +221,12 @@ namespace Darcy_Backup
                 Dynamic_Process_Specific1.Visible = true;
                 Dynamic_Process_Specific2.Text = Entries[i].TimeOfDay;
                 Dynamic_Process_Specific2.Visible = true;
+
+                Rectangle rect = Label_Automated.Bounds;
+                Label_Automated.SetBounds(rect.X, _automatedLabelYSchedule, rect.Width, rect.Height);
+                rect = Dynamic_Automated.Bounds;
+                Dynamic_Automated.SetBounds(rect.X, _automatedLabelYSchedule, rect.Width, rect.Height);
+
             }
             else if (process == "Timer")
             {
@@ -213,6 +239,11 @@ namespace Darcy_Backup
                 Dynamic_Process_Specific1.Visible = true;
                 Dynamic_Process_Specific2.Text = "n/a";
                 Dynamic_Process_Specific2.Visible = false;
+
+                Rectangle rect = Label_Automated.Bounds;
+                Label_Automated.SetBounds(rect.X, _automatedLabelYTimer, rect.Width, rect.Height);
+                rect = Dynamic_Automated.Bounds;
+                Dynamic_Automated.SetBounds(rect.X, _automatedLabelYTimer, rect.Width, rect.Height);
             }
             else if (process == "Manual")
             {
@@ -255,7 +286,7 @@ namespace Darcy_Backup
             }
             else
             {
-                List_Log.Items.Insert(List_Log.Items.Count, item);
+                List_Log.Items.Insert(0, item);
             }
         }
 
@@ -518,6 +549,8 @@ namespace Darcy_Backup
         {
             if (_editNewOngoing == true)
                 return;
+
+
             for (int i = 0; i < Entries.Length; i++)
             {
                 string process = ProcessToString(Entries[i].Process);
@@ -525,16 +558,21 @@ namespace Darcy_Backup
                 {
                     if (Entries[i].Status == "In Queue" || Entries[i].Status == "In Progress")
                     {
+                        /*
                         Entries[i].Ongoing = true;
                         Perform(i);
                         string str = GetTimeString(DateTime.Now);
                         Entries[i].LastPerformed = str;
                         Entries[i].Status = "Resting";
                         Entries[i].Ongoing = false;
+                        */
                     }
 
-                    Entries[i].NextScheduled = "Manual Mode";
-                    Save();
+                    if (Entries[i].NextScheduled != "Manual Mode") ;
+                    {
+                        Entries[i].NextScheduled = "Manual Mode";
+                        Save();
+                    }
 
                     int selectedIndex = GetSelectedListIndex(List_Backup);
                     if (RemoveFromList(Entries[i], i) == true)
@@ -550,10 +588,13 @@ namespace Darcy_Backup
                     if (Entries[i].Automated == false)
                     {
                         //if (lp == "In Queue" || lp == "In Progress" || lp == "")
-                            //Entries[i].LastPerformed = "Manual Mode";
+                        //Entries[i].LastPerformed = "Manual Mode";
 
-                        Entries[i].NextScheduled = "Manual Mode";
-                        Save();
+                        if (Entries[i].NextScheduled != "Manual Mode")
+                        {
+                            Entries[i].NextScheduled = "Manual Mode";
+                            Save();
+                        }
 
                         int selectedIndex = GetSelectedListIndex(List_Backup);
                         if (RemoveFromList(Entries[i], i) == true)
@@ -735,6 +776,7 @@ namespace Darcy_Backup
         
         private void Label_About_Click(object sender, EventArgs e)
         {
+            /*
             Settings_Language_Panel.Visible = false;
             Label_Settings.ForeColor = Color.FromArgb(66, 66, 66);
             Settings_Panel.Visible = false;
@@ -745,6 +787,7 @@ namespace Darcy_Backup
                 About_Panel.Visible = false;
             else
                 About_Panel.Visible = true;
+                */
         }
         
         private void Language_Label_Click(object sender, EventArgs e)
@@ -817,6 +860,7 @@ namespace Darcy_Backup
 
         private void Label_Settings_Click(object sender, EventArgs e)
         {
+            /*
             About_Panel.Visible = false;
             Label_About.ForeColor = Color.FromArgb(66, 66, 66);
 
@@ -829,6 +873,7 @@ namespace Darcy_Backup
             }
             else
                 Settings_Panel.Visible = true;
+                */
         }
 
         RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -946,6 +991,9 @@ namespace Darcy_Backup
         }
         private void Button_New_Click(object sender, EventArgs e)
         {
+            if (_editNewOngoing == true)
+                return;
+
             _editNewObj = new Form_New_Entry(this, 0, Entries.Length + 1);
             _editNewObj.Show();
             _editNewOngoing = true;
@@ -953,6 +1001,8 @@ namespace Darcy_Backup
         private void Button_Edit_Click(object sender, EventArgs e)
         {
             if (List_Backup.SelectedItems.Count == 0)
+                return;
+            if (_editNewOngoing == true)
                 return;
 
             int i = List_Backup.SelectedItems[0].Index;
