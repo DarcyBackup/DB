@@ -317,13 +317,11 @@ namespace Darcy_Backup
             List_Log.Columns.Add("", 140);
             List_Log.Columns[2].TextAlign = HorizontalAlignment.Right;
 
-            AddToLog(-1, "Test func");
-
             _automatedLabelYSchedule = Label_Automated.Bounds.Y;
             _automatedLabelYTimer = Label_Process_Specific2.Bounds.Y;
 
 
-        Settings_Panel.BringToFront();
+            Settings_Panel.BringToFront();
             Settings_Language_Panel.BringToFront();
             About_Panel.BringToFront();
 

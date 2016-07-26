@@ -36,8 +36,6 @@
             this.Label_Backup = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.Label_Settings = new System.Windows.Forms.Label();
-            this.Label_About = new System.Windows.Forms.Label();
             this.Button_Edit = new System.Windows.Forms.Button();
             this.Button_New = new System.Windows.Forms.Button();
             this.Label_Toggle = new System.Windows.Forms.Label();
@@ -45,6 +43,8 @@
             this.Darcy_Top_Panel = new Darcy_Backup.DarcyTopPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.Label_Settings = new System.Windows.Forms.Label();
+            this.Label_About = new System.Windows.Forms.Label();
             this.List_Backup = new Darcy_Backup.DarcyListView();
             this.Button_Perform = new Darcy_Backup.DarcyButton();
             this.Settings_Panel = new Darcy_Backup.DarcySettingsPanel();
@@ -137,39 +137,6 @@
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
-            // Label_Settings
-            // 
-            this.Label_Settings.AutoSize = true;
-            this.Label_Settings.BackColor = System.Drawing.Color.Transparent;
-            this.Label_Settings.Font = new System.Drawing.Font("Calibri", 11F);
-            this.Label_Settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Label_Settings.Location = new System.Drawing.Point(5, 6);
-            this.Label_Settings.Name = "Label_Settings";
-            this.Label_Settings.Size = new System.Drawing.Size(57, 18);
-            this.Label_Settings.TabIndex = 21;
-            this.Label_Settings.Text = "Settings";
-            this.Label_Settings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Label_Settings.Click += new System.EventHandler(this.Label_Settings_Click);
-            this.Label_Settings.DoubleClick += new System.EventHandler(this.Label_Settings_Click);
-            this.Label_Settings.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
-            this.Label_Settings.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
-            // 
-            // Label_About
-            // 
-            this.Label_About.AutoSize = true;
-            this.Label_About.BackColor = System.Drawing.Color.Transparent;
-            this.Label_About.Font = new System.Drawing.Font("Calibri", 11F);
-            this.Label_About.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Label_About.Location = new System.Drawing.Point(306, 6);
-            this.Label_About.Name = "Label_About";
-            this.Label_About.Size = new System.Drawing.Size(46, 18);
-            this.Label_About.TabIndex = 22;
-            this.Label_About.Text = "About";
-            this.Label_About.Click += new System.EventHandler(this.Label_About_Click);
-            this.Label_About.DoubleClick += new System.EventHandler(this.Label_About_Click);
-            this.Label_About.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
-            this.Label_About.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
-            // 
             // Button_Edit
             // 
             this.Button_Edit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
@@ -248,6 +215,39 @@
             this.label1.TabIndex = 23;
             this.label1.Text = "Languages";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Label_Settings
+            // 
+            this.Label_Settings.AutoSize = true;
+            this.Label_Settings.BackColor = System.Drawing.Color.Transparent;
+            this.Label_Settings.Font = new System.Drawing.Font("Calibri", 11F);
+            this.Label_Settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Label_Settings.Location = new System.Drawing.Point(5, 6);
+            this.Label_Settings.Name = "Label_Settings";
+            this.Label_Settings.Size = new System.Drawing.Size(57, 18);
+            this.Label_Settings.TabIndex = 21;
+            this.Label_Settings.Text = "Settings";
+            this.Label_Settings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Settings.Click += new System.EventHandler(this.Label_Settings_Click);
+            this.Label_Settings.DoubleClick += new System.EventHandler(this.Label_Settings_Click);
+            this.Label_Settings.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Label_Settings.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
+            // 
+            // Label_About
+            // 
+            this.Label_About.AutoSize = true;
+            this.Label_About.BackColor = System.Drawing.Color.Transparent;
+            this.Label_About.Font = new System.Drawing.Font("Calibri", 11F);
+            this.Label_About.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Label_About.Location = new System.Drawing.Point(306, 6);
+            this.Label_About.Name = "Label_About";
+            this.Label_About.Size = new System.Drawing.Size(46, 18);
+            this.Label_About.TabIndex = 22;
+            this.Label_About.Text = "About";
+            this.Label_About.Click += new System.EventHandler(this.Label_About_Click);
+            this.Label_About.DoubleClick += new System.EventHandler(this.Label_About_Click);
+            this.Label_About.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Label_About.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // List_Backup
             // 
