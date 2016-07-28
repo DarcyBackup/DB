@@ -183,7 +183,7 @@
             // 
             // About_Panel
             // 
-            this.About_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(253)))), ((int)(((byte)(255)))));
+            this.About_Panel.BackColor = System.Drawing.Color.White;
             this.About_Panel.Controls.Add(this.About_Label_License);
             this.About_Panel.Controls.Add(this.About_Label_Version);
             this.About_Panel.Controls.Add(this.About_Label_Title);
@@ -192,6 +192,8 @@
             this.About_Panel.Size = new System.Drawing.Size(172, 125);
             this.About_Panel.TabIndex = 25;
             this.About_Panel.Visible = false;
+            this.About_Panel.Click += new System.EventHandler(this.Panel_Click);
+            this.About_Panel.DoubleClick += new System.EventHandler(this.Panel_Click);
             // 
             // About_Label_License
             // 
@@ -240,6 +242,8 @@
             this.Theme_Panel.Size = new System.Drawing.Size(96, 102);
             this.Theme_Panel.TabIndex = 26;
             this.Theme_Panel.Visible = false;
+            this.Theme_Panel.Click += new System.EventHandler(this.Panel_Click);
+            this.Theme_Panel.DoubleClick += new System.EventHandler(this.Panel_Click);
             // 
             // Theme_Label_Gray
             // 
@@ -300,6 +304,8 @@
             this.Language_Panel.Size = new System.Drawing.Size(96, 102);
             this.Language_Panel.TabIndex = 25;
             this.Language_Panel.Visible = false;
+            this.Language_Panel.Click += new System.EventHandler(this.Panel_Click);
+            this.Language_Panel.DoubleClick += new System.EventHandler(this.Panel_Click);
             // 
             // Language_Label_English
             // 
@@ -360,6 +366,8 @@
             this.Settings_Panel.Size = new System.Drawing.Size(143, 102);
             this.Settings_Panel.TabIndex = 23;
             this.Settings_Panel.Visible = false;
+            this.Settings_Panel.Click += new System.EventHandler(this.Panel_Click);
+            this.Settings_Panel.DoubleClick += new System.EventHandler(this.Panel_Click);
             // 
             // Settings_Label_Minimized
             // 
@@ -434,6 +442,7 @@
             this.Label_Themes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Label_Themes.Click += new System.EventHandler(this.Label_Settings_Click);
             this.Label_Themes.DoubleClick += new System.EventHandler(this.Label_Settings_Click);
+            this.Label_Themes.Leave += new System.EventHandler(this.Label_Settings_Focus_Leave);
             this.Label_Themes.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_Themes.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
@@ -450,6 +459,7 @@
             this.Label_Language.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Label_Language.Click += new System.EventHandler(this.Label_Settings_Click);
             this.Label_Language.DoubleClick += new System.EventHandler(this.Label_Settings_Click);
+            this.Label_Language.Leave += new System.EventHandler(this.Label_Settings_Focus_Leave);
             this.Label_Language.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_Language.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
@@ -466,6 +476,7 @@
             this.Label_Settings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Label_Settings.Click += new System.EventHandler(this.Label_Settings_Click);
             this.Label_Settings.DoubleClick += new System.EventHandler(this.Label_Settings_Click);
+            this.Label_Settings.Leave += new System.EventHandler(this.Label_Settings_Focus_Leave);
             this.Label_Settings.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_Settings.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
@@ -482,6 +493,7 @@
             this.Label_About.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Label_About.Click += new System.EventHandler(this.Label_Settings_Click);
             this.Label_About.DoubleClick += new System.EventHandler(this.Label_Settings_Click);
+            this.Label_About.Leave += new System.EventHandler(this.Label_Settings_Focus_Leave);
             this.Label_About.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_About.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
@@ -497,6 +509,7 @@
             this.List_Backup.TabIndex = 10;
             this.List_Backup.UseCompatibleStateImageBehavior = false;
             this.List_Backup.SelectedIndexChanged += new System.EventHandler(this.List_Backup_Selection_Changed);
+            this.List_Backup.DoubleClick += new System.EventHandler(this.List_Backup_DoubleClick);
             // 
             // Button_Perform
             // 
@@ -538,6 +551,8 @@
             this.Panel_Selected_Log.Name = "Panel_Selected_Log";
             this.Panel_Selected_Log.Size = new System.Drawing.Size(436, 616);
             this.Panel_Selected_Log.TabIndex = 26;
+            this.Panel_Selected_Log.Click += new System.EventHandler(this.Panel_Selected_Log_Click);
+            this.Panel_Selected_Log.DoubleClick += new System.EventHandler(this.Panel_Selected_Log_Click);
             // 
             // Dynamic_Mode
             // 
@@ -754,6 +769,8 @@
             this.Text = "Darcy Backup";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DarcyFormClosing);
             this.ResizeEnd += new System.EventHandler(this.Form_Darcy_ResizeEnd);
+            this.Click += new System.EventHandler(this.Form_Darcy_Panel_Click);
+            this.DoubleClick += new System.EventHandler(this.Form_Darcy_Panel_Click);
             this.Resize += new System.EventHandler(this.Form_Darcy_Resize);
             this.About_Panel.ResumeLayout(false);
             this.About_Panel.PerformLayout();

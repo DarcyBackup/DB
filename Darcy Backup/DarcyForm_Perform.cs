@@ -49,6 +49,7 @@ namespace Darcy_Backup
             //if (checksum == false)
                 //return false;
 
+            
             string checksum1, checksum2;
             using (var md5 = MD5.Create())
             {
@@ -57,7 +58,6 @@ namespace Darcy_Backup
                     checksum1 = Encoding.Default.GetString(md5.ComputeHash(stream));
                 }
             }
-
             using (var md5 = MD5.Create())
             {
                 using (var stream = File.OpenRead(path2))

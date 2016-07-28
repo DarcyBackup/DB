@@ -853,7 +853,7 @@ namespace Darcy_Backup
         
         private void Language_Label_Click(object sender, EventArgs e)
         {
-
+            ((Label)sender).Focus();
             if (sender == Language_Label_English)
                 Language_Label_English.Image = Properties.Resources.Check2;
             else
@@ -927,8 +927,8 @@ namespace Darcy_Backup
 
         private void Label_Settings_Click(object sender, EventArgs e)
         {
+            Label_Settings.Focus();
             Color color = Color.FromArgb(66, 66, 66);
-
             int index = 0;
 
             for (int i = 0; i < _privateSettingsPanels.Count(); i++)
@@ -1056,7 +1056,7 @@ namespace Darcy_Backup
             if (_editNewOngoing == true)
                 return;
 
-            _editNewObj = new Form_New_Entry(this, 0, Entries.Length + 1);
+            _editNewObj = new Form_New_Entry(this, 0, Entries.Length + 1, _themeColor);
             _editNewObj.Show();
             _editNewOngoing = true;
         }
@@ -1069,7 +1069,7 @@ namespace Darcy_Backup
 
             int i = List_Backup.SelectedItems[0].Index;
 
-            _editNewObj = new Form_New_Entry(this, 1, i);
+            _editNewObj = new Form_New_Entry(this, 1, i, _themeColor);
             _editNewObj.Show();
             _editNewOngoing = true;
         }
@@ -1081,24 +1081,25 @@ namespace Darcy_Backup
             Application.Exit();
         }
 
-        
+        private Color _themeColor;
         private void SetTheme(string theme)
         {
-            Color color = Color.FromArgb(85, 85, 85);
+            _themeColor = Color.FromArgb(85, 85, 85);
 
             if (theme == "Red")
-                color = Color.FromArgb(188, 18, 10);
+                _themeColor = Color.FromArgb(188, 18, 10);
             else if (theme == "Blue")
-                color = Color.FromArgb(64, 52, 203);
+                _themeColor = Color.FromArgb(64, 52, 203);
 
-            Label_Backup.ForeColor = color;
-            Label_HeaderSelected.ForeColor = color;
-            Label_HeaderLog.ForeColor = color;
+            Label_Backup.ForeColor = _themeColor;
+            Label_HeaderSelected.ForeColor = _themeColor;
+            Label_HeaderLog.ForeColor = _themeColor;
+            About_Label_Title.ForeColor = _themeColor;
         }
 
         private void Theme_Label_Click(object sender, EventArgs e)
         {
-            
+            ((Label)sender).Focus();
             if (sender == Theme_Label_Gray)
                 Theme_Label_Gray.Image = Properties.Resources.Check2;
             else
@@ -1134,7 +1135,7 @@ namespace Darcy_Backup
                     string entry = List_Log.SelectedItems[0].SubItems[0].Text;
                     string time = List_Log.SelectedItems[0].SubItems[2].Text;
                     string error = List_Log.SelectedItems[0].SubItems[1].Text;
-                    _DarcyLogForm = new DarcyLogForm(entry, time, error);
+                    _DarcyLogForm = new DarcyLogForm(entry, time, error, _themeColor);
                     _DarcyLogForm.Visible = true;
                 }
             }
@@ -1142,6 +1143,7 @@ namespace Darcy_Backup
 
         private void Settings_Label_Click(object sender, EventArgs e)
         {
+            ((Label)sender).Focus();
             if (sender == Settings_Label_Autorun)
             {
                 if (((Label)sender).Image != null)
@@ -1182,6 +1184,55 @@ namespace Darcy_Backup
                 }
             }
             Properties.Settings.Default.Save();
+        }
+
+        private void List_Backup_DoubleClick(object sender, EventArgs e)
+        {
+            if (List_Backup.SelectedItems.Count != 0)
+            {
+                if (List_Backup.SelectedItems[0].SubItems.Count != 0)
+                {
+                    if (_editNewOngoing == true)
+                        return;
+                    if (_DarcyLogForm != null)
+                        _DarcyLogForm.Dispose();
+
+                    int i = List_Backup.SelectedItems[0].Index;
+
+                    _editNewObj = new Form_New_Entry(this, 1, i, _themeColor);
+                    _editNewObj.Show();
+                    _editNewOngoing = true;
+                }
+            }
+        }
+
+        private void Form_Darcy_Panel_Click(object sender, EventArgs e)
+        {
+            Panel_Selected_Log.Focus();
+        }
+
+        private void Panel_Selected_Log_Click(object sender, EventArgs e)
+        {
+            ((Panel)sender).Focus();
+        }
+
+        private void Panel_Click(object sender, EventArgs e)
+        {
+            ((Panel)sender).Focus();
+        }
+
+        private void Label_Settings_Focus_Leave(object sender, EventArgs e)
+        {
+            Label_Settings.Focus();
+            Color color = Color.FromArgb(66, 66, 66);
+
+            for (int i = 0; i < _privateSettingsPanels.Count(); i++)
+            {
+                if (_privateSettingsPanels[i] == null)
+                    continue;
+                _privateSettingsPanels[i].Visible = false;
+                _privateSettingsLabels[i].ForeColor = color;
+            }
         }
     }
 }

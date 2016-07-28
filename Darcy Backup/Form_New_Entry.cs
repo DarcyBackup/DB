@@ -1056,11 +1056,14 @@ namespace Darcy_Backup
         private int Id;
         private Form_Darcy_Panel Main;
         private EntryClass Entry;
-        public Form_New_Entry(Form_Darcy_Panel main, int type, int id)
+
+        private Color _themeColor;
+        public Form_New_Entry(Form_Darcy_Panel main, int type, int id, Color theme)
         {
             Main = main;
             Type = type;
             Id = id;
+            _themeColor = theme;
             if (type == 1)
                 Entry = main.GetEntry(id);
 
@@ -1196,6 +1199,7 @@ namespace Darcy_Backup
                 Label_Entry.Text = "Entry " + (Id + 1).ToString();
             }
 
+            Label_Entry.ForeColor = _themeColor;
 
             Label_Error.Visible = false;
 
