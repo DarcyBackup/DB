@@ -16,7 +16,6 @@ namespace Darcy_Backup
     public partial class Form_Darcy_Panel
     {
         
-
         public Form_Darcy_Panel()
         {
 
@@ -37,6 +36,8 @@ namespace Darcy_Backup
 
             InitializeLanguage();
 
+            InitializeTheme();
+
             InitializeCache();
 
             //CheckForUpdates();
@@ -46,24 +47,40 @@ namespace Darcy_Backup
         private void CheckForUpdates()
         {
             WebClient client = new WebClient();
-            Stream stream = client.OpenRead("http://www.darcybackup.com/deploy/currentVersion.php");
+            Stream stream = client.OpenRead("https://www.darcybackup.com/deploy/currentVersion.php");
             StreamReader reader = new StreamReader(stream);
             String content = reader.ReadToEnd();
+
+            int debug = 0;
+        }
+
+        private void InitializeTheme()
+        {
+            string theme = Properties.Settings.Default.Theme;
+            if (theme.Length == 0)
+                theme = "Gray";
+
+            if (theme == "Gray")
+                Theme_Label_Gray.Image = Properties.Resources.Check1;
+            else if (theme == "Red")
+                Theme_Label_Red.Image = Properties.Resources.Check1;
+            else if (theme == "Blue")
+                Theme_Label_Blue.Image = Properties.Resources.Check1;
+
+            SetTheme(theme);
         }
         private void InitializeLanguage()
         {
             string language = Properties.Settings.Default.Language;
             if (language.Length == 0)
                 language = "English";
-
+            
             if (language == "English")
-                Language_Label_English.Font = new Font(Language_Label_English.Font, FontStyle.Italic);
+                Language_Label_English.Image = Properties.Resources.Check1;
             else if (language == "Swedish")
-                Language_Label_Swedish.Font = new Font(Language_Label_Swedish.Font, FontStyle.Italic);
+                Language_Label_Swedish.Image = Properties.Resources.Check1;
             else if (language == "Finnish")
-                Language_Label_Finnish.Font = new Font(Language_Label_Finnish.Font, FontStyle.Italic);
-
-
+                Language_Label_Finnish.Image = Properties.Resources.Check1;
         }
         /*
         //  START OF RESIZE
@@ -330,37 +347,26 @@ namespace Darcy_Backup
             List_Log.GridLines = false;
             List_Log.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 
-            List_Log.Columns.Add("", 129);
-            List_Log.Columns.Add("", 109);
-            List_Log.Columns.Add("", 140);
+            List_Log.Columns.Add("", 99);
+            List_Log.Columns.Add("", 159);
+            List_Log.Columns.Add("", 120);
             List_Log.Columns[2].TextAlign = HorizontalAlignment.Right;
 
             _automatedLabelYSchedule = Label_Automated.Bounds.Y;
             _automatedLabelYTimer = Label_Process_Specific2.Bounds.Y;
             
 
-            About_Label_Version.Text = "Beta Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            About_Label_Version.Text = "Beta Version " + _assemblyVersion;
 
             //for (int i = 0; i < 15; i ++)
                 //AddToLog(0, "success");
 
-            if (rkApp.GetValue("DarcyBackup") == null)
-            {
-                Settings_Check_Autorun.Checked = false;
-            }
-            else
-            {
-                Settings_Check_Autorun.Checked = true;
-            }
+            if (_rkApp.GetValue("DarcyBackup") != null)
+                Settings_Label_Autorun.Image = Properties.Resources.Check1;
             if (Properties.Settings.Default.MinimizedOnStartup == true)
-            {
-                Settings_Check_Minimized.Checked = true;
-            }
+                Settings_Label_Minimized.Image = Properties.Resources.Check1;
             if (Properties.Settings.Default.ToTray == true)
-            {
-                Settings_Check_Tray.Checked = true;
-            }
-
+                Settings_Label_Tray.Image = Properties.Resources.Check1;
 
             Update_SelectedEntry();
 

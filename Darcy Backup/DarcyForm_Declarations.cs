@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace Darcy_Backup
 
         private string _currPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         private string _fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\db.dbss";
+        
+        RegistryKey _rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+        string _assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         private EntryClass[] Entries;
 

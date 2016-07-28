@@ -45,9 +45,9 @@ namespace Darcy_Backup
                 return true;
 
 
-            bool checksum = false; //This will later be an option in the interface
-            if (checksum == false)
-                return false;
+            //bool checksum = false; //This will later be an option in the interface
+            //if (checksum == false)
+                //return false;
 
             string checksum1, checksum2;
             using (var md5 = MD5.Create())
@@ -102,8 +102,8 @@ namespace Darcy_Backup
             {
                 if (directory == false)
                 {
-                    MessageBox.Show("Could not find " + source , "Error", MessageBoxButtons.OK);
-                    AddToLog(entry, "error 1");
+                    //MessageBox.Show("Could not find " + source , "Error", MessageBoxButtons.OK);
+                    AddToLog(entry, "Could not find " + source);
                     return;
                 }
             }
@@ -113,10 +113,15 @@ namespace Darcy_Backup
                 {
                     System.IO.Directory.CreateDirectory(Entries[entry].Destination);
                 }
+                catch (System.IO.DirectoryNotFoundException)
+                {
+                    AddToLog(entry, "Destination not found " + Entries[entry].Destination);
+                    return;
+                }
                 catch (System.NotSupportedException)
                 {
-                    MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
-                    AddToLog(entry, "error 2");
+                    //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
+                    AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
                     return;
                 }
             }
@@ -142,12 +147,12 @@ namespace Darcy_Backup
                     {
                         try
                         {
-                            System.IO.File.Copy(source, destination + filename, true);
+                            System.IO.File.Copy(source, destination + "\\" + filename, true);
                         }
                         catch (IOException error)
                         {
-                            MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                            AddToLog(entry, "error 3");
+                            //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                            AddToLog(entry, error.Message);
                             return;
                         }
                         
@@ -173,8 +178,8 @@ namespace Darcy_Backup
                     }
                     catch (IOException error)
                     {
-                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                        AddToLog(entry, "error 4");
+                        //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        AddToLog(entry, error.Message);
                         return;
                     }
 
@@ -187,8 +192,8 @@ namespace Darcy_Backup
                     }
                     catch (IOException error)
                     {
-                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                        AddToLog(entry, "error 5");
+                        //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        AddToLog(entry, error.Message);
                         return;
                     }
                 }
@@ -215,7 +220,24 @@ namespace Darcy_Backup
                     {
                         string destAdd = folders[i].Remove(0, folders[0].Length);
                         if (System.IO.Directory.Exists(Entries[entry].Destination + destAdd) == false)
-                            System.IO.Directory.CreateDirectory(Entries[entry].Destination + destAdd);
+                        {
+                            try
+                            {
+                                System.IO.Directory.CreateDirectory(Entries[entry].Destination + destAdd);
+                            }
+                            catch (System.IO.DirectoryNotFoundException)
+                            {
+                                AddToLog(entry, "Destination not found " + Entries[entry].Destination + destAdd);
+                                return;
+                            }
+                            catch (System.NotSupportedException)
+                            {
+                                //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
+                                AddToLog(entry, "Illegal destination " + Entries[entry].Destination + destAdd);
+                                return;
+                            }
+                        }
+                        
 
                         files = System.IO.Directory.GetFiles(folders[i]);
 
@@ -229,11 +251,12 @@ namespace Darcy_Backup
                                 try
                                 {
                                     System.IO.File.Copy(s, destFile, true);
+                                    File.SetLastWriteTime(destFile, File.GetLastWriteTime(s));
                                 }
                                 catch (IOException error)
                                 {
-                                    MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                                    AddToLog(entry, "error 6");
+                                    //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                                    AddToLog(entry, error.Message);
                                     return;
                                 }
                             }
@@ -247,28 +270,115 @@ namespace Darcy_Backup
                         destination = destination.Remove(destination.Length - 1, 1);
 
                     destination += DateTime.Now.ToString(" (yyyy-MM-dd HH.mm)");
-                    System.IO.Directory.CreateDirectory(destination);
+                    try
+                    {
+                        System.IO.Directory.CreateDirectory(destination);
+                    }
+                    catch (System.IO.DirectoryNotFoundException)
+                    {
+                        AddToLog(entry, "Destination not found " + destination);
+                        return;
+                    }
+                    catch (System.NotSupportedException)
+                    {
+                        //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
+                        AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
+                        return;
+                    }
+
 
                     foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
-                        Directory.CreateDirectory(dirPath.Replace(source, destination));
+                    {
+                        try
+                        {
+                            Directory.CreateDirectory(dirPath.Replace(source, destination));
+                        }
+                        catch (System.IO.DirectoryNotFoundException)
+                        {
+                            AddToLog(entry, "Destination not found " + destination);
+                            return;
+                        }
+                        catch (System.NotSupportedException)
+                        {
+                            //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
+                            AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
+                            return;
+                        }
+                    }
 
                     foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
-                        File.Copy(newPath, newPath.Replace(source, destination), true);
+                    {
+                        try
+                        {
+                            File.Copy(newPath, newPath.Replace(source, destination), true);
+                        }
+                        catch (IOException error)
+                        {
+                            //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                            AddToLog(entry, error.Message);
+                            return;
+                        }
+                    }
                 }
                 else if (mode == "Replace Files")
                 {
                     if (System.IO.Directory.Exists(Entries[entry].Destination) == false)
-                        System.IO.Directory.CreateDirectory(Entries[entry].Destination);
+                    {
+                        try
+                        {
+                            System.IO.Directory.CreateDirectory(Entries[entry].Destination); 
+                        }
+                        catch (System.IO.DirectoryNotFoundException)
+                        {
+                            AddToLog(entry, "Destination not found " + Entries[entry].Destination);
+                            return;
+                        }
+                        catch (System.NotSupportedException)
+                        {
+                            //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
+                            AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
+                            return;
+                        }
+                    }
+
+
 
                     foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
-                        Directory.CreateDirectory(dirPath.Replace(source, destination));
+                    {
+                        try
+                        {
+                            Directory.CreateDirectory(dirPath.Replace(source, destination));
+                        }
+                        catch (System.IO.DirectoryNotFoundException)
+                        {
+                            AddToLog(entry, "Destination not found " + destination);
+                            return;
+                        }
+                        catch (System.NotSupportedException)
+                        {
+                            //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
+                            AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
+                            return;
+                        }
+                    }
 
                     foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
-                        File.Copy(newPath, newPath.Replace(source, destination), true);
+                    {
+                        try
+                        {
+                            File.Copy(newPath, newPath.Replace(source, destination), true);
+                        }
+                        catch (IOException error)
+                        {
+                            //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                            AddToLog(entry, error.Message);
+                            return;
+                        }
+                    }
                 }
             }
 
-            AddToLog(entry, "Success");
+            AddToLog(entry, "Backup Succeeded");
         }
     }
 }

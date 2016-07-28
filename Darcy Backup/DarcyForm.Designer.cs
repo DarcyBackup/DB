@@ -45,17 +45,17 @@
             this.About_Label_Version = new System.Windows.Forms.Label();
             this.About_Label_Title = new System.Windows.Forms.Label();
             this.Theme_Panel = new Darcy_Backup.DarcySettingsPanel();
-            this.Theme_Label_Theme1 = new System.Windows.Forms.Label();
-            this.Theme_Label_Theme3 = new System.Windows.Forms.Label();
-            this.Theme_Label_Theme2 = new System.Windows.Forms.Label();
+            this.Theme_Label_Gray = new System.Windows.Forms.Label();
+            this.Theme_Label_Blue = new System.Windows.Forms.Label();
+            this.Theme_Label_Red = new System.Windows.Forms.Label();
             this.Language_Panel = new Darcy_Backup.DarcySettingsPanel();
             this.Language_Label_English = new System.Windows.Forms.Label();
             this.Language_Label_Finnish = new System.Windows.Forms.Label();
             this.Language_Label_Swedish = new System.Windows.Forms.Label();
             this.Settings_Panel = new Darcy_Backup.DarcySettingsPanel();
-            this.Settings_Check_Tray = new System.Windows.Forms.CheckBox();
-            this.Settings_Check_Minimized = new System.Windows.Forms.CheckBox();
-            this.Settings_Check_Autorun = new System.Windows.Forms.CheckBox();
+            this.Settings_Label_Minimized = new System.Windows.Forms.Label();
+            this.Settings_Label_Tray = new System.Windows.Forms.Label();
+            this.Settings_Label_Autorun = new System.Windows.Forms.Label();
             this.Darcy_Top_Panel = new Darcy_Backup.DarcyTopPanel();
             this.Label_Themes = new System.Windows.Forms.Label();
             this.Label_Language = new System.Windows.Forms.Label();
@@ -124,7 +124,7 @@
             this.Label_Backup.AutoSize = true;
             this.Label_Backup.Font = new System.Drawing.Font("Calibri Light", 20F);
             this.Label_Backup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            this.Label_Backup.Location = new System.Drawing.Point(445, 96);
+            this.Label_Backup.Location = new System.Drawing.Point(442, 96);
             this.Label_Backup.Name = "Label_Backup";
             this.Label_Backup.Size = new System.Drawing.Size(135, 33);
             this.Label_Backup.TabIndex = 13;
@@ -232,47 +232,62 @@
             // Theme_Panel
             // 
             this.Theme_Panel.BackColor = System.Drawing.Color.Transparent;
-            this.Theme_Panel.Controls.Add(this.Theme_Label_Theme1);
-            this.Theme_Panel.Controls.Add(this.Theme_Label_Theme3);
-            this.Theme_Panel.Controls.Add(this.Theme_Label_Theme2);
+            this.Theme_Panel.Controls.Add(this.Theme_Label_Gray);
+            this.Theme_Panel.Controls.Add(this.Theme_Label_Blue);
+            this.Theme_Panel.Controls.Add(this.Theme_Label_Red);
             this.Theme_Panel.Location = new System.Drawing.Point(1370, 27);
             this.Theme_Panel.Name = "Theme_Panel";
             this.Theme_Panel.Size = new System.Drawing.Size(96, 102);
             this.Theme_Panel.TabIndex = 26;
             this.Theme_Panel.Visible = false;
             // 
-            // Theme_Label_Theme1
+            // Theme_Label_Gray
             // 
-            this.Theme_Label_Theme1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Theme_Label_Theme1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Theme_Label_Theme1.Location = new System.Drawing.Point(7, 20);
-            this.Theme_Label_Theme1.Name = "Theme_Label_Theme1";
-            this.Theme_Label_Theme1.Size = new System.Drawing.Size(81, 23);
-            this.Theme_Label_Theme1.TabIndex = 0;
-            this.Theme_Label_Theme1.Text = "Theme 1";
-            this.Theme_Label_Theme1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Theme_Label_Gray.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Theme_Label_Gray.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Theme_Label_Gray.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.Theme_Label_Gray.Location = new System.Drawing.Point(7, 20);
+            this.Theme_Label_Gray.Name = "Theme_Label_Gray";
+            this.Theme_Label_Gray.Size = new System.Drawing.Size(81, 23);
+            this.Theme_Label_Gray.TabIndex = 0;
+            this.Theme_Label_Gray.Text = "Gray";
+            this.Theme_Label_Gray.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Theme_Label_Gray.Click += new System.EventHandler(this.Theme_Label_Click);
+            this.Theme_Label_Gray.DoubleClick += new System.EventHandler(this.Theme_Label_Click);
+            this.Theme_Label_Gray.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Theme_Label_Gray.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
-            // Theme_Label_Theme3
+            // Theme_Label_Blue
             // 
-            this.Theme_Label_Theme3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Theme_Label_Theme3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Theme_Label_Theme3.Location = new System.Drawing.Point(7, 72);
-            this.Theme_Label_Theme3.Name = "Theme_Label_Theme3";
-            this.Theme_Label_Theme3.Size = new System.Drawing.Size(81, 23);
-            this.Theme_Label_Theme3.TabIndex = 2;
-            this.Theme_Label_Theme3.Text = "Theme 3";
-            this.Theme_Label_Theme3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Theme_Label_Blue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Theme_Label_Blue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Theme_Label_Blue.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.Theme_Label_Blue.Location = new System.Drawing.Point(7, 72);
+            this.Theme_Label_Blue.Name = "Theme_Label_Blue";
+            this.Theme_Label_Blue.Size = new System.Drawing.Size(81, 23);
+            this.Theme_Label_Blue.TabIndex = 2;
+            this.Theme_Label_Blue.Text = "Blue";
+            this.Theme_Label_Blue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Theme_Label_Blue.Click += new System.EventHandler(this.Theme_Label_Click);
+            this.Theme_Label_Blue.DoubleClick += new System.EventHandler(this.Theme_Label_Click);
+            this.Theme_Label_Blue.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Theme_Label_Blue.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
-            // Theme_Label_Theme2
+            // Theme_Label_Red
             // 
-            this.Theme_Label_Theme2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Theme_Label_Theme2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Theme_Label_Theme2.Location = new System.Drawing.Point(7, 46);
-            this.Theme_Label_Theme2.Name = "Theme_Label_Theme2";
-            this.Theme_Label_Theme2.Size = new System.Drawing.Size(81, 23);
-            this.Theme_Label_Theme2.TabIndex = 1;
-            this.Theme_Label_Theme2.Text = "Theme 2";
-            this.Theme_Label_Theme2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Theme_Label_Red.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Theme_Label_Red.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Theme_Label_Red.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.Theme_Label_Red.Location = new System.Drawing.Point(7, 46);
+            this.Theme_Label_Red.Name = "Theme_Label_Red";
+            this.Theme_Label_Red.Size = new System.Drawing.Size(81, 23);
+            this.Theme_Label_Red.TabIndex = 1;
+            this.Theme_Label_Red.Text = "Red";
+            this.Theme_Label_Red.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Theme_Label_Red.Click += new System.EventHandler(this.Theme_Label_Click);
+            this.Theme_Label_Red.DoubleClick += new System.EventHandler(this.Theme_Label_Click);
+            this.Theme_Label_Red.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Theme_Label_Red.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Language_Panel
             // 
@@ -290,6 +305,7 @@
             // 
             this.Language_Label_English.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Language_Label_English.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Language_Label_English.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.Language_Label_English.Location = new System.Drawing.Point(7, 20);
             this.Language_Label_English.Name = "Language_Label_English";
             this.Language_Label_English.Size = new System.Drawing.Size(81, 23);
@@ -297,13 +313,15 @@
             this.Language_Label_English.Text = "English";
             this.Language_Label_English.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Language_Label_English.Click += new System.EventHandler(this.Language_Label_Click);
-            this.Language_Label_English.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
-            this.Language_Label_English.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
+            this.Language_Label_English.DoubleClick += new System.EventHandler(this.Language_Label_Click);
+            this.Language_Label_English.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Language_Label_English.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Language_Label_Finnish
             // 
             this.Language_Label_Finnish.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Language_Label_Finnish.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Language_Label_Finnish.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.Language_Label_Finnish.Location = new System.Drawing.Point(7, 72);
             this.Language_Label_Finnish.Name = "Language_Label_Finnish";
             this.Language_Label_Finnish.Size = new System.Drawing.Size(81, 23);
@@ -311,13 +329,15 @@
             this.Language_Label_Finnish.Text = "Finnish";
             this.Language_Label_Finnish.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Language_Label_Finnish.Click += new System.EventHandler(this.Language_Label_Click);
-            this.Language_Label_Finnish.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
-            this.Language_Label_Finnish.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
+            this.Language_Label_Finnish.DoubleClick += new System.EventHandler(this.Language_Label_Click);
+            this.Language_Label_Finnish.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Language_Label_Finnish.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Language_Label_Swedish
             // 
             this.Language_Label_Swedish.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Language_Label_Swedish.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Language_Label_Swedish.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.Language_Label_Swedish.Location = new System.Drawing.Point(7, 46);
             this.Language_Label_Swedish.Name = "Language_Label_Swedish";
             this.Language_Label_Swedish.Size = new System.Drawing.Size(81, 23);
@@ -325,71 +345,69 @@
             this.Language_Label_Swedish.Text = "Swedish";
             this.Language_Label_Swedish.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Language_Label_Swedish.Click += new System.EventHandler(this.Language_Label_Click);
-            this.Language_Label_Swedish.MouseEnter += new System.EventHandler(this.MouseEnter_LanguageLabels);
-            this.Language_Label_Swedish.MouseLeave += new System.EventHandler(this.MouseLeave_LanguageLabels);
+            this.Language_Label_Swedish.DoubleClick += new System.EventHandler(this.Language_Label_Click);
+            this.Language_Label_Swedish.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Language_Label_Swedish.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Settings_Panel
             // 
             this.Settings_Panel.BackColor = System.Drawing.Color.Transparent;
-            this.Settings_Panel.Controls.Add(this.Settings_Check_Tray);
-            this.Settings_Panel.Controls.Add(this.Settings_Check_Minimized);
-            this.Settings_Panel.Controls.Add(this.Settings_Check_Autorun);
+            this.Settings_Panel.Controls.Add(this.Settings_Label_Minimized);
+            this.Settings_Panel.Controls.Add(this.Settings_Label_Tray);
+            this.Settings_Panel.Controls.Add(this.Settings_Label_Autorun);
             this.Settings_Panel.Location = new System.Drawing.Point(1119, 27);
             this.Settings_Panel.Name = "Settings_Panel";
             this.Settings_Panel.Size = new System.Drawing.Size(143, 102);
             this.Settings_Panel.TabIndex = 23;
             this.Settings_Panel.Visible = false;
             // 
-            // Settings_Check_Tray
+            // Settings_Label_Minimized
             // 
-            this.Settings_Check_Tray.BackColor = System.Drawing.Color.Transparent;
-            this.Settings_Check_Tray.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.Settings_Check_Tray.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Settings_Check_Tray.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Settings_Check_Tray.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Settings_Check_Tray.Location = new System.Drawing.Point(7, 46);
-            this.Settings_Check_Tray.Name = "Settings_Check_Tray";
-            this.Settings_Check_Tray.Size = new System.Drawing.Size(132, 22);
-            this.Settings_Check_Tray.TabIndex = 1;
-            this.Settings_Check_Tray.Text = "Minimize to tray";
-            this.Settings_Check_Tray.UseVisualStyleBackColor = false;
-            this.Settings_Check_Tray.CheckedChanged += new System.EventHandler(this.Settings_Check_Tray_CheckedChanged);
-            this.Settings_Check_Tray.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
-            this.Settings_Check_Tray.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
+            this.Settings_Label_Minimized.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Settings_Label_Minimized.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Settings_Label_Minimized.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.Settings_Label_Minimized.Location = new System.Drawing.Point(7, 72);
+            this.Settings_Label_Minimized.Name = "Settings_Label_Minimized";
+            this.Settings_Label_Minimized.Size = new System.Drawing.Size(133, 23);
+            this.Settings_Label_Minimized.TabIndex = 5;
+            this.Settings_Label_Minimized.Text = "Start minimized";
+            this.Settings_Label_Minimized.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Settings_Label_Minimized.Click += new System.EventHandler(this.Settings_Label_Click);
+            this.Settings_Label_Minimized.DoubleClick += new System.EventHandler(this.Settings_Label_Click);
+            this.Settings_Label_Minimized.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Settings_Label_Minimized.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
-            // Settings_Check_Minimized
+            // Settings_Label_Tray
             // 
-            this.Settings_Check_Minimized.BackColor = System.Drawing.Color.Transparent;
-            this.Settings_Check_Minimized.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.Settings_Check_Minimized.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Settings_Check_Minimized.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Settings_Check_Minimized.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Settings_Check_Minimized.Location = new System.Drawing.Point(7, 72);
-            this.Settings_Check_Minimized.Name = "Settings_Check_Minimized";
-            this.Settings_Check_Minimized.Size = new System.Drawing.Size(132, 24);
-            this.Settings_Check_Minimized.TabIndex = 2;
-            this.Settings_Check_Minimized.Text = "Start minimized";
-            this.Settings_Check_Minimized.UseVisualStyleBackColor = false;
-            this.Settings_Check_Minimized.CheckedChanged += new System.EventHandler(this.Settings_Check_Minimized_CheckedChanged);
-            this.Settings_Check_Minimized.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
-            this.Settings_Check_Minimized.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
+            this.Settings_Label_Tray.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Settings_Label_Tray.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Settings_Label_Tray.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.Settings_Label_Tray.Location = new System.Drawing.Point(7, 46);
+            this.Settings_Label_Tray.Name = "Settings_Label_Tray";
+            this.Settings_Label_Tray.Size = new System.Drawing.Size(133, 23);
+            this.Settings_Label_Tray.TabIndex = 4;
+            this.Settings_Label_Tray.Text = "Minimize to tray";
+            this.Settings_Label_Tray.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Settings_Label_Tray.Click += new System.EventHandler(this.Settings_Label_Click);
+            this.Settings_Label_Tray.DoubleClick += new System.EventHandler(this.Settings_Label_Click);
+            this.Settings_Label_Tray.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Settings_Label_Tray.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
-            // Settings_Check_Autorun
+            // Settings_Label_Autorun
             // 
-            this.Settings_Check_Autorun.BackColor = System.Drawing.Color.Transparent;
-            this.Settings_Check_Autorun.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.Settings_Check_Autorun.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Settings_Check_Autorun.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Settings_Check_Autorun.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.Settings_Check_Autorun.Location = new System.Drawing.Point(7, 20);
-            this.Settings_Check_Autorun.Name = "Settings_Check_Autorun";
-            this.Settings_Check_Autorun.Size = new System.Drawing.Size(132, 22);
-            this.Settings_Check_Autorun.TabIndex = 0;
-            this.Settings_Check_Autorun.Text = "Autorun";
-            this.Settings_Check_Autorun.UseVisualStyleBackColor = false;
-            this.Settings_Check_Autorun.CheckedChanged += new System.EventHandler(this.Settings_Check_Autorun_CheckedChanged);
-            this.Settings_Check_Autorun.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
-            this.Settings_Check_Autorun.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
+            this.Settings_Label_Autorun.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Settings_Label_Autorun.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Settings_Label_Autorun.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.Settings_Label_Autorun.Location = new System.Drawing.Point(7, 20);
+            this.Settings_Label_Autorun.Name = "Settings_Label_Autorun";
+            this.Settings_Label_Autorun.Size = new System.Drawing.Size(133, 23);
+            this.Settings_Label_Autorun.TabIndex = 3;
+            this.Settings_Label_Autorun.Text = "Autorun";
+            this.Settings_Label_Autorun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Settings_Label_Autorun.Click += new System.EventHandler(this.Settings_Label_Click);
+            this.Settings_Label_Autorun.DoubleClick += new System.EventHandler(this.Settings_Label_Click);
+            this.Settings_Label_Autorun.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Settings_Label_Autorun.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Darcy_Top_Panel
             // 
@@ -681,10 +699,12 @@
             this.List_Log.Font = new System.Drawing.Font("Calibri", 11F);
             this.List_Log.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
             this.List_Log.Location = new System.Drawing.Point(22, 357);
+            this.List_Log.MultiSelect = false;
             this.List_Log.Name = "List_Log";
             this.List_Log.Size = new System.Drawing.Size(416, 243);
             this.List_Log.TabIndex = 2;
             this.List_Log.UseCompatibleStateImageBehavior = false;
+            this.List_Log.DoubleClick += new System.EventHandler(this.List_Log_DoubleClick);
             // 
             // Label_HeaderLog
             // 
@@ -758,8 +778,6 @@
         private System.Windows.Forms.Label Label_Settings;
         private System.Windows.Forms.Label Label_About;
         private DarcySettingsPanel Settings_Panel;
-        private System.Windows.Forms.CheckBox Settings_Check_Autorun;
-        private System.Windows.Forms.CheckBox Settings_Check_Minimized;
         private System.Windows.Forms.Label Language_Label_Swedish;
         private System.Windows.Forms.Label Language_Label_English;
         private System.Windows.Forms.Label Language_Label_Finnish;
@@ -792,12 +810,14 @@
         private DarcyTopPanel Darcy_Top_Panel;
         private System.Windows.Forms.Label Label_Themes;
         private System.Windows.Forms.Label Label_Language;
-        private System.Windows.Forms.CheckBox Settings_Check_Tray;
         private DarcySettingsPanel Language_Panel;
         private DarcySettingsPanel Theme_Panel;
-        private System.Windows.Forms.Label Theme_Label_Theme1;
-        private System.Windows.Forms.Label Theme_Label_Theme3;
-        private System.Windows.Forms.Label Theme_Label_Theme2;
+        private System.Windows.Forms.Label Theme_Label_Gray;
+        private System.Windows.Forms.Label Theme_Label_Blue;
+        private System.Windows.Forms.Label Theme_Label_Red;
+        private System.Windows.Forms.Label Settings_Label_Minimized;
+        private System.Windows.Forms.Label Settings_Label_Tray;
+        private System.Windows.Forms.Label Settings_Label_Autorun;
     }
 }
 

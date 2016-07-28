@@ -1,4 +1,18 @@
-﻿using Microsoft.Win32;
+﻿/*
+Copyright 2016 Marcel Siggelsten
+
+This file is part of Darcy Backup.
+
+Darcy Backup is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, 
+either version 2 of the License, or (at your option) any later version.
+
+Darcy Backup is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with Darcy. If not, see http://www.gnu.org/licenses/.
+*/
+
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +36,6 @@ namespace Darcy_Backup
 
         private void AddEntry(EntryClass entry)
         {
-
             EntryClass[] newEntries = new EntryClass[Entries.Length + 1];
 
             for (int i = 0; i < Entries.Length; i ++)
@@ -208,7 +221,7 @@ namespace Darcy_Backup
                     Label_Automated.Visible = true;
                     Dynamic_Automated.Visible = true;
                 }
-            }
+            }   
             
             if (process == "Scheduled")
             {
@@ -840,21 +853,22 @@ namespace Darcy_Backup
         
         private void Language_Label_Click(object sender, EventArgs e)
         {
+
             if (sender == Language_Label_English)
-                Language_Label_English.Font = new Font(Language_Label_English.Font, FontStyle.Italic);
+                Language_Label_English.Image = Properties.Resources.Check2;
             else
-                Language_Label_English.Font = new Font(Language_Label_English.Font, FontStyle.Regular);
+                Language_Label_English.Image = null;
 
             if (sender == Language_Label_Swedish)
-                Language_Label_Swedish.Font = new Font(Language_Label_Swedish.Font, FontStyle.Italic);
+                Language_Label_Swedish.Image = Properties.Resources.Check2;
             else
-                Language_Label_Swedish.Font = new Font(Language_Label_Swedish.Font, FontStyle.Regular);
+                Language_Label_Swedish.Image = null;
 
             if (sender == Language_Label_Finnish)
-                Language_Label_Finnish.Font = new Font(Language_Label_Finnish.Font, FontStyle.Italic);
+                Language_Label_Finnish.Image = Properties.Resources.Check2;
             else
-                Language_Label_Finnish.Font = new Font(Language_Label_Finnish.Font, FontStyle.Regular);
-            
+                Language_Label_Finnish.Image = null;
+
             Properties.Settings.Default.Language = ((Control)sender).Text;
             Properties.Settings.Default.Save();
         }
@@ -862,6 +876,16 @@ namespace Darcy_Backup
         private void MouseEnter_BlackFont(object sender, EventArgs e)
         {
             ((Control)sender).ForeColor = Color.Black;
+
+            if (((Control)sender).GetType() == typeof(Label))
+            {
+                if (((Label)sender).Image != null)
+                {
+                    //Implement tags if multiple images are needed
+                    ((Label)sender).Image = Properties.Resources.Check2;
+                    ((Label)sender).Invalidate();
+                }
+            }
         }
         private void MouseEnter_LanguageLabels(object sender, EventArgs e)
         {
@@ -886,22 +910,20 @@ namespace Darcy_Backup
             if (sender == Label_About)
                 if (About_Panel.Visible == true)
                     return;
+
+            if (((Control)sender).GetType() == typeof(Label))
+            {
+                if (((Label)sender).Image != null)
+                {
+                    //Implement tags if there is need for multiple images
+                    ((Label)sender).Image = Properties.Resources.Check1;
+                    ((Label)sender).Invalidate();
+                }
+            }
+
             ((Control)sender).ForeColor = Color.FromArgb(66, 66, 66);
         }
-
-        private void Settings_Check_Minimized_CheckedChanged(object sender, EventArgs e)
-        {
-            bool minimized = Settings_Check_Minimized.Checked;
-            if (minimized)
-            {
-                Properties.Settings.Default.MinimizedOnStartup = true;
-            }
-            else
-            {
-                Properties.Settings.Default.MinimizedOnStartup = false;
-            }
-            Properties.Settings.Default.Save();
-        }
+        
 
         private void Label_Settings_Click(object sender, EventArgs e)
         {
@@ -930,19 +952,6 @@ namespace Darcy_Backup
                 _privateSettingsPanels[index].Visible = true;
         }
 
-        RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-        private void Settings_Check_Autorun_CheckedChanged(object sender, EventArgs e)
-        {
-            bool autorun = Settings_Check_Autorun.Checked;
-            if (autorun)
-            {
-                rkApp.SetValue("DarcyBackup", Application.ExecutablePath);
-            }
-            else
-            {
-                rkApp.DeleteValue("DarcyBackup", false);
-            }
-        }
 
         private void Button_Perform_Click(object sender, EventArgs e)
         {
@@ -1072,17 +1081,105 @@ namespace Darcy_Backup
             Application.Exit();
         }
 
-        private void Settings_Check_Tray_CheckedChanged(object sender, EventArgs e)
+        
+        private void SetTheme(string theme)
+        {
+            Color color = Color.FromArgb(85, 85, 85);
+
+            if (theme == "Red")
+                color = Color.FromArgb(188, 18, 10);
+            else if (theme == "Blue")
+                color = Color.FromArgb(64, 52, 203);
+
+            Label_Backup.ForeColor = color;
+            Label_HeaderSelected.ForeColor = color;
+            Label_HeaderLog.ForeColor = color;
+        }
+
+        private void Theme_Label_Click(object sender, EventArgs e)
+        {
+            
+            if (sender == Theme_Label_Gray)
+                Theme_Label_Gray.Image = Properties.Resources.Check2;
+            else
+                Theme_Label_Gray.Image = null;
+
+            if (sender == Theme_Label_Red)
+                Theme_Label_Red.Image = Properties.Resources.Check2;
+            else
+                Theme_Label_Red.Image = null;
+
+            if (sender == Theme_Label_Blue)
+                Theme_Label_Blue.Image = Properties.Resources.Check2;
+            else
+                Theme_Label_Blue.Image = null;
+
+
+            SetTheme(((Control)sender).Text);
+
+            Properties.Settings.Default.Theme = ((Control)sender).Text;
+            Properties.Settings.Default.Save();
+        }
+
+        DarcyLogForm _DarcyLogForm;
+        private void List_Log_DoubleClick(object sender, EventArgs e)
         {
 
-            bool minimized = Settings_Check_Tray.Checked;
-            if (minimized)
+            if (_DarcyLogForm != null)
+                _DarcyLogForm.Dispose();
+            if (List_Log.SelectedItems.Count != 0)
             {
-                Properties.Settings.Default.ToTray = true;
+                if (List_Log.SelectedItems[0].SubItems.Count != 0)
+                {
+                    string entry = List_Log.SelectedItems[0].SubItems[0].Text;
+                    string time = List_Log.SelectedItems[0].SubItems[2].Text;
+                    string error = List_Log.SelectedItems[0].SubItems[1].Text;
+                    _DarcyLogForm = new DarcyLogForm(entry, time, error);
+                    _DarcyLogForm.Visible = true;
+                }
             }
-            else
+        }
+
+        private void Settings_Label_Click(object sender, EventArgs e)
+        {
+            if (sender == Settings_Label_Autorun)
             {
-                Properties.Settings.Default.ToTray = false;
+                if (((Label)sender).Image != null)
+                {
+                    _rkApp.DeleteValue("DarcyBackup", false);
+                    ((Label)sender).Image = null;
+                }
+                else
+                {
+                    _rkApp.SetValue("DarcyBackup", Application.ExecutablePath);
+                    ((Label)sender).Image = Properties.Resources.Check2;
+                }
+            }
+            else if (sender == Settings_Label_Minimized)
+            {
+                if (((Label)sender).Image != null)
+                {
+                    Properties.Settings.Default.MinimizedOnStartup = false;
+                    ((Label)sender).Image = null;
+                }
+                else
+                {
+                    Properties.Settings.Default.MinimizedOnStartup = true;
+                    ((Label)sender).Image = Properties.Resources.Check2;
+                }
+            }
+            else if (sender == Settings_Label_Tray)
+            {
+                if (((Label)sender).Image != null)
+                {
+                    Properties.Settings.Default.ToTray = false;
+                    ((Label)sender).Image = null;
+                }
+                else
+                {
+                    Properties.Settings.Default.ToTray = true;
+                    ((Label)sender).Image = Properties.Resources.Check2;
+                }
             }
             Properties.Settings.Default.Save();
         }
