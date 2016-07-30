@@ -935,7 +935,7 @@ namespace Darcy_Backup
         {
             ((Control)sender).ForeColor = Color.Black;
 
-            if (((Control)sender).GetType() == typeof(Label))
+            if (((Control)sender).GetType() == typeof(DarcyLabel))
             {
                 if (((Label)sender).Image != null)
                 {
@@ -969,7 +969,7 @@ namespace Darcy_Backup
                 if (About_Panel.Visible == true)
                     return;
 
-            if (((Control)sender).GetType() == typeof(Label))
+            if (((Control)sender).GetType() == typeof(DarcyLabel))
             {
                 if (((Label)sender).Image != null)
                 {

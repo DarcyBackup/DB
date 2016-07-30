@@ -1090,7 +1090,7 @@ namespace Darcy_Backup
 
             this.Visible = true;
 
-            Text_Source.Focus();
+            Text_Source.Select();
         }
 
         private bool[] ArrayDays;

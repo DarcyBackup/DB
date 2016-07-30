@@ -125,7 +125,7 @@
     <Compile Include="FolderBrowserDialogEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Form_New_Entry.cs">
+    <Compile Include="Custom Controls\Form_New_Entry.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DarcyForm.cs">
@@ -163,7 +163,7 @@
     <EmbeddedResource Include="Custom Controls\Form_Disclaimer.resx">
       <DependentUpon>Form_Disclaimer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_New_Entry.resx">
+    <EmbeddedResource Include="Custom Controls\Form_New_Entry.resx">
       <DependentUpon>Form_New_Entry.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DarcyForm.resx">
