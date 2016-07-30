@@ -282,8 +282,8 @@ namespace Darcy_Backup
         }
 
 
-        delegate void AddToLogCallback(int entry, string error);
-        private void AddToLog(int entry, string error)
+        delegate void AddToLogCallback(int entry, string error, string tag);
+        private void AddToLog(int entry, string error, string tag)
         {
             string[] strArr = new string[3];
             ListViewItem item;
@@ -291,18 +291,57 @@ namespace Darcy_Backup
             strArr[1] = error;
             strArr[2] = GetTimeString(DateTime.Now);
             item = new ListViewItem(strArr);
+            if (tag == "")
+                item.Tag = error;
+            else
+                item.Tag = tag;
 
             if (List_Log.InvokeRequired == true)
             {
                 AddToLogCallback d = new AddToLogCallback(AddToLog);
-                this.Invoke(d, new object[] { entry, error });
+                this.Invoke(d, new object[] { entry, error, tag});
             }
             else
             {
                 List_Log.Items.Insert(0, item);
             }
         }
+        delegate void UpdateListItemCallback(EntryClass entry, int index);
+        private void UpdateListItem(EntryClass entry, int index)
+        {
+            string[] strArr = new string[9];
+            strArr[0] = entry.Entry.ToString();
+            strArr[1] = entry.Source;
+            strArr[2] = entry.Destination;
+            strArr[3] = ModeToString(entry.Mode);
+            strArr[4] = ProcessToString(entry.Process);
+            strArr[5] = entry.LastPerformed;
+            strArr[6] = entry.NextScheduled;
+            strArr[7] = entry.Status;
+            strArr[8] = AutomatedToString(entry.Automated);
 
+
+            if (List_Backup.InvokeRequired == true)
+            {
+                UpdateListItemCallback d = new UpdateListItemCallback(UpdateListItem);
+                this.Invoke(d, new object[] { entry, index });
+            }
+            else
+            {
+
+                List_Backup.Items[index].SubItems[0].Text = entry.Entry.ToString();
+                List_Backup.Items[index].SubItems[1].Text = entry.Source;
+                List_Backup.Items[index].SubItems[2].Text = entry.Destination;
+                List_Backup.Items[index].SubItems[3].Text = ModeToString(entry.Mode);
+                List_Backup.Items[index].SubItems[4].Text = ProcessToString(entry.Process);
+                List_Backup.Items[index].SubItems[5].Text = entry.LastPerformed;
+                List_Backup.Items[index].SubItems[6].Text = entry.NextScheduled;
+                List_Backup.Items[index].SubItems[7].Text = entry.Status;
+                List_Backup.Items[index].SubItems[8].Text = AutomatedToString(entry.Automated);
+
+
+            }
+        }
 
         delegate void AddToListCallback(EntryClass entry, int index, int selection); //for thread-safe interface actions
         private void AddToList(EntryClass entry, int index, int selection)
@@ -320,7 +359,6 @@ namespace Darcy_Backup
             strArr[7] = entry.Status;
             strArr[8] = AutomatedToString(entry.Automated);
             item = new ListViewItem(strArr);
-            item.ToolTipText = "test";
 
             if (index == -1)
                 index = List_Backup.Items.Count;
@@ -587,9 +625,10 @@ namespace Darcy_Backup
                         Save();
                     }
 
-                    int selectedIndex = GetSelectedListIndex(List_Backup);
-                    if (RemoveFromList(Entries[i], i) == true)
-                        AddToList(Entries[i], i, selectedIndex);
+                    //int selectedIndex = GetSelectedListIndex(List_Backup);
+                    //if (RemoveFromList(Entries[i], i) == true)
+                    //AddToList(Entries[i], i, selectedIndex);
+                    UpdateListItem(Entries[i], i);
                     continue;
                 }
 
@@ -609,9 +648,10 @@ namespace Darcy_Backup
                             Save();
                         }
 
-                        int selectedIndex = GetSelectedListIndex(List_Backup);
-                        if (RemoveFromList(Entries[i], i) == true)
-                            AddToList(Entries[i], i, selectedIndex);
+                        //int selectedIndex = GetSelectedListIndex(List_Backup);
+                        //if (RemoveFromList(Entries[i], i) == true)
+                        //AddToList(Entries[i], i, selectedIndex);
+                        UpdateListItem(Entries[i], i);
                         continue;
                     }
                 }
@@ -640,9 +680,10 @@ namespace Darcy_Backup
 
                         Save();
 
-                        int selectedIndex = GetSelectedListIndex(List_Backup);
-                        if (RemoveFromList(Entries[i], i) == true)
-                            AddToList(Entries[i], i, selectedIndex);
+                        //int selectedIndex = GetSelectedListIndex(List_Backup);
+                        //if (RemoveFromList(Entries[i], i) == true)
+                        //AddToList(Entries[i], i, selectedIndex);
+                        UpdateListItem(Entries[i], i);
 
 
 
@@ -689,7 +730,7 @@ namespace Darcy_Backup
                         */
 
 
-                        
+
                     }
 
                     bool a = false;
@@ -708,9 +749,10 @@ namespace Darcy_Backup
 
                         Save();
 
-                        int selectedIndex = GetSelectedListIndex(List_Backup);
-                        if (RemoveFromList(Entries[i], i) == true)
-                            AddToList(Entries[i], i, selectedIndex);
+                        //int selectedIndex = GetSelectedListIndex(List_Backup);
+                        //if (RemoveFromList(Entries[i], i) == true)
+                        //AddToList(Entries[i], i, selectedIndex);
+                        UpdateListItem(Entries[i], i);
                     }
                 }
 
@@ -720,9 +762,10 @@ namespace Darcy_Backup
                     {
                         Entries[i].Status = "In Queue";
 
-                        int selectedIndex = GetSelectedListIndex(List_Backup);
-                        if (RemoveFromList(Entries[i], i) == true)
-                            AddToList(Entries[i], i, selectedIndex);
+                        //int selectedIndex = GetSelectedListIndex(List_Backup);
+                        //if (RemoveFromList(Entries[i], i) == true)
+                        //AddToList(Entries[i], i, selectedIndex);
+                        UpdateListItem(Entries[i], i);
 
                     }
                     else if (status == "In Queue" || status == "In Progress")
@@ -737,10 +780,11 @@ namespace Darcy_Backup
 
                         if (perform == true)
                             Entries[i].Status = "In Queue";
-                        
-                        int selectedIndex = GetSelectedListIndex(List_Backup);
-                        if (RemoveFromList(Entries[i], i) == true)
-                            AddToList(Entries[i], i, selectedIndex);
+
+                        //int selectedIndex = GetSelectedListIndex(List_Backup);
+                        //if (RemoveFromList(Entries[i], i) == true)
+                        //AddToList(Entries[i], i, selectedIndex);
+                        UpdateListItem(Entries[i], i);
 
                         Save();
                     }
@@ -761,9 +805,10 @@ namespace Darcy_Backup
 
                         Save();
 
-                        int selectedIndex = GetSelectedListIndex(List_Backup);
-                        if (RemoveFromList(Entries[i], i) == true)
-                            AddToList(Entries[i], i, selectedIndex);
+                        //int selectedIndex = GetSelectedListIndex(List_Backup);
+                        //if (RemoveFromList(Entries[i], i) == true)
+                        //AddToList(Entries[i], i, selectedIndex);
+                        UpdateListItem(Entries[i], i);
                     }
                 }
             }
@@ -796,9 +841,10 @@ namespace Darcy_Backup
                         }
                         Save();
 
-                        int selectedIndex = GetSelectedListIndex(List_Backup);
-                        if (RemoveFromList(Entries[i], i) == true)
-                            AddToList(Entries[i], i, selectedIndex);
+                        //int selectedIndex = GetSelectedListIndex(List_Backup);
+                        //if (RemoveFromList(Entries[i], i) == true)
+                        //AddToList(Entries[i], i, selectedIndex);
+                        UpdateListItem(Entries[i], i);
                     }
                 }
             }
@@ -967,9 +1013,10 @@ namespace Darcy_Backup
             Entries[index].Status = "In Queue";
 
             Save();
-            int selectedIndex = GetSelectedListIndex(List_Backup);
-            if (RemoveFromList(Entries[index], index) == true)
-                AddToList(Entries[index], index, selectedIndex);
+            //int selectedIndex = GetSelectedListIndex(List_Backup);
+            //if (RemoveFromList(Entries[index], index) == true)
+                //AddToList(Entries[index], index, selectedIndex);
+            UpdateListItem(Entries[index], index);
         }
 
         public void SaveEditNew(EntryClass entry)
@@ -1002,11 +1049,11 @@ namespace Darcy_Backup
 
                                 Save();
 
-                                int selection = GetSelectedListIndex(List_Backup);
-                                if (RemoveFromList(entry, i) == true)
-                                    AddToList(entry, i, selection);
-                                
-
+                                //int selection = GetSelectedListIndex(List_Backup);
+                                //if (RemoveFromList(entry, i) == true)
+                                    //AddToList(entry, i, selection);
+                                    
+                                UpdateListItem(entry, i);
                             }
                         }
                     }
@@ -1044,9 +1091,11 @@ namespace Darcy_Backup
 
             Save();
 
-            if (RemoveFromList(Entries[i], i) == true)
-                AddToList(Entries[i], i, i);
-            
+            //int selectedIndex = GetSelectedListIndex(List_Backup);
+            //if (RemoveFromList(Entries[i], i) == true)
+            //AddToList(Entries[i], i, selectedIndex);
+            UpdateListItem(Entries[i], i);
+
         }
         public EntryClass GetEntry(int id)
         {
@@ -1135,7 +1184,7 @@ namespace Darcy_Backup
                 {
                     string entry = List_Log.SelectedItems[0].SubItems[0].Text;
                     string time = List_Log.SelectedItems[0].SubItems[2].Text;
-                    string error = List_Log.SelectedItems[0].SubItems[1].Text;
+                    string error = (string)List_Log.SelectedItems[0].Tag;
                     _DarcyLogForm = new DarcyLogForm(entry, time, error, _themeColor);
                     _DarcyLogForm.Visible = true;
                 }

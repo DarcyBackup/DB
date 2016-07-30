@@ -21,7 +21,18 @@ namespace Darcy_Backup
             Label_Entry.Text = entry;
             Label_Entry.ForeColor = theme;
             Label_Time.Text = time;
-            Text_Error.Text = error;
+
+
+            if (error.Contains('\n')) 
+            {
+                Text_Error.Text = "";
+                string[] str = error.Split('\n');
+                for (int i = 0; i < str.Length; i++)
+                    Text_Error.Text += str[i] + Environment.NewLine;
+            }
+            else 
+                Text_Error.Text = error;
+            
         }
 
         private void DarcyLogForm_KeyPress(object sender, KeyPressEventArgs e)

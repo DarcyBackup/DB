@@ -88,9 +88,10 @@ namespace Darcy_Backup
 
             Entries[entry].Status = "In Progress";
 
-            int selectedIndex = GetSelectedListIndex(List_Backup);
-            if (RemoveFromList(Entries[entry], entry) == true)
-                AddToList(Entries[entry], entry, selectedIndex);
+            //int selectedIndex = GetSelectedListIndex(List_Backup);
+            //if (RemoveFromList(Entries[entry], entry) == true)
+                //AddToList(Entries[entry], entry, selectedIndex);
+            UpdateListItem(Entries[entry], entry);
 
 
             int copyCount = 0;
@@ -107,7 +108,7 @@ namespace Darcy_Backup
                 if (directory == false)
                 {
                     //MessageBox.Show("Could not find " + source , "Error", MessageBoxButtons.OK);
-                    AddToLog(entry, "Could not find " + source);
+                    AddToLog(entry, "Source not found", "Could not find " + source);
                     return;
                 }
             }
@@ -119,13 +120,13 @@ namespace Darcy_Backup
                 }
                 catch (System.IO.DirectoryNotFoundException)
                 {
-                    AddToLog(entry, "Destination not found " + Entries[entry].Destination);
+                    AddToLog(entry, "Destination not found", "Could not find " + Entries[entry].Destination);
                     return;
                 }
                 catch (System.NotSupportedException)
                 {
                     //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
-                    AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
+                    AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination);
                     return;
                 }
             }
@@ -157,7 +158,7 @@ namespace Darcy_Backup
                         catch (IOException error)
                         {
                             //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                            AddToLog(entry, error.Message);
+                            AddToLog(entry, "IO Exception", error.Message);
                             return;
                         }
 
@@ -187,7 +188,7 @@ namespace Darcy_Backup
                     catch (IOException error)
                     {
                         //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                        AddToLog(entry, error.Message);
+                        AddToLog(entry, "IO Exception", error.Message);
                         return;
                     }
 
@@ -202,7 +203,7 @@ namespace Darcy_Backup
                     catch (IOException error)
                     {
                         //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                        AddToLog(entry, error.Message);
+                        AddToLog(entry, "IO Exception", error.Message);
                         return;
                     }
                 }
@@ -236,13 +237,13 @@ namespace Darcy_Backup
                             }
                             catch (System.IO.DirectoryNotFoundException)
                             {
-                                AddToLog(entry, "Destination not found " + Entries[entry].Destination + destAdd);
+                                AddToLog(entry, "Destination not found", "Could not find " + Entries[entry].Destination + destAdd);
                                 return;
                             }
                             catch (System.NotSupportedException)
                             {
                                 //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
-                                AddToLog(entry, "Illegal destination " + Entries[entry].Destination + destAdd);
+                                AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination + destAdd);
                                 return;
                             }
                         }
@@ -266,7 +267,7 @@ namespace Darcy_Backup
                                 catch (IOException error)
                                 {
                                     //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                                    AddToLog(entry, error.Message);
+                                    AddToLog(entry, "IO Exception", error.Message);
                                     return;
                                 }
                             }
@@ -288,13 +289,13 @@ namespace Darcy_Backup
                     }
                     catch (System.IO.DirectoryNotFoundException)
                     {
-                        AddToLog(entry, "Destination not found " + destination);
+                        AddToLog(entry, "Destination not found", "Could not find " + destination);
                         return;
                     }
                     catch (System.NotSupportedException)
                     {
                         //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
-                        AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
+                        AddToLog(entry, "Illegal destination", "Illegal destination, " + Entries[entry].Destination);
                         return;
                     }
 
@@ -307,13 +308,13 @@ namespace Darcy_Backup
                         }
                         catch (System.IO.DirectoryNotFoundException)
                         {
-                            AddToLog(entry, "Destination not found " + destination);
+                            AddToLog(entry, "Destination not found", "Could not find" + destination);
                             return;
                         }
                         catch (System.NotSupportedException)
                         {
                             //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
-                            AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
+                            AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination);
                             return;
                         }
                     }
@@ -328,7 +329,7 @@ namespace Darcy_Backup
                         catch (IOException error)
                         {
                             //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                            AddToLog(entry, error.Message);
+                            AddToLog(entry, "IO Exception", error.Message);
                             return;
                         }
                     }
@@ -343,13 +344,13 @@ namespace Darcy_Backup
                         }
                         catch (System.IO.DirectoryNotFoundException)
                         {
-                            AddToLog(entry, "Destination not found " + Entries[entry].Destination);
+                            AddToLog(entry, "Destination not found", "Could not find " + Entries[entry].Destination);
                             return;
                         }
                         catch (System.NotSupportedException)
                         {
                             //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
-                            AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
+                            AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination);
                             return;
                         }
                     }
@@ -364,13 +365,13 @@ namespace Darcy_Backup
                         }
                         catch (System.IO.DirectoryNotFoundException)
                         {
-                            AddToLog(entry, "Destination not found " + destination);
+                            AddToLog(entry, "Destination not found", "Could not find " + destination);
                             return;
                         }
                         catch (System.NotSupportedException)
                         {
                             //MessageBox.Show("Error in backup: " + Entries[entry].Destination + " is an illegal destination", "Error", MessageBoxButtons.OK);
-                            AddToLog(entry, "Illegal destination " + Entries[entry].Destination);
+                            AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination);
                             return;
                         }
                     }
@@ -385,29 +386,29 @@ namespace Darcy_Backup
                         catch (IOException error)
                         {
                             //MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                            AddToLog(entry, error.Message);
+                            AddToLog(entry, "IO Exception", error.Message);
                             return;
                         }
                     }
                 }
             }
 
-            string add = "";
+            string tag = "";
 
-            add += copyCount;
+            tag += copyCount;
 
             if (copyCount == 1)
-                add += " file copied";
+                tag += " File copied";
             else
-                add += " files copied";
+                tag += " Files copied";
 
             if (noDiffCount == 1)
-                add += ", 1 file not different";
+                tag += "\n1 File not different";
             else if (noDiffCount > 1)
-                add += ", " + noDiffCount + " files not different";
+                tag += "\n" + noDiffCount + " Files not different";
 
 
-            AddToLog(entry, "Backup Succeeded        " + add);
+            AddToLog(entry, "Backup Succeeded", tag);
         }
     }
 }
