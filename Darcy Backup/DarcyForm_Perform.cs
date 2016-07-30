@@ -12,6 +12,9 @@ namespace Darcy_Backup
     public partial class Form_Darcy_Panel
     {
 
+        private bool _cancel = false;
+
+
         private string[] AddToStringArray(string[] array, string[] addArray)
         {
             string[] newArray = new string[array.Length + addArray.Length];
@@ -25,9 +28,9 @@ namespace Darcy_Backup
             return newArray;
         }
         
-        private bool Different(string path1, string path2)
+        private bool Different(string path1, string path2, out string error)
         {
-
+            error = "";
             if (File.Exists(path2) == false)
                 return true;
             
@@ -47,10 +50,82 @@ namespace Darcy_Backup
 
             //bool checksum = false; //This will later be an option in the interface
             //if (checksum == false)
-                //return false;
+            //return false;
 
+
+            byte[] buffer;
+            byte[] oldBuffer;
+            int bytesRead;
+            int oldBytesRead;
+            long size;
+            long totalBytesRead = 0;
+
+
+            string checksum1 = "", checksum2 = "";
             
-            string checksum1, checksum2;
+            for (int i = 0; i < 2; i++)
+            {
+                string path = path1;
+                if (i == 1)
+                    path = path2;
+                using (Stream stream = File.OpenRead(path))
+                using (HashAlgorithm hashAlgorithm = MD5.Create())
+                {
+                    size = stream.Length;
+
+                    buffer = new byte[4096];
+                    try
+                    {
+                        bytesRead = stream.Read(buffer, 0, buffer.Length);
+                    }
+                    catch (IOException e)
+                    {
+                        error = e.ToString();
+                        return false;
+                    }
+                    catch (NotSupportedException e)
+                    {
+
+                        error = e.ToString();
+                        return false;
+                    }
+                    catch (ObjectDisposedException e)
+                    {
+
+                        error = e.ToString();
+                        return false;
+                    }
+                    totalBytesRead += bytesRead;
+
+                    do
+                    {
+                        if (_cancel)
+                            return true;
+
+                        oldBytesRead = bytesRead;
+                        oldBuffer = buffer;
+
+                        buffer = new byte[4096];
+                        bytesRead = stream.Read(buffer, 0, buffer.Length);
+                        totalBytesRead += bytesRead;
+                        if (bytesRead == 0)
+                        {
+                            hashAlgorithm.TransformFinalBlock(oldBuffer, 0, oldBytesRead);
+                        }
+                        else
+                        {
+                            hashAlgorithm.TransformBlock(oldBuffer, 0, oldBytesRead, oldBuffer, 0);
+                        }
+                    } while (bytesRead != 0);
+
+                    if (i == 0)
+                        checksum1 = hashAlgorithm.Hash.ToString();
+                    else
+                        checksum2 = hashAlgorithm.Hash.ToString();
+                }
+            }
+            
+            /*
             using (var md5 = MD5.Create())
             {
                 using (var stream = File.OpenRead(path1))
@@ -65,7 +140,7 @@ namespace Darcy_Backup
                     checksum2 = Encoding.Default.GetString(md5.ComputeHash(stream));
                 }
             }
-
+            */
             if (checksum1 == checksum2)
                 return false;
 
@@ -83,16 +158,64 @@ namespace Darcy_Backup
 
             return -1;
         }
+
+        class CopyClass
+        {
+            public class ItemsClass
+            {
+                public string Source { get; set; }
+                public string Destination { get; set; }
+            };
+
+            public ItemsClass[] Items { get; set; }
+
+            public CopyClass()
+            {
+                Items = new ItemsClass[0];
+            }
+
+            public void AddItem(string source, string destination)
+            {
+                int count = Items.Count();
+                ItemsClass[] add = new ItemsClass[count + 1];
+
+                for (int i = 0; i < Items.Count(); i++)
+                    add[i] = Items[i];
+
+                add[count] = new ItemsClass();
+                add[count].Source = source;
+                add[count].Destination = destination;
+
+                Items = add;
+            }
+        }
+
+        delegate void EnableCancelCallback(bool b);
+        private void EnableCancel(bool b)
+        {
+            if (List_Backup.InvokeRequired == true)
+            {
+                EnableCancelCallback d = new EnableCancelCallback(EnableCancel);
+                this.Invoke(d, new object[] { b });
+            }
+            else
+            {
+                Button_Cancel.Enabled = b;
+            }
+        }
+
         private void Perform(int entry)
         {
-
-            Entries[entry].Status = "In Progress";
+            _cancel = false;
+            Entries[entry].Status = "Processing";
 
             //int selectedIndex = GetSelectedListIndex(List_Backup);
             //if (RemoveFromList(Entries[entry], entry) == true)
-                //AddToList(Entries[entry], entry, selectedIndex);
+            //AddToList(Entries[entry], entry, selectedIndex);
             UpdateListItem(Entries[entry], entry);
 
+            if (_currentListSel == entry)
+                EnableCancel(true);
 
             int copyCount = 0;
             int noDiffCount = 0;
@@ -100,6 +223,10 @@ namespace Darcy_Backup
             string source = Entries[entry].Source;
             bool file = false;
             bool directory = false;
+
+
+            CopyClass copy = new CopyClass();
+
 
             file = File.Exists(source);
             directory = Directory.Exists(source);
@@ -147,13 +274,20 @@ namespace Darcy_Backup
                     if (split[split.Length - 1] == "")
                         destination = destination.Remove(destination.Length - 1, 1);
 
-                    bool different = Different(source, destination + "\\" + filename);
+                    string hashError;
+                    bool different = Different(source, destination + "\\" + filename, out hashError);
+                    if (hashError != "")
+                    {
+                        AddToLog(entry, "Hash Error", hashError);
+                        return;
+                    }
                     if (different)
                     {
                         try
                         {
-                            System.IO.File.Copy(source, destination + "\\" + filename, true);
+                            //System.IO.File.Copy(source, destination + "\\" + filename, true);
                             copyCount++;
+                            copy.AddItem(source, destination + "\\" + filename);
                         }
                         catch (IOException error)
                         {
@@ -168,6 +302,9 @@ namespace Darcy_Backup
                 }
                 else if (mode == "New Copies")
                 {
+                    string[] split = destination.Split('\\');
+                    if (split[split.Length - 1] == "")
+                        destination = destination.Remove(destination.Length - 1, 1);
                     try
                     {
                         strArray = filename.Split('.');
@@ -181,9 +318,10 @@ namespace Darcy_Backup
 
 
                         String timestring = DateTime.Now.ToString(" (yyyyMMdd-HH.mm)");
-                        string fullDest = destination + filename + timestring + '.' + extension;
-                        System.IO.File.Copy(source, fullDest, true);
+                        string fullDest = destination + "\\" + filename + timestring + '.' + extension;
+                        //System.IO.File.Copy(source, fullDest, true);
                         copyCount++;
+                        copy.AddItem(source, fullDest);
                     }
                     catch (IOException error)
                     {
@@ -195,10 +333,14 @@ namespace Darcy_Backup
                 }
                 else if (mode == "Replace files")
                 {
+                    string[] split = destination.Split('\\');
+                    if (split[split.Length - 1] == "")
+                        destination = destination.Remove(destination.Length - 1, 1);
                     try
                     {
-                        System.IO.File.Copy(source, destination + filename, true);
+                        //System.IO.File.Copy(source, destination + filename, true);
                         copyCount++;
+                        copy.AddItem(source, destination + "\\" + filename);
                     }
                     catch (IOException error)
                     {
@@ -253,16 +395,33 @@ namespace Darcy_Backup
 
                         foreach (string s in files)
                         {
+
+                            if (_cancel == true)
+                            {
+                                AddToLog(entry, "Aborted", "Aborted by user");
+                                if (_currentListSel == entry)
+                                    EnableCancel(false);
+                                return;
+                            }
+
                             string fileName = System.IO.Path.GetFileName(s);
                             string destFile = System.IO.Path.Combine(destination + destAdd + "\\", fileName);
 
-                            if (Different(source + destAdd + "\\" + fileName, destFile))
+                            string hashError;
+                            bool different = Different(source + destAdd + "\\" + fileName, destFile, out hashError);
+                            if (hashError != "")
+                            {
+                                AddToLog(entry, "Hash Error", hashError);
+                                return;
+                            }
+                            if (different)
                             {
                                 try
                                 {
-                                    System.IO.File.Copy(s, destFile, true);
-                                    File.SetLastWriteTime(destFile, File.GetLastWriteTime(s));
+                                    //System.IO.File.Copy(s, destFile, true);
+                                    //File.SetLastWriteTime(destFile, File.GetLastWriteTime(s));
                                     copyCount++;
+                                    copy.AddItem(s, destFile);
                                 }
                                 catch (IOException error)
                                 {
@@ -323,8 +482,10 @@ namespace Darcy_Backup
                     {
                         try
                         {
-                            File.Copy(newPath, newPath.Replace(source, destination), true);
+                            //File.Copy(newPath, newPath.Replace(source, destination), true);
                             copyCount++;
+                            copy.AddItem(newPath, newPath.Replace(source, destination));
+
                         }
                         catch (IOException error)
                         {
@@ -380,8 +541,9 @@ namespace Darcy_Backup
                     {
                         try
                         {
-                            File.Copy(newPath, newPath.Replace(source, destination), true);
+                            //File.Copy(newPath, newPath.Replace(source, destination), true);
                             copyCount++;
+                            copy.AddItem(newPath, newPath.Replace(source, destination));
                         }
                         catch (IOException error)
                         {
@@ -392,6 +554,129 @@ namespace Darcy_Backup
                     }
                 }
             }
+
+
+            if (_cancel == true)
+            {
+                AddToLog(entry, "Aborted", "Aborted by user");
+                if (_currentListSel == entry)
+                    EnableCancel(false);
+                return;
+            }
+
+            if (copy.Items.Count() != 0)
+            {
+                byte[] buffer = new byte[1024 * 1024];
+
+                long totalSize = 0;
+                long totalBytes = 0;
+                for (int i = 0; i < copy.Items.Count(); i ++)
+                {
+                    using (FileStream sc = new FileStream(copy.Items[i].Source, FileMode.Open, FileAccess.Read))
+                    {
+                        totalSize += sc.Length;
+                    }
+                }
+                double lastPercentage = 0;
+                for (int i = 0; i < copy.Items.Count(); i ++)
+                {
+                    using (FileStream sc = new FileStream(copy.Items[i].Source, FileMode.Open, FileAccess.Read))
+                    {
+                        if (File.Exists(copy.Items[i].Destination) == true)
+                        {
+                            try
+                            {
+                                File.Delete(copy.Items[i].Destination);
+                            }
+                            catch (DirectoryNotFoundException error)
+                            {
+                                AddToLog(entry, "Directory not found", "Replace File\n\n" + error.Message);
+                                return;
+                            }
+                            catch (IOException error)
+                            {
+                                AddToLog(entry, "IO Exception", "Replace File\n\n" + error.Message);
+                                return;
+                            }
+                            catch (UnauthorizedAccessException error)
+                            {
+                                AddToLog(entry, "No Access", "Replace File\n\n" + error.Message);
+                                return;
+                            }
+                            catch (NotSupportedException error)
+                            {
+                                AddToLog(entry, "Not Supported", "Replace File\n\n" + error.Message);
+                                return;
+                            }
+                        }
+                        using (FileStream dest = new FileStream(copy.Items[i].Destination, FileMode.CreateNew, FileAccess.Write))
+                        {
+                            int currentBlockSize = 0;
+
+                            while ((currentBlockSize = sc.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                if (_cancel == true)
+                                {
+                                    AddToLog(entry, "Aborted", "Aborted by user");
+                                    if (_currentListSel == entry)
+                                        EnableCancel(false);
+                                    return;
+                                }
+
+                                totalBytes += currentBlockSize;
+                                double percentage = (double)totalBytes * 100.0 / totalSize;
+
+                                if (percentage - lastPercentage > 0.1)
+                                {
+                                    lastPercentage = percentage;
+                                    Entries[entry].Status = lastPercentage.ToString("#.0") + "%";
+                                    UpdateListItem(Entries[entry], entry);
+                                }
+
+                                try
+                                {
+                                    dest.Write(buffer, 0, currentBlockSize);
+                                }
+                                catch (IOException error)
+                                {
+                                    AddToLog(entry, "IO Exception", "Write Buffer\n\n" + error.Message);
+                                    return;
+                                }
+                                catch (ObjectDisposedException error)
+                                {
+                                    AddToLog(entry, "Object Disposed", "Write Buffer\n\n" + error.Message);
+                                    return;
+                                }
+                                catch (NotSupportedException error)
+                                {
+                                    AddToLog(entry, "Not Supported", "Write Buffer\n\n" + error.Message);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    try
+                    {
+                        File.SetLastWriteTime(copy.Items[i].Destination, File.GetLastWriteTime(copy.Items[i].Source));
+                    }
+                    catch (FileNotFoundException error)
+                    {
+                        AddToLog(entry, "File Not Found", "SetLastWriteTime\n\n" + error.Message);
+                        return;
+                    }
+                    catch (UnauthorizedAccessException error)
+                    {
+                        AddToLog(entry, "Unauthorized", "SetLastWriteTime\n\n" + error.Message);
+                        return;
+                    }
+                    catch (NotSupportedException error)
+                    {
+                        AddToLog(entry, "Not Supported", "SetLastWriteTime\n\n" + error.Message);
+                        return;
+                    }
+                }
+            }
+            
 
             string tag = "";
 
@@ -407,6 +692,9 @@ namespace Darcy_Backup
             else if (noDiffCount > 1)
                 tag += "\n" + noDiffCount + " Files not different";
 
+
+            if (_currentListSel == entry)
+                EnableCancel(false);
 
             AddToLog(entry, "Backup Succeeded", tag);
         }

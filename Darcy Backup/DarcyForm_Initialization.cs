@@ -95,8 +95,9 @@ namespace Darcy_Backup
         private static int BUTTON_EDIT = 5;
         private static int LABEL_TOGGLE = 6;
         private static int PANEL_SELECTEDLOG = 7;
+        private static int BUTTON_CANCEL = 8;
 
-        private static int RESIZE_ARRAY_SIZE = 8;
+        private static int RESIZE_ARRAY_SIZE = 9;
 
         private void InitializeResize()
         {
@@ -113,9 +114,15 @@ namespace Darcy_Backup
             _resizeArray[BUTTON_PERFORM].height = 30;
             _resizeArray[BUTTON_PERFORM].stayX = false;
             _resizeArray[BUTTON_PERFORM].stayY = false;
-        
+
+            _resizeArray[BUTTON_CANCEL].control = Button_Cancel;
+            _resizeArray[BUTTON_CANCEL].width = 117;
+            _resizeArray[BUTTON_CANCEL].height = 30;
+            _resizeArray[BUTTON_CANCEL].stayX = false;
+            _resizeArray[BUTTON_CANCEL].stayY = false;
+
             _resizeArray[BUTTON_ACTIVATE].control = Button_Activate;
-            _resizeArray[BUTTON_ACTIVATE].width = 144;
+            _resizeArray[BUTTON_ACTIVATE].width = 202;
             _resizeArray[BUTTON_ACTIVATE].height = 30;
             _resizeArray[BUTTON_ACTIVATE].stayX = false;
             _resizeArray[BUTTON_ACTIVATE].stayY = false;
@@ -145,7 +152,7 @@ namespace Darcy_Backup
             _resizeArray[BUTTON_EDIT].stayY = false;
 
             _resizeArray[LABEL_TOGGLE].control = Label_Toggle;
-            _resizeArray[LABEL_TOGGLE].width = 228;
+            _resizeArray[LABEL_TOGGLE].width = 286;
             _resizeArray[LABEL_TOGGLE].height = 30;
             _resizeArray[LABEL_TOGGLE].stayX = false;
             _resizeArray[LABEL_TOGGLE].stayY = false;
@@ -387,6 +394,8 @@ namespace Darcy_Backup
 
             Update_SelectedEntry();
 
+            Label_HeaderSelected.Focus();
+            Label_HeaderSelected.Select();
         }
 
         private void List_Backup_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)

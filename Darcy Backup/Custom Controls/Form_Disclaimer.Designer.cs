@@ -43,13 +43,13 @@
             this.Text_License.Location = new System.Drawing.Point(12, 73);
             this.Text_License.Multiline = true;
             this.Text_License.Name = "Text_License";
-            this.Text_License.Size = new System.Drawing.Size(394, 303);
+            this.Text_License.Size = new System.Drawing.Size(351, 252);
             this.Text_License.TabIndex = 0;
             this.Text_License.Text = resources.GetString("Text_License.Text");
             // 
             // Button_Accept
             // 
-            this.Button_Accept.Location = new System.Drawing.Point(331, 382);
+            this.Button_Accept.Location = new System.Drawing.Point(288, 331);
             this.Button_Accept.Name = "Button_Accept";
             this.Button_Accept.Size = new System.Drawing.Size(75, 23);
             this.Button_Accept.TabIndex = 1;
@@ -69,7 +69,7 @@
             // 
             // Button_Decline
             // 
-            this.Button_Decline.Location = new System.Drawing.Point(234, 382);
+            this.Button_Decline.Location = new System.Drawing.Point(193, 331);
             this.Button_Decline.Name = "Button_Decline";
             this.Button_Decline.Size = new System.Drawing.Size(75, 23);
             this.Button_Decline.TabIndex = 3;
@@ -81,7 +81,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(418, 412);
+            this.ClientSize = new System.Drawing.Size(376, 364);
             this.Controls.Add(this.Button_Decline);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Button_Accept);

@@ -40,6 +40,7 @@
             this.Button_New = new System.Windows.Forms.Button();
             this.Label_Toggle = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.Button_Cancel = new Darcy_Backup.DarcyButton();
             this.About_Panel = new Darcy_Backup.DarcySettingsPanel();
             this.About_Label_License = new System.Windows.Forms.Label();
             this.About_Label_Version = new System.Windows.Forms.Label();
@@ -96,9 +97,9 @@
             this.Button_Delete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Delete.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Button_Delete.Location = new System.Drawing.Point(672, 516);
+            this.Button_Delete.Location = new System.Drawing.Point(580, 516);
             this.Button_Delete.Name = "Button_Delete";
-            this.Button_Delete.Size = new System.Drawing.Size(92, 25);
+            this.Button_Delete.Size = new System.Drawing.Size(60, 25);
             this.Button_Delete.TabIndex = 11;
             this.Button_Delete.Text = "Delete";
             this.Button_Delete.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -111,11 +112,11 @@
             this.Button_Activate.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Activate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Activate.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Button_Activate.Location = new System.Drawing.Point(936, 516);
+            this.Button_Activate.Location = new System.Drawing.Point(908, 516);
             this.Button_Activate.Name = "Button_Activate";
-            this.Button_Activate.Size = new System.Drawing.Size(81, 25);
+            this.Button_Activate.Size = new System.Drawing.Size(80, 25);
             this.Button_Activate.TabIndex = 12;
-            this.Button_Activate.Text = "Activate";
+            this.Button_Activate.Text = "Deactivate";
             this.Button_Activate.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Button_Activate.UseVisualStyleBackColor = false;
             this.Button_Activate.Click += new System.EventHandler(this.Button_Activate_Click);
@@ -149,9 +150,9 @@
             this.Button_Edit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Edit.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Button_Edit.Location = new System.Drawing.Point(561, 516);
+            this.Button_Edit.Location = new System.Drawing.Point(515, 516);
             this.Button_Edit.Name = "Button_Edit";
-            this.Button_Edit.Size = new System.Drawing.Size(92, 25);
+            this.Button_Edit.Size = new System.Drawing.Size(45, 25);
             this.Button_Edit.TabIndex = 27;
             this.Button_Edit.Text = "Edit";
             this.Button_Edit.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -166,7 +167,7 @@
             this.Button_New.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.Button_New.Location = new System.Drawing.Point(450, 516);
             this.Button_New.Name = "Button_New";
-            this.Button_New.Size = new System.Drawing.Size(92, 25);
+            this.Button_New.Size = new System.Drawing.Size(45, 25);
             this.Button_New.TabIndex = 28;
             this.Button_New.Text = "New";
             this.Button_New.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -177,7 +178,7 @@
             // 
             this.Label_Toggle.BackColor = System.Drawing.Color.Transparent;
             this.Label_Toggle.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Label_Toggle.Location = new System.Drawing.Point(807, 518);
+            this.Label_Toggle.Location = new System.Drawing.Point(779, 517);
             this.Label_Toggle.Name = "Label_Toggle";
             this.Label_Toggle.Size = new System.Drawing.Size(123, 23);
             this.Label_Toggle.TabIndex = 29;
@@ -186,13 +187,29 @@
             this.Label_Toggle.Click += new System.EventHandler(this.Label_Click_Focus);
             this.Label_Toggle.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
+            // Button_Cancel
+            // 
+            this.Button_Cancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.Button_Cancel.DarcyDisabled = false;
+            this.Button_Cancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
+            this.Button_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_Cancel.Font = new System.Drawing.Font("Calibri Light", 10F);
+            this.Button_Cancel.Location = new System.Drawing.Point(1077, 516);
+            this.Button_Cancel.Name = "Button_Cancel";
+            this.Button_Cancel.Size = new System.Drawing.Size(65, 25);
+            this.Button_Cancel.TabIndex = 31;
+            this.Button_Cancel.Text = "Cancel";
+            this.Button_Cancel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.Button_Cancel.UseVisualStyleBackColor = false;
+            this.Button_Cancel.Click += new System.EventHandler(this.Button_Cancel_Click);
+            // 
             // About_Panel
             // 
             this.About_Panel.BackColor = System.Drawing.Color.White;
             this.About_Panel.Controls.Add(this.About_Label_License);
             this.About_Panel.Controls.Add(this.About_Label_Version);
             this.About_Panel.Controls.Add(this.About_Label_Title);
-            this.About_Panel.Location = new System.Drawing.Point(1119, 180);
+            this.About_Panel.Location = new System.Drawing.Point(1370, 194);
             this.About_Panel.Name = "About_Panel";
             this.About_Panel.Size = new System.Drawing.Size(172, 125);
             this.About_Panel.TabIndex = 25;
@@ -304,7 +321,7 @@
             this.Language_Panel.Controls.Add(this.Language_Label_English);
             this.Language_Panel.Controls.Add(this.Language_Label_Finnish);
             this.Language_Panel.Controls.Add(this.Language_Label_Swedish);
-            this.Language_Panel.Location = new System.Drawing.Point(1329, 191);
+            this.Language_Panel.Location = new System.Drawing.Point(1434, 369);
             this.Language_Panel.Name = "Language_Panel";
             this.Language_Panel.Size = new System.Drawing.Size(96, 102);
             this.Language_Panel.TabIndex = 25;
@@ -367,7 +384,7 @@
             this.Settings_Panel.Controls.Add(this.Settings_Label_Minimized);
             this.Settings_Panel.Controls.Add(this.Settings_Label_Tray);
             this.Settings_Panel.Controls.Add(this.Settings_Label_Autorun);
-            this.Settings_Panel.Location = new System.Drawing.Point(1119, 27);
+            this.Settings_Panel.Location = new System.Drawing.Point(1213, 12);
             this.Settings_Panel.Name = "Settings_Panel";
             this.Settings_Panel.Size = new System.Drawing.Size(151, 128);
             this.Settings_Panel.TabIndex = 23;
@@ -527,9 +544,10 @@
             this.List_Backup.Location = new System.Drawing.Point(450, 150);
             this.List_Backup.MultiSelect = false;
             this.List_Backup.Name = "List_Backup";
-            this.List_Backup.Size = new System.Drawing.Size(663, 343);
+            this.List_Backup.Size = new System.Drawing.Size(778, 343);
             this.List_Backup.TabIndex = 10;
             this.List_Backup.UseCompatibleStateImageBehavior = false;
+            this.List_Backup.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.List_Backup_ItemSelectionChanged);
             this.List_Backup.SelectedIndexChanged += new System.EventHandler(this.List_Backup_Selection_Changed);
             this.List_Backup.DoubleClick += new System.EventHandler(this.List_Backup_DoubleClick);
             // 
@@ -540,9 +558,9 @@
             this.Button_Perform.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Perform.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Perform.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Button_Perform.Location = new System.Drawing.Point(1021, 516);
+            this.Button_Perform.Location = new System.Drawing.Point(1163, 516);
             this.Button_Perform.Name = "Button_Perform";
-            this.Button_Perform.Size = new System.Drawing.Size(92, 25);
+            this.Button_Perform.Size = new System.Drawing.Size(65, 25);
             this.Button_Perform.TabIndex = 9;
             this.Button_Perform.Text = "Perform";
             this.Button_Perform.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -802,6 +820,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1574, 701);
+            this.Controls.Add(this.Button_Cancel);
             this.Controls.Add(this.About_Panel);
             this.Controls.Add(this.Theme_Panel);
             this.Controls.Add(this.Language_Panel);
@@ -890,6 +909,7 @@
         private System.Windows.Forms.Label Settings_Label_Tray;
         private System.Windows.Forms.Label Settings_Label_Autorun;
         private System.Windows.Forms.Label Settings_Label_Updates;
+        private DarcyButton Button_Cancel;
     }
 }
 

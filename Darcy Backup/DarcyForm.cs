@@ -172,9 +172,17 @@ namespace Darcy_Backup
 
             int i = _currentListSel;
             if (i == -1)
+            {
+                Button_Cancel.Enabled = false;
                 i = 0;
-            
-
+            }
+            else
+            {
+                if (Entries[i].Status != "Resting")
+                    Button_Cancel.Enabled = true;
+                else
+                    Button_Cancel.Enabled = false;
+            }
 
             Dynamic_Source.Visible = true;
             Dynamic_Destination.Visible = true;
@@ -200,11 +208,13 @@ namespace Darcy_Backup
                 {
                     Label_Automated.Visible = false;
                     Dynamic_Automated.Visible = false;
+                    Button_Activate.Enabled = false;
                 }
                 else
                 {
                     Label_Automated.Visible = true;
                     Dynamic_Automated.Visible = true;
+                    Button_Activate.Enabled = true;
                 }
             }
             else
@@ -215,11 +225,13 @@ namespace Darcy_Backup
                 {
                     Label_Automated.Visible = false;
                     Dynamic_Automated.Visible = false;
+                    Button_Activate.Enabled = false;
                 }
                 else
                 {
                     Label_Automated.Visible = true;
                     Dynamic_Automated.Visible = true;
+                    Button_Activate.Enabled = true;
                 }
             }   
             
@@ -1012,11 +1024,11 @@ namespace Darcy_Backup
 
             Entries[index].Status = "In Queue";
 
-            Save();
-            //int selectedIndex = GetSelectedListIndex(List_Backup);
-            //if (RemoveFromList(Entries[index], index) == true)
-                //AddToList(Entries[index], index, selectedIndex);
             UpdateListItem(Entries[index], index);
+
+            Button_Cancel.Enabled = true;
+
+            List_Backup.Focus();
         }
 
         public void SaveEditNew(EntryClass entry)
@@ -1302,6 +1314,42 @@ namespace Darcy_Backup
         private void Label_Click_Focus(object sender, EventArgs e)
         {
             ((Label)sender).Focus();
+        }
+
+        private void Button_Cancel_Click(object sender, EventArgs e)
+        {
+
+            int index = 0;
+            if (List_Backup.SelectedItems.Count > 0)
+            {
+                index = List_Backup.Items.IndexOf(List_Backup.SelectedItems[0]);
+            }
+            else
+                return;
+
+            if (Entries[index].Status == "In Queue")
+            {
+                Entries[index].Status = "Resting";
+                UpdateListItem(Entries[index], index);
+                Button_Cancel.Enabled = false;
+            }
+            else
+            {
+                _cancel = true;
+            }
+
+            List_Backup.Focus();
+            List_Backup.Focus();
+        }
+
+        private void List_Backup_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            /*
+            if (List_Backup.SelectedItems.Count == 0)
+            {_currentListSel
+                Button_Cancel.Enabled = false;
+            }
+            */
         }
     }
 }

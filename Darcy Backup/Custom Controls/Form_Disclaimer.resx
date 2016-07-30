@@ -118,13 +118,20 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Text_License.Text" xml:space="preserve">
-    <value>Darcy Backup is a free software licensed under GPL 2.0.
+    <value>Darcy Backup is free software for the Windows platform.
+Copyright (C) 2016
 
-By using this software you agree to the following terms:
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or any later version.
 
-1. Use the program at your own risk. The author(s) of Darcy Backup are not liable for any loss of data or any other damages that may occur from using this program.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
-2. That´s it.</value>
+See the
+GNU General Public License for more details.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
