@@ -92,6 +92,10 @@ namespace Darcy_Backup
             if (RemoveFromList(Entries[entry], entry) == true)
                 AddToList(Entries[entry], entry, selectedIndex);
 
+
+            int copyCount = 0;
+            int noDiffCount = 0;
+
             string source = Entries[entry].Source;
             bool file = false;
             bool directory = false;
@@ -148,6 +152,7 @@ namespace Darcy_Backup
                         try
                         {
                             System.IO.File.Copy(source, destination + "\\" + filename, true);
+                            copyCount++;
                         }
                         catch (IOException error)
                         {
@@ -155,8 +160,10 @@ namespace Darcy_Backup
                             AddToLog(entry, error.Message);
                             return;
                         }
-                        
+
                     }
+                    else
+                        noDiffCount++;
                 }
                 else if (mode == "New Copies")
                 {
@@ -175,6 +182,7 @@ namespace Darcy_Backup
                         String timestring = DateTime.Now.ToString(" (yyyyMMdd-HH.mm)");
                         string fullDest = destination + filename + timestring + '.' + extension;
                         System.IO.File.Copy(source, fullDest, true);
+                        copyCount++;
                     }
                     catch (IOException error)
                     {
@@ -189,6 +197,7 @@ namespace Darcy_Backup
                     try
                     {
                         System.IO.File.Copy(source, destination + filename, true);
+                        copyCount++;
                     }
                     catch (IOException error)
                     {
@@ -252,6 +261,7 @@ namespace Darcy_Backup
                                 {
                                     System.IO.File.Copy(s, destFile, true);
                                     File.SetLastWriteTime(destFile, File.GetLastWriteTime(s));
+                                    copyCount++;
                                 }
                                 catch (IOException error)
                                 {
@@ -260,6 +270,8 @@ namespace Darcy_Backup
                                     return;
                                 }
                             }
+                            else
+                                noDiffCount++;
                         }
                     }
                 }
@@ -311,6 +323,7 @@ namespace Darcy_Backup
                         try
                         {
                             File.Copy(newPath, newPath.Replace(source, destination), true);
+                            copyCount++;
                         }
                         catch (IOException error)
                         {
@@ -367,6 +380,7 @@ namespace Darcy_Backup
                         try
                         {
                             File.Copy(newPath, newPath.Replace(source, destination), true);
+                            copyCount++;
                         }
                         catch (IOException error)
                         {
@@ -378,7 +392,22 @@ namespace Darcy_Backup
                 }
             }
 
-            AddToLog(entry, "Backup Succeeded");
+            string add = "";
+
+            add += copyCount;
+
+            if (copyCount == 1)
+                add += " file copied";
+            else
+                add += " files copied";
+
+            if (noDiffCount == 1)
+                add += ", 1 file not different";
+            else if (noDiffCount > 1)
+                add += ", " + noDiffCount + " files not different";
+
+
+            AddToLog(entry, "Backup Succeeded        " + add);
         }
     }
 }

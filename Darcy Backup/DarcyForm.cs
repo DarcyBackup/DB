@@ -853,7 +853,7 @@ namespace Darcy_Backup
         
         private void Language_Label_Click(object sender, EventArgs e)
         {
-            ((Label)sender).Focus();
+            //((Label)sender).Focus();
             if (sender == Language_Label_English)
                 Language_Label_English.Image = Properties.Resources.Check2;
             else
@@ -1020,6 +1020,7 @@ namespace Darcy_Backup
             {
                 if (_editNewObj != null)
                 {
+                    _editNewObj.Dispose();
                     _editNewObj = null;
                     _editNewOngoing = false;
                 }
@@ -1099,7 +1100,7 @@ namespace Darcy_Backup
 
         private void Theme_Label_Click(object sender, EventArgs e)
         {
-            ((Label)sender).Focus();
+            //((Label)sender).Focus();
             if (sender == Theme_Label_Gray)
                 Theme_Label_Gray.Image = Properties.Resources.Check2;
             else
@@ -1143,7 +1144,7 @@ namespace Darcy_Backup
 
         private void Settings_Label_Click(object sender, EventArgs e)
         {
-            ((Label)sender).Focus();
+            //((Label)sender).Focus();
             if (sender == Settings_Label_Autorun)
             {
                 if (((Label)sender).Image != null)
@@ -1183,6 +1184,22 @@ namespace Darcy_Backup
                     ((Label)sender).Image = Properties.Resources.Check2;
                 }
             }
+            else if (sender == Settings_Label_Updates)
+            {
+                if (((Label)sender).Image != null)
+                {
+                    Properties.Settings.Default.Updates = false;
+                    ((Label)sender).Image = null;
+                }
+                else
+                {
+                    Properties.Settings.Default.Updates = true;
+                    ((Label)sender).Image = Properties.Resources.Check2;
+
+                    InitializeUpdateThread();
+                }
+            }
+            
             Properties.Settings.Default.Save();
         }
 
@@ -1223,9 +1240,7 @@ namespace Darcy_Backup
 
         private void Label_Settings_Focus_Leave(object sender, EventArgs e)
         {
-            Label_Settings.Focus();
             Color color = Color.FromArgb(66, 66, 66);
-
             for (int i = 0; i < _privateSettingsPanels.Count(); i++)
             {
                 if (_privateSettingsPanels[i] == null)
@@ -1233,6 +1248,11 @@ namespace Darcy_Backup
                 _privateSettingsPanels[i].Visible = false;
                 _privateSettingsLabels[i].ForeColor = color;
             }
+        }
+
+        private void Label_Click_Focus(object sender, EventArgs e)
+        {
+            ((Label)sender).Focus();
         }
     }
 }

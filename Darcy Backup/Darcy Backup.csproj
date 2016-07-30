@@ -152,6 +152,7 @@
     <Compile Include="EntryClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateClass.cs" />
     <Compile Include="WorkerClass.cs" />
     <EmbeddedResource Include="Custom Controls\DarcyLogForm.resx">
       <DependentUpon>DarcyLogForm.cs</DependentUpon>

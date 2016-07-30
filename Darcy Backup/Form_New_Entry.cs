@@ -77,6 +77,7 @@ namespace Darcy_Backup
         private Label Label_Help_Text_Timer;
         private TextBox Text_Timer;
         private Label Label_Help_Timer;
+        private Panel Panel_Button_Panel;
         private Label Label_Entry;
 
         private void InitializeComponent()
@@ -147,9 +148,11 @@ namespace Darcy_Backup
             this.Label_Help_Text_Timer = new System.Windows.Forms.Label();
             this.Text_Timer = new System.Windows.Forms.TextBox();
             this.Label_Help_Timer = new System.Windows.Forms.Label();
+            this.Panel_Button_Panel = new System.Windows.Forms.Panel();
             this.Combo_Mode = new Darcy_Backup.DarcyComboBox();
             this.Panel_Schedule.SuspendLayout();
             this.Panel_Timer.SuspendLayout();
+            this.Panel_Button_Panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // Label_Entry
@@ -179,14 +182,14 @@ namespace Darcy_Backup
             this.Text_Source.Location = new System.Drawing.Point(26, 99);
             this.Text_Source.Name = "Text_Source";
             this.Text_Source.Size = new System.Drawing.Size(289, 20);
-            this.Text_Source.TabIndex = 2;
+            this.Text_Source.TabIndex = 0;
             // 
             // Text_Destination
             // 
             this.Text_Destination.Location = new System.Drawing.Point(26, 165);
             this.Text_Destination.Name = "Text_Destination";
             this.Text_Destination.Size = new System.Drawing.Size(289, 20);
-            this.Text_Destination.TabIndex = 4;
+            this.Text_Destination.TabIndex = 2;
             // 
             // Label_Destination
             // 
@@ -217,7 +220,7 @@ namespace Darcy_Backup
             this.Radio_Schedule.Location = new System.Drawing.Point(26, 290);
             this.Radio_Schedule.Name = "Radio_Schedule";
             this.Radio_Schedule.Size = new System.Drawing.Size(70, 17);
-            this.Radio_Schedule.TabIndex = 7;
+            this.Radio_Schedule.TabIndex = 5;
             this.Radio_Schedule.TabStop = true;
             this.Radio_Schedule.Text = "Schedule";
             this.Radio_Schedule.UseVisualStyleBackColor = true;
@@ -230,7 +233,7 @@ namespace Darcy_Backup
             this.Radio_Timer.Location = new System.Drawing.Point(103, 290);
             this.Radio_Timer.Name = "Radio_Timer";
             this.Radio_Timer.Size = new System.Drawing.Size(51, 17);
-            this.Radio_Timer.TabIndex = 8;
+            this.Radio_Timer.TabIndex = 6;
             this.Radio_Timer.TabStop = true;
             this.Radio_Timer.Text = "Timer";
             this.Radio_Timer.UseVisualStyleBackColor = true;
@@ -243,7 +246,7 @@ namespace Darcy_Backup
             this.Radio_Manual.Location = new System.Drawing.Point(161, 290);
             this.Radio_Manual.Name = "Radio_Manual";
             this.Radio_Manual.Size = new System.Drawing.Size(60, 17);
-            this.Radio_Manual.TabIndex = 9;
+            this.Radio_Manual.TabIndex = 7;
             this.Radio_Manual.TabStop = true;
             this.Radio_Manual.Text = "Manual";
             this.Radio_Manual.UseVisualStyleBackColor = true;
@@ -268,7 +271,7 @@ namespace Darcy_Backup
             this.Button_Day1.Location = new System.Drawing.Point(13, 55);
             this.Button_Day1.Name = "Button_Day1";
             this.Button_Day1.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day1.TabIndex = 11;
+            this.Button_Day1.TabIndex = 6;
             this.Button_Day1.Text = "1";
             this.Button_Day1.UseVisualStyleBackColor = false;
             this.Button_Day1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -281,7 +284,7 @@ namespace Darcy_Backup
             this.Button_Day2.Location = new System.Drawing.Point(51, 55);
             this.Button_Day2.Name = "Button_Day2";
             this.Button_Day2.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day2.TabIndex = 12;
+            this.Button_Day2.TabIndex = 9;
             this.Button_Day2.Text = "2";
             this.Button_Day2.UseVisualStyleBackColor = false;
             this.Button_Day2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -294,7 +297,7 @@ namespace Darcy_Backup
             this.Button_Day3.Location = new System.Drawing.Point(89, 55);
             this.Button_Day3.Name = "Button_Day3";
             this.Button_Day3.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day3.TabIndex = 13;
+            this.Button_Day3.TabIndex = 10;
             this.Button_Day3.Text = "3";
             this.Button_Day3.UseVisualStyleBackColor = false;
             this.Button_Day3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -307,7 +310,7 @@ namespace Darcy_Backup
             this.Button_Day4.Location = new System.Drawing.Point(127, 55);
             this.Button_Day4.Name = "Button_Day4";
             this.Button_Day4.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day4.TabIndex = 14;
+            this.Button_Day4.TabIndex = 11;
             this.Button_Day4.Text = "4";
             this.Button_Day4.UseVisualStyleBackColor = false;
             this.Button_Day4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -320,7 +323,7 @@ namespace Darcy_Backup
             this.Button_Day5.Location = new System.Drawing.Point(165, 55);
             this.Button_Day5.Name = "Button_Day5";
             this.Button_Day5.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day5.TabIndex = 15;
+            this.Button_Day5.TabIndex = 12;
             this.Button_Day5.Text = "5";
             this.Button_Day5.UseVisualStyleBackColor = false;
             this.Button_Day5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -333,7 +336,7 @@ namespace Darcy_Backup
             this.Button_Day6.Location = new System.Drawing.Point(203, 55);
             this.Button_Day6.Name = "Button_Day6";
             this.Button_Day6.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day6.TabIndex = 16;
+            this.Button_Day6.TabIndex = 13;
             this.Button_Day6.Text = "6";
             this.Button_Day6.UseVisualStyleBackColor = false;
             this.Button_Day6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -346,7 +349,7 @@ namespace Darcy_Backup
             this.Button_Day7.Location = new System.Drawing.Point(241, 55);
             this.Button_Day7.Name = "Button_Day7";
             this.Button_Day7.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day7.TabIndex = 17;
+            this.Button_Day7.TabIndex = 14;
             this.Button_Day7.Text = "7";
             this.Button_Day7.UseVisualStyleBackColor = false;
             this.Button_Day7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -359,7 +362,7 @@ namespace Darcy_Backup
             this.Button_Day8.Location = new System.Drawing.Point(279, 55);
             this.Button_Day8.Name = "Button_Day8";
             this.Button_Day8.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day8.TabIndex = 18;
+            this.Button_Day8.TabIndex = 15;
             this.Button_Day8.Text = "8";
             this.Button_Day8.UseVisualStyleBackColor = false;
             this.Button_Day8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -372,7 +375,7 @@ namespace Darcy_Backup
             this.Button_Day9.Location = new System.Drawing.Point(13, 90);
             this.Button_Day9.Name = "Button_Day9";
             this.Button_Day9.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day9.TabIndex = 19;
+            this.Button_Day9.TabIndex = 16;
             this.Button_Day9.Text = "9";
             this.Button_Day9.UseVisualStyleBackColor = false;
             this.Button_Day9.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -385,7 +388,7 @@ namespace Darcy_Backup
             this.Button_Day10.Location = new System.Drawing.Point(51, 90);
             this.Button_Day10.Name = "Button_Day10";
             this.Button_Day10.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day10.TabIndex = 20;
+            this.Button_Day10.TabIndex = 17;
             this.Button_Day10.Text = "10";
             this.Button_Day10.UseVisualStyleBackColor = false;
             this.Button_Day10.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -398,7 +401,7 @@ namespace Darcy_Backup
             this.Button_Day11.Location = new System.Drawing.Point(89, 90);
             this.Button_Day11.Name = "Button_Day11";
             this.Button_Day11.Size = new System.Drawing.Size(32, 29);
-            this.Button_Day11.TabIndex = 21;
+            this.Button_Day11.TabIndex = 18;
             this.Button_Day11.Text = "11";
             this.Button_Day11.UseVisualStyleBackColor = false;
             this.Button_Day11.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -670,10 +673,10 @@ namespace Darcy_Backup
             this.Button_Discard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Discard.Font = new System.Drawing.Font("Calibri", 10F);
             this.Button_Discard.ForeColor = System.Drawing.Color.Black;
-            this.Button_Discard.Location = new System.Drawing.Point(178, 581);
+            this.Button_Discard.Location = new System.Drawing.Point(17, 0);
             this.Button_Discard.Name = "Button_Discard";
             this.Button_Discard.Size = new System.Drawing.Size(75, 25);
-            this.Button_Discard.TabIndex = 42;
+            this.Button_Discard.TabIndex = 44;
             this.Button_Discard.Text = "Discard";
             this.Button_Discard.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Button_Discard.UseVisualStyleBackColor = false;
@@ -686,10 +689,10 @@ namespace Darcy_Backup
             this.Button_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Save.Font = new System.Drawing.Font("Calibri", 10F);
             this.Button_Save.ForeColor = System.Drawing.Color.Black;
-            this.Button_Save.Location = new System.Drawing.Point(278, 581);
+            this.Button_Save.Location = new System.Drawing.Point(117, 0);
             this.Button_Save.Name = "Button_Save";
             this.Button_Save.Size = new System.Drawing.Size(75, 25);
-            this.Button_Save.TabIndex = 43;
+            this.Button_Save.TabIndex = 45;
             this.Button_Save.Text = "Save";
             this.Button_Save.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Button_Save.UseVisualStyleBackColor = false;
@@ -704,7 +707,7 @@ namespace Darcy_Backup
             this.Button_PickSource.Location = new System.Drawing.Point(321, 99);
             this.Button_PickSource.Name = "Button_PickSource";
             this.Button_PickSource.Size = new System.Drawing.Size(32, 20);
-            this.Button_PickSource.TabIndex = 44;
+            this.Button_PickSource.TabIndex = 1;
             this.Button_PickSource.Text = "...";
             this.Button_PickSource.UseVisualStyleBackColor = false;
             this.Button_PickSource.Click += new System.EventHandler(this.Button_PickSource_Click);
@@ -718,7 +721,7 @@ namespace Darcy_Backup
             this.Button_PickFolder.Location = new System.Drawing.Point(321, 165);
             this.Button_PickFolder.Name = "Button_PickFolder";
             this.Button_PickFolder.Size = new System.Drawing.Size(32, 20);
-            this.Button_PickFolder.TabIndex = 45;
+            this.Button_PickFolder.TabIndex = 3;
             this.Button_PickFolder.Text = "...";
             this.Button_PickFolder.UseVisualStyleBackColor = false;
             this.Button_PickFolder.Click += new System.EventHandler(this.Button_PickFolder_Click);
@@ -739,7 +742,7 @@ namespace Darcy_Backup
             this.Text_TimeOfDay.Location = new System.Drawing.Point(13, 230);
             this.Text_TimeOfDay.Name = "Text_TimeOfDay";
             this.Text_TimeOfDay.Size = new System.Drawing.Size(108, 20);
-            this.Text_TimeOfDay.TabIndex = 47;
+            this.Text_TimeOfDay.TabIndex = 43;
             // 
             // Label_Help_Text_Time
             // 
@@ -890,7 +893,7 @@ namespace Darcy_Backup
             this.Button_DayAll.Location = new System.Drawing.Point(279, 160);
             this.Button_DayAll.Name = "Button_DayAll";
             this.Button_DayAll.Size = new System.Drawing.Size(32, 29);
-            this.Button_DayAll.TabIndex = 61;
+            this.Button_DayAll.TabIndex = 42;
             this.Button_DayAll.Text = "All";
             this.Button_DayAll.UseVisualStyleBackColor = false;
             this.Button_DayAll.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Days_MouseClick);
@@ -978,7 +981,7 @@ namespace Darcy_Backup
             this.Text_Timer.Location = new System.Drawing.Point(13, 60);
             this.Text_Timer.Name = "Text_Timer";
             this.Text_Timer.Size = new System.Drawing.Size(174, 20);
-            this.Text_Timer.TabIndex = 0;
+            this.Text_Timer.TabIndex = 8;
             // 
             // Label_Help_Timer
             // 
@@ -995,6 +998,15 @@ namespace Darcy_Backup
             this.Label_Help_Timer.MouseEnter += new System.EventHandler(this.Help_MouseEnter);
             this.Label_Help_Timer.MouseLeave += new System.EventHandler(this.Help_MouseLeave);
             // 
+            // Panel_Button_Panel
+            // 
+            this.Panel_Button_Panel.Controls.Add(this.Button_Discard);
+            this.Panel_Button_Panel.Controls.Add(this.Button_Save);
+            this.Panel_Button_Panel.Location = new System.Drawing.Point(161, 581);
+            this.Panel_Button_Panel.Name = "Panel_Button_Panel";
+            this.Panel_Button_Panel.Size = new System.Drawing.Size(224, 34);
+            this.Panel_Button_Panel.TabIndex = 64;
+            // 
             // Combo_Mode
             // 
             this.Combo_Mode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1008,13 +1020,14 @@ namespace Darcy_Backup
             this.Combo_Mode.MaxDropDownItems = 3;
             this.Combo_Mode.Name = "Combo_Mode";
             this.Combo_Mode.Size = new System.Drawing.Size(146, 21);
-            this.Combo_Mode.TabIndex = 6;
+            this.Combo_Mode.TabIndex = 4;
             this.Combo_Mode.SelectionChangeCommitted += new System.EventHandler(this.Combo_Mode_SelectionChangeCommitted);
             // 
             // Form_New_Entry
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(253)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(1219, 635);
+            this.Controls.Add(this.Panel_Button_Panel);
             this.Controls.Add(this.Label_Error);
             this.Controls.Add(this.Label_Help_Text_Mode);
             this.Controls.Add(this.Label_Help_Mode);
@@ -1024,8 +1037,6 @@ namespace Darcy_Backup
             this.Controls.Add(this.Label_Help_Source);
             this.Controls.Add(this.Button_PickFolder);
             this.Controls.Add(this.Button_PickSource);
-            this.Controls.Add(this.Button_Save);
-            this.Controls.Add(this.Button_Discard);
             this.Controls.Add(this.Radio_Manual);
             this.Controls.Add(this.Radio_Timer);
             this.Controls.Add(this.Radio_Schedule);
@@ -1038,15 +1049,19 @@ namespace Darcy_Backup
             this.Controls.Add(this.Label_Entry);
             this.Controls.Add(this.Panel_Schedule);
             this.Controls.Add(this.Panel_Timer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form_New_Entry";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_New_Entry_FormClosing);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form_New_Entry_KeyPress);
             this.Panel_Schedule.ResumeLayout(false);
             this.Panel_Schedule.PerformLayout();
             this.Panel_Timer.ResumeLayout(false);
             this.Panel_Timer.PerformLayout();
+            this.Panel_Button_Panel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1073,6 +1088,9 @@ namespace Darcy_Backup
 
             InitializeGUI();
 
+            this.Visible = true;
+
+            Text_Source.Focus();
         }
 
         private bool[] ArrayDays;
@@ -1186,6 +1204,7 @@ namespace Darcy_Backup
         Button[] ButtonDayArray = new Button[31];
         private void InitializeGUI()
         {
+            this.KeyPreview = true;
             this.SetBounds(0, 0, 394, 671);
 
             if (Type == 0)
@@ -1339,6 +1358,8 @@ namespace Darcy_Backup
                 }
             }
         }
+
+        
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -1599,7 +1620,7 @@ namespace Darcy_Backup
             return true;
         }
 
-        private void Button_Save_Click(object sender, EventArgs e)
+        private void OnSave()
         {
             bool validated = ValidateInput();
 
@@ -1612,6 +1633,10 @@ namespace Darcy_Backup
             {
                 Label_Error.Visible = true;
             }
+        }
+        private void Button_Save_Click(object sender, EventArgs e)
+        {
+            OnSave();
         }
 
         private void Radio_Process_CheckedChanged(object sender, EventArgs e)
@@ -1671,6 +1696,26 @@ namespace Darcy_Backup
         {
             Main.DiscardEditNew();
             
+        }
+
+        private void Form_New_Entry_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //escape
+            if (e.KeyChar == '\u001b')
+            {
+                Main.DiscardEditNew();
+            }
+            //return
+            else if (e.KeyChar == '\r')
+            {
+                OnSave();
+            }
+            
+        }
+
+        private void Combo_Mode_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int i = 0;
         }
     }
 }

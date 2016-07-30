@@ -53,6 +53,7 @@
             this.Language_Label_Finnish = new System.Windows.Forms.Label();
             this.Language_Label_Swedish = new System.Windows.Forms.Label();
             this.Settings_Panel = new Darcy_Backup.DarcySettingsPanel();
+            this.Settings_Label_Updates = new System.Windows.Forms.Label();
             this.Settings_Label_Minimized = new System.Windows.Forms.Label();
             this.Settings_Label_Tray = new System.Windows.Forms.Label();
             this.Settings_Label_Autorun = new System.Windows.Forms.Label();
@@ -129,6 +130,8 @@
             this.Label_Backup.Size = new System.Drawing.Size(135, 33);
             this.Label_Backup.TabIndex = 13;
             this.Label_Backup.Text = "Backup List";
+            this.Label_Backup.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Backup.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // notifyIcon
             // 
@@ -180,6 +183,8 @@
             this.Label_Toggle.TabIndex = 29;
             this.Label_Toggle.Text = "Toggle Automated:";
             this.Label_Toggle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Label_Toggle.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Toggle.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // About_Panel
             // 
@@ -187,7 +192,7 @@
             this.About_Panel.Controls.Add(this.About_Label_License);
             this.About_Panel.Controls.Add(this.About_Label_Version);
             this.About_Panel.Controls.Add(this.About_Label_Title);
-            this.About_Panel.Location = new System.Drawing.Point(1119, 146);
+            this.About_Panel.Location = new System.Drawing.Point(1119, 180);
             this.About_Panel.Name = "About_Panel";
             this.About_Panel.Size = new System.Drawing.Size(172, 125);
             this.About_Panel.TabIndex = 25;
@@ -299,7 +304,7 @@
             this.Language_Panel.Controls.Add(this.Language_Label_English);
             this.Language_Panel.Controls.Add(this.Language_Label_Finnish);
             this.Language_Panel.Controls.Add(this.Language_Label_Swedish);
-            this.Language_Panel.Location = new System.Drawing.Point(1268, 27);
+            this.Language_Panel.Location = new System.Drawing.Point(1329, 191);
             this.Language_Panel.Name = "Language_Panel";
             this.Language_Panel.Size = new System.Drawing.Size(96, 102);
             this.Language_Panel.TabIndex = 25;
@@ -358,16 +363,33 @@
             // Settings_Panel
             // 
             this.Settings_Panel.BackColor = System.Drawing.Color.Transparent;
+            this.Settings_Panel.Controls.Add(this.Settings_Label_Updates);
             this.Settings_Panel.Controls.Add(this.Settings_Label_Minimized);
             this.Settings_Panel.Controls.Add(this.Settings_Label_Tray);
             this.Settings_Panel.Controls.Add(this.Settings_Label_Autorun);
             this.Settings_Panel.Location = new System.Drawing.Point(1119, 27);
             this.Settings_Panel.Name = "Settings_Panel";
-            this.Settings_Panel.Size = new System.Drawing.Size(143, 102);
+            this.Settings_Panel.Size = new System.Drawing.Size(151, 128);
             this.Settings_Panel.TabIndex = 23;
             this.Settings_Panel.Visible = false;
             this.Settings_Panel.Click += new System.EventHandler(this.Panel_Click);
             this.Settings_Panel.DoubleClick += new System.EventHandler(this.Panel_Click);
+            // 
+            // Settings_Label_Updates
+            // 
+            this.Settings_Label_Updates.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Settings_Label_Updates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.Settings_Label_Updates.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.Settings_Label_Updates.Location = new System.Drawing.Point(7, 98);
+            this.Settings_Label_Updates.Name = "Settings_Label_Updates";
+            this.Settings_Label_Updates.Size = new System.Drawing.Size(141, 23);
+            this.Settings_Label_Updates.TabIndex = 6;
+            this.Settings_Label_Updates.Text = "Check for updates";
+            this.Settings_Label_Updates.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Settings_Label_Updates.Click += new System.EventHandler(this.Settings_Label_Click);
+            this.Settings_Label_Updates.DoubleClick += new System.EventHandler(this.Settings_Label_Click);
+            this.Settings_Label_Updates.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
+            this.Settings_Label_Updates.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
             // Settings_Label_Minimized
             // 
@@ -376,7 +398,7 @@
             this.Settings_Label_Minimized.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.Settings_Label_Minimized.Location = new System.Drawing.Point(7, 72);
             this.Settings_Label_Minimized.Name = "Settings_Label_Minimized";
-            this.Settings_Label_Minimized.Size = new System.Drawing.Size(133, 23);
+            this.Settings_Label_Minimized.Size = new System.Drawing.Size(141, 23);
             this.Settings_Label_Minimized.TabIndex = 5;
             this.Settings_Label_Minimized.Text = "Start minimized";
             this.Settings_Label_Minimized.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -392,7 +414,7 @@
             this.Settings_Label_Tray.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.Settings_Label_Tray.Location = new System.Drawing.Point(7, 46);
             this.Settings_Label_Tray.Name = "Settings_Label_Tray";
-            this.Settings_Label_Tray.Size = new System.Drawing.Size(133, 23);
+            this.Settings_Label_Tray.Size = new System.Drawing.Size(141, 23);
             this.Settings_Label_Tray.TabIndex = 4;
             this.Settings_Label_Tray.Text = "Minimize to tray";
             this.Settings_Label_Tray.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -408,7 +430,7 @@
             this.Settings_Label_Autorun.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.Settings_Label_Autorun.Location = new System.Drawing.Point(7, 20);
             this.Settings_Label_Autorun.Name = "Settings_Label_Autorun";
-            this.Settings_Label_Autorun.Size = new System.Drawing.Size(133, 23);
+            this.Settings_Label_Autorun.Size = new System.Drawing.Size(141, 23);
             this.Settings_Label_Autorun.TabIndex = 3;
             this.Settings_Label_Autorun.Text = "Autorun";
             this.Settings_Label_Autorun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -564,6 +586,8 @@
             this.Dynamic_Mode.TabIndex = 22;
             this.Dynamic_Mode.Text = "dyn mode";
             this.Dynamic_Mode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Dynamic_Mode.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Dynamic_Mode.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Label_Mode
             // 
@@ -575,6 +599,8 @@
             this.Label_Mode.TabIndex = 21;
             this.Label_Mode.Text = "Mode:";
             this.Label_Mode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Mode.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Mode.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Dynamic_Process_Specific2
             // 
@@ -586,6 +612,8 @@
             this.Dynamic_Process_Specific2.TabIndex = 20;
             this.Dynamic_Process_Specific2.Text = "dyn process";
             this.Dynamic_Process_Specific2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Dynamic_Process_Specific2.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Dynamic_Process_Specific2.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Label_Process_Specific2
             // 
@@ -597,6 +625,8 @@
             this.Label_Process_Specific2.TabIndex = 19;
             this.Label_Process_Specific2.Text = "Process:";
             this.Label_Process_Specific2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Process_Specific2.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Process_Specific2.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Dynamic_Process_Specific1
             // 
@@ -608,6 +638,8 @@
             this.Dynamic_Process_Specific1.TabIndex = 18;
             this.Dynamic_Process_Specific1.Text = "dyn process";
             this.Dynamic_Process_Specific1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Dynamic_Process_Specific1.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Dynamic_Process_Specific1.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Label_Process_Specific1
             // 
@@ -619,6 +651,8 @@
             this.Label_Process_Specific1.TabIndex = 17;
             this.Label_Process_Specific1.Text = "Process:";
             this.Label_Process_Specific1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Process_Specific1.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Process_Specific1.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Dynamic_Automated
             // 
@@ -630,6 +664,8 @@
             this.Dynamic_Automated.TabIndex = 16;
             this.Dynamic_Automated.Text = "dyn automated";
             this.Dynamic_Automated.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Dynamic_Automated.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Dynamic_Automated.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Dynamic_Process
             // 
@@ -641,6 +677,8 @@
             this.Dynamic_Process.TabIndex = 15;
             this.Dynamic_Process.Text = "dyn process";
             this.Dynamic_Process.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Dynamic_Process.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Dynamic_Process.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Dynamic_Destination
             // 
@@ -652,6 +690,8 @@
             this.Dynamic_Destination.TabIndex = 13;
             this.Dynamic_Destination.Text = "dyn dest";
             this.Dynamic_Destination.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Dynamic_Destination.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Dynamic_Destination.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Dynamic_Source
             // 
@@ -663,6 +703,8 @@
             this.Dynamic_Source.TabIndex = 12;
             this.Dynamic_Source.Text = "dyn source";
             this.Dynamic_Source.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Dynamic_Source.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Dynamic_Source.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Label_Automated
             // 
@@ -674,6 +716,8 @@
             this.Label_Automated.TabIndex = 9;
             this.Label_Automated.Text = "Automated:";
             this.Label_Automated.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Automated.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Automated.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Label_Process
             // 
@@ -685,6 +729,8 @@
             this.Label_Process.TabIndex = 8;
             this.Label_Process.Text = "Process:";
             this.Label_Process.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Process.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Process.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Label_Destination
             // 
@@ -696,6 +742,8 @@
             this.Label_Destination.TabIndex = 6;
             this.Label_Destination.Text = "Destination:";
             this.Label_Destination.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Destination.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Destination.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Label_Source
             // 
@@ -707,6 +755,8 @@
             this.Label_Source.TabIndex = 5;
             this.Label_Source.Text = "Source:";
             this.Label_Source.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label_Source.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Source.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // List_Log
             // 
@@ -730,6 +780,8 @@
             this.Label_HeaderLog.Size = new System.Drawing.Size(204, 33);
             this.Label_HeaderLog.TabIndex = 1;
             this.Label_HeaderLog.Text = "Log";
+            this.Label_HeaderLog.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_HeaderLog.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Label_HeaderSelected
             // 
@@ -741,6 +793,8 @@
             this.Label_HeaderSelected.Size = new System.Drawing.Size(204, 33);
             this.Label_HeaderSelected.TabIndex = 0;
             this.Label_HeaderSelected.Text = "Selected Entry";
+            this.Label_HeaderSelected.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_HeaderSelected.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Form_Darcy_Panel
             // 
@@ -835,6 +889,7 @@
         private System.Windows.Forms.Label Settings_Label_Minimized;
         private System.Windows.Forms.Label Settings_Label_Tray;
         private System.Windows.Forms.Label Settings_Label_Autorun;
+        private System.Windows.Forms.Label Settings_Label_Updates;
     }
 }
 

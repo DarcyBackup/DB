@@ -16,10 +16,20 @@ namespace Darcy_Backup
         {
             InitializeComponent();
 
+            this.KeyPreview = true;
+
             Label_Entry.Text = entry;
             Label_Entry.ForeColor = theme;
             Label_Time.Text = time;
             Text_Error.Text = error;
+        }
+
+        private void DarcyLogForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\u001b')
+            {
+                this.Dispose();
+            }
         }
     }
 }

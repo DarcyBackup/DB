@@ -20,6 +20,14 @@ namespace Darcy_Backup
         {
 
             InitializeComponent();
+
+            if (Properties.Settings.Default.UpgradeSettings == true)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeSettings = false;
+                Properties.Settings.Default.Save();
+            }
+
             
             if (Properties.Settings.Default.MinimizedOnStartup == true)
             {
@@ -40,18 +48,10 @@ namespace Darcy_Backup
 
             InitializeCache();
 
-            //CheckForUpdates();
+            if (Properties.Settings.Default.Updates == true)
+                InitializeUpdateThread();
 
             InitializeWorkerThread();
-        }
-        private void CheckForUpdates()
-        {
-            WebClient client = new WebClient();
-            Stream stream = client.OpenRead("https://www.darcybackup.com/deploy/currentVersion.php");
-            StreamReader reader = new StreamReader(stream);
-            String content = reader.ReadToEnd();
-
-            int debug = 0;
         }
 
         private void InitializeTheme()
@@ -166,7 +166,21 @@ namespace Darcy_Backup
         /*
         //  END OF RESIZE
         */
+        UpdateClass _uc = null;
+        Thread _ut = null;
+        private void InitializeUpdateThread()
+        {
+            if (_uc != null)
+                _uc = null;
+            _uc = new UpdateClass(_assemblyVersion);
 
+            if (_ut != null)
+                _ut.Abort();
+
+            _ut = new Thread(_uc.CheckUpdate);
+            _ut.IsBackground = true;
+            _ut.Start();
+        }
         private void InitializeWorkerThread()
         {
             WorkerClass wc = new WorkerClass(this);
@@ -317,7 +331,7 @@ namespace Darcy_Backup
             List_Backup.FullRowSelect = true;
             List_Backup.MultiSelect = false;
             List_Backup.GridLines = false;
-            List_Backup.HideSelection = false;
+            List_Backup.HideSelection = true;
 
             List_Backup.ColumnWidthChanged += List_Backup_ColumnWidthChanged;
 
@@ -343,6 +357,7 @@ namespace Darcy_Backup
 
 
             List_Log.View = View.Details;
+            List_Log.HideSelection = true;
             List_Log.FullRowSelect = true;
             List_Log.GridLines = false;
             List_Log.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
@@ -367,6 +382,8 @@ namespace Darcy_Backup
                 Settings_Label_Minimized.Image = Properties.Resources.Check1;
             if (Properties.Settings.Default.ToTray == true)
                 Settings_Label_Tray.Image = Properties.Resources.Check1;
+            if (Properties.Settings.Default.Updates == true)
+                Settings_Label_Updates.Image = Properties.Resources.Check1;
 
             Update_SelectedEntry();
 

@@ -76,9 +76,11 @@
             this.Controls.Add(this.Text_Error);
             this.Controls.Add(this.Label_Time);
             this.Controls.Add(this.Label_Entry);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DarcyLogForm";
             this.Text = "Darcy Backup";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DarcyLogForm_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
 
