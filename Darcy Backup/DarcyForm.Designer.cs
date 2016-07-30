@@ -33,56 +33,56 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Darcy_Panel));
             this.Button_Delete = new System.Windows.Forms.Button();
             this.Button_Activate = new System.Windows.Forms.Button();
-            this.Label_Backup = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.Button_Edit = new System.Windows.Forms.Button();
             this.Button_New = new System.Windows.Forms.Button();
-            this.Label_Toggle = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.Button_Cancel = new Darcy_Backup.DarcyButton();
             this.About_Panel = new Darcy_Backup.DarcySettingsPanel();
-            this.About_Label_License = new System.Windows.Forms.Label();
-            this.About_Label_Version = new System.Windows.Forms.Label();
-            this.About_Label_Title = new System.Windows.Forms.Label();
+            this.About_Label_License = new Darcy_Backup.DarcyLabel();
+            this.About_Label_Version = new Darcy_Backup.DarcyLabel();
+            this.About_Label_Title = new Darcy_Backup.DarcyLabel();
             this.Theme_Panel = new Darcy_Backup.DarcySettingsPanel();
-            this.Theme_Label_Gray = new System.Windows.Forms.Label();
-            this.Theme_Label_Blue = new System.Windows.Forms.Label();
-            this.Theme_Label_Red = new System.Windows.Forms.Label();
+            this.Theme_Label_Gray = new Darcy_Backup.DarcyLabel();
+            this.Theme_Label_Blue = new Darcy_Backup.DarcyLabel();
+            this.Theme_Label_Red = new Darcy_Backup.DarcyLabel();
             this.Language_Panel = new Darcy_Backup.DarcySettingsPanel();
-            this.Language_Label_English = new System.Windows.Forms.Label();
-            this.Language_Label_Finnish = new System.Windows.Forms.Label();
-            this.Language_Label_Swedish = new System.Windows.Forms.Label();
+            this.Language_Label_English = new Darcy_Backup.DarcyLabel();
+            this.Language_Label_Finnish = new Darcy_Backup.DarcyLabel();
+            this.Language_Label_Swedish = new Darcy_Backup.DarcyLabel();
             this.Settings_Panel = new Darcy_Backup.DarcySettingsPanel();
-            this.Settings_Label_Updates = new System.Windows.Forms.Label();
-            this.Settings_Label_Minimized = new System.Windows.Forms.Label();
-            this.Settings_Label_Tray = new System.Windows.Forms.Label();
-            this.Settings_Label_Autorun = new System.Windows.Forms.Label();
+            this.Settings_Label_Updates = new Darcy_Backup.DarcyLabel();
+            this.Settings_Label_Minimized = new Darcy_Backup.DarcyLabel();
+            this.Settings_Label_Tray = new Darcy_Backup.DarcyLabel();
+            this.Settings_Label_Autorun = new Darcy_Backup.DarcyLabel();
             this.Darcy_Top_Panel = new Darcy_Backup.DarcyTopPanel();
-            this.Label_Themes = new System.Windows.Forms.Label();
-            this.Label_Language = new System.Windows.Forms.Label();
-            this.Label_Settings = new System.Windows.Forms.Label();
-            this.Label_About = new System.Windows.Forms.Label();
+            this.Label_Themes = new Darcy_Backup.DarcyLabel();
+            this.Label_Language = new Darcy_Backup.DarcyLabel();
+            this.Label_Settings = new Darcy_Backup.DarcyLabel();
+            this.Label_About = new Darcy_Backup.DarcyLabel();
+            this.Label_Toggle = new Darcy_Backup.DarcyLabel();
+            this.Label_Backup = new Darcy_Backup.DarcyLabel();
             this.List_Backup = new Darcy_Backup.DarcyListView();
             this.Button_Perform = new Darcy_Backup.DarcyButton();
             this.Panel_Selected_Log = new Darcy_Backup.DarcySelectedLogPanel();
-            this.Dynamic_Mode = new System.Windows.Forms.Label();
-            this.Label_Mode = new System.Windows.Forms.Label();
-            this.Dynamic_Process_Specific2 = new System.Windows.Forms.Label();
-            this.Label_Process_Specific2 = new System.Windows.Forms.Label();
-            this.Dynamic_Process_Specific1 = new System.Windows.Forms.Label();
-            this.Label_Process_Specific1 = new System.Windows.Forms.Label();
-            this.Dynamic_Automated = new System.Windows.Forms.Label();
-            this.Dynamic_Process = new System.Windows.Forms.Label();
-            this.Dynamic_Destination = new System.Windows.Forms.Label();
-            this.Dynamic_Source = new System.Windows.Forms.Label();
-            this.Label_Automated = new System.Windows.Forms.Label();
-            this.Label_Process = new System.Windows.Forms.Label();
-            this.Label_Destination = new System.Windows.Forms.Label();
-            this.Label_Source = new System.Windows.Forms.Label();
+            this.Dynamic_Mode = new Darcy_Backup.DarcyLabel();
+            this.Label_Mode = new Darcy_Backup.DarcyLabel();
+            this.Dynamic_Process_Specific2 = new Darcy_Backup.DarcyLabel();
+            this.Label_Process_Specific2 = new Darcy_Backup.DarcyLabel();
+            this.Dynamic_Process_Specific1 = new Darcy_Backup.DarcyLabel();
+            this.Label_Process_Specific1 = new Darcy_Backup.DarcyLabel();
+            this.Dynamic_Automated = new Darcy_Backup.DarcyLabel();
+            this.Dynamic_Process = new Darcy_Backup.DarcyLabel();
+            this.Dynamic_Destination = new Darcy_Backup.DarcyLabel();
+            this.Dynamic_Source = new Darcy_Backup.DarcyLabel();
+            this.Label_Automated = new Darcy_Backup.DarcyLabel();
+            this.Label_Process = new Darcy_Backup.DarcyLabel();
+            this.Label_Destination = new Darcy_Backup.DarcyLabel();
+            this.Label_Source = new Darcy_Backup.DarcyLabel();
             this.List_Log = new System.Windows.Forms.ListView();
-            this.Label_HeaderLog = new System.Windows.Forms.Label();
-            this.Label_HeaderSelected = new System.Windows.Forms.Label();
+            this.Label_HeaderLog = new Darcy_Backup.DarcyLabel();
+            this.Label_HeaderSelected = new Darcy_Backup.DarcyLabel();
             this.About_Panel.SuspendLayout();
             this.Theme_Panel.SuspendLayout();
             this.Language_Panel.SuspendLayout();
@@ -120,19 +120,6 @@
             this.Button_Activate.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Button_Activate.UseVisualStyleBackColor = false;
             this.Button_Activate.Click += new System.EventHandler(this.Button_Activate_Click);
-            // 
-            // Label_Backup
-            // 
-            this.Label_Backup.AutoSize = true;
-            this.Label_Backup.Font = new System.Drawing.Font("Calibri Light", 20F);
-            this.Label_Backup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            this.Label_Backup.Location = new System.Drawing.Point(442, 96);
-            this.Label_Backup.Name = "Label_Backup";
-            this.Label_Backup.Size = new System.Drawing.Size(135, 33);
-            this.Label_Backup.TabIndex = 13;
-            this.Label_Backup.Text = "Backup List";
-            this.Label_Backup.Click += new System.EventHandler(this.Label_Click_Focus);
-            this.Label_Backup.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // notifyIcon
             // 
@@ -173,19 +160,6 @@
             this.Button_New.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Button_New.UseVisualStyleBackColor = false;
             this.Button_New.Click += new System.EventHandler(this.Button_New_Click);
-            // 
-            // Label_Toggle
-            // 
-            this.Label_Toggle.BackColor = System.Drawing.Color.Transparent;
-            this.Label_Toggle.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Label_Toggle.Location = new System.Drawing.Point(779, 517);
-            this.Label_Toggle.Name = "Label_Toggle";
-            this.Label_Toggle.Size = new System.Drawing.Size(123, 23);
-            this.Label_Toggle.TabIndex = 29;
-            this.Label_Toggle.Text = "Toggle Automated:";
-            this.Label_Toggle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Label_Toggle.Click += new System.EventHandler(this.Label_Click_Focus);
-            this.Label_Toggle.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
             // 
             // Button_Cancel
             // 
@@ -536,6 +510,32 @@
             this.Label_About.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_About.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
             // 
+            // Label_Toggle
+            // 
+            this.Label_Toggle.BackColor = System.Drawing.Color.Transparent;
+            this.Label_Toggle.Font = new System.Drawing.Font("Calibri Light", 10F);
+            this.Label_Toggle.Location = new System.Drawing.Point(779, 517);
+            this.Label_Toggle.Name = "Label_Toggle";
+            this.Label_Toggle.Size = new System.Drawing.Size(123, 23);
+            this.Label_Toggle.TabIndex = 29;
+            this.Label_Toggle.Text = "Toggle Automated:";
+            this.Label_Toggle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Label_Toggle.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Toggle.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
+            // 
+            // Label_Backup
+            // 
+            this.Label_Backup.AutoSize = true;
+            this.Label_Backup.Font = new System.Drawing.Font("Calibri Light", 20F);
+            this.Label_Backup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            this.Label_Backup.Location = new System.Drawing.Point(442, 96);
+            this.Label_Backup.Name = "Label_Backup";
+            this.Label_Backup.Size = new System.Drawing.Size(135, 33);
+            this.Label_Backup.TabIndex = 13;
+            this.Label_Backup.Text = "Backup List";
+            this.Label_Backup.Click += new System.EventHandler(this.Label_Click_Focus);
+            this.Label_Backup.DoubleClick += new System.EventHandler(this.Label_Click_Focus);
+            // 
             // List_Backup
             // 
             this.List_Backup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
@@ -862,53 +862,53 @@
         private DarcyListView List_Backup;
         private System.Windows.Forms.Button Button_Delete;
         private System.Windows.Forms.Button Button_Activate;
-        private System.Windows.Forms.Label Label_Backup;
+        private DarcyLabel Label_Backup;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
-        private System.Windows.Forms.Label Label_Settings;
-        private System.Windows.Forms.Label Label_About;
+        private DarcyLabel Label_Settings;
+        private DarcyLabel Label_About;
         private DarcySettingsPanel Settings_Panel;
-        private System.Windows.Forms.Label Language_Label_Swedish;
-        private System.Windows.Forms.Label Language_Label_English;
-        private System.Windows.Forms.Label Language_Label_Finnish;
+        private DarcyLabel Language_Label_Swedish;
+        private DarcyLabel Language_Label_English;
+        private DarcyLabel Language_Label_Finnish;
         private DarcySettingsPanel About_Panel;
-        private System.Windows.Forms.Label About_Label_Version;
-        private System.Windows.Forms.Label About_Label_Title;
-        private System.Windows.Forms.Label About_Label_License;
+        private DarcyLabel About_Label_Version;
+        private DarcyLabel About_Label_Title;
+        private DarcyLabel About_Label_License;
         private DarcySelectedLogPanel Panel_Selected_Log;
         private System.Windows.Forms.Button Button_Edit;
         private System.Windows.Forms.Button Button_New;
-        private System.Windows.Forms.Label Label_Toggle;
-        private System.Windows.Forms.Label Label_HeaderSelected;
+        private DarcyLabel Label_Toggle;
+        private DarcyLabel Label_HeaderSelected;
         private System.Windows.Forms.ListView List_Log;
-        private System.Windows.Forms.Label Label_HeaderLog;
-        private System.Windows.Forms.Label Label_Automated;
-        private System.Windows.Forms.Label Label_Process;
-        private System.Windows.Forms.Label Dynamic_Automated;
-        private System.Windows.Forms.Label Dynamic_Process;
-        private System.Windows.Forms.Label Dynamic_Process_Specific1;
-        private System.Windows.Forms.Label Label_Process_Specific1;
-        private System.Windows.Forms.Label Dynamic_Process_Specific2;
-        private System.Windows.Forms.Label Label_Process_Specific2;
-        private System.Windows.Forms.Label Dynamic_Mode;
-        private System.Windows.Forms.Label Label_Mode;
-        private System.Windows.Forms.Label Dynamic_Destination;
-        private System.Windows.Forms.Label Dynamic_Source;
-        private System.Windows.Forms.Label Label_Destination;
-        private System.Windows.Forms.Label Label_Source;
+        private DarcyLabel Label_HeaderLog;
+        private DarcyLabel Label_Automated;
+        private DarcyLabel Label_Process;
+        private DarcyLabel Dynamic_Automated;
+        private DarcyLabel Dynamic_Process;
+        private DarcyLabel Dynamic_Process_Specific1;
+        private DarcyLabel Label_Process_Specific1;
+        private DarcyLabel Dynamic_Process_Specific2;
+        private DarcyLabel Label_Process_Specific2;
+        private DarcyLabel Dynamic_Mode;
+        private DarcyLabel Label_Mode;
+        private DarcyLabel Dynamic_Destination;
+        private DarcyLabel Dynamic_Source;
+        private DarcyLabel Label_Destination;
+        private DarcyLabel Label_Source;
         private System.Windows.Forms.ToolTip toolTip1;
         private DarcyTopPanel Darcy_Top_Panel;
-        private System.Windows.Forms.Label Label_Themes;
-        private System.Windows.Forms.Label Label_Language;
+        private DarcyLabel Label_Themes;
+        private DarcyLabel Label_Language;
         private DarcySettingsPanel Language_Panel;
         private DarcySettingsPanel Theme_Panel;
-        private System.Windows.Forms.Label Theme_Label_Gray;
-        private System.Windows.Forms.Label Theme_Label_Blue;
-        private System.Windows.Forms.Label Theme_Label_Red;
-        private System.Windows.Forms.Label Settings_Label_Minimized;
-        private System.Windows.Forms.Label Settings_Label_Tray;
-        private System.Windows.Forms.Label Settings_Label_Autorun;
-        private System.Windows.Forms.Label Settings_Label_Updates;
+        private DarcyLabel Theme_Label_Gray;
+        private DarcyLabel Theme_Label_Blue;
+        private DarcyLabel Theme_Label_Red;
+        private DarcyLabel Settings_Label_Minimized;
+        private DarcyLabel Settings_Label_Tray;
+        private DarcyLabel Settings_Label_Autorun;
+        private DarcyLabel Settings_Label_Updates;
         private DarcyButton Button_Cancel;
     }
 }

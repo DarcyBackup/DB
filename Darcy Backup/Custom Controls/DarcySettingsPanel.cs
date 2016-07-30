@@ -10,7 +10,10 @@ namespace Darcy_Backup
 {
     class DarcySettingsPanel : Panel
     {
-        
+        public DarcySettingsPanel() : base()
+        {
+            DoubleBuffered = true;
+        }
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);

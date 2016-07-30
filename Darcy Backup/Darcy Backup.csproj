@@ -95,6 +95,9 @@
     <Compile Include="Custom Controls\DarcyComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Custom Controls\DarcyLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Custom Controls\DarcyListView.cs">
       <SubType>Component</SubType>
     </Compile>
