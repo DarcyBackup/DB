@@ -97,7 +97,7 @@
             this.Button_Delete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Delete.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Button_Delete.Location = new System.Drawing.Point(580, 516);
+            this.Button_Delete.Location = new System.Drawing.Point(610, 516);
             this.Button_Delete.Name = "Button_Delete";
             this.Button_Delete.Size = new System.Drawing.Size(60, 25);
             this.Button_Delete.TabIndex = 11;
@@ -137,9 +137,9 @@
             this.Button_Edit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(135)))), ((int)(((byte)(144)))));
             this.Button_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Edit.Font = new System.Drawing.Font("Calibri Light", 10F);
-            this.Button_Edit.Location = new System.Drawing.Point(515, 516);
+            this.Button_Edit.Location = new System.Drawing.Point(530, 516);
             this.Button_Edit.Name = "Button_Edit";
-            this.Button_Edit.Size = new System.Drawing.Size(45, 25);
+            this.Button_Edit.Size = new System.Drawing.Size(60, 25);
             this.Button_Edit.TabIndex = 27;
             this.Button_Edit.Text = "Edit";
             this.Button_Edit.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -154,7 +154,7 @@
             this.Button_New.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.Button_New.Location = new System.Drawing.Point(450, 516);
             this.Button_New.Name = "Button_New";
-            this.Button_New.Size = new System.Drawing.Size(45, 25);
+            this.Button_New.Size = new System.Drawing.Size(60, 25);
             this.Button_New.TabIndex = 28;
             this.Button_New.Text = "New";
             this.Button_New.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -458,6 +458,7 @@
             this.Label_Themes.Leave += new System.EventHandler(this.Label_Settings_Focus_Leave);
             this.Label_Themes.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_Themes.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
+            this.Label_Themes.MouseHover += new System.EventHandler(this.Label_Settings_MouseHover);
             // 
             // Label_Language
             // 
@@ -475,6 +476,7 @@
             this.Label_Language.Leave += new System.EventHandler(this.Label_Settings_Focus_Leave);
             this.Label_Language.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_Language.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
+            this.Label_Language.MouseHover += new System.EventHandler(this.Label_Settings_MouseHover);
             // 
             // Label_Settings
             // 
@@ -492,6 +494,7 @@
             this.Label_Settings.Leave += new System.EventHandler(this.Label_Settings_Focus_Leave);
             this.Label_Settings.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_Settings.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
+            this.Label_Settings.MouseHover += new System.EventHandler(this.Label_Settings_MouseHover);
             // 
             // Label_About
             // 
@@ -509,6 +512,7 @@
             this.Label_About.Leave += new System.EventHandler(this.Label_Settings_Focus_Leave);
             this.Label_About.MouseEnter += new System.EventHandler(this.MouseEnter_BlackFont);
             this.Label_About.MouseLeave += new System.EventHandler(this.MouseLeave_Regular);
+            this.Label_About.MouseHover += new System.EventHandler(this.Label_Settings_MouseHover);
             // 
             // Label_Toggle
             // 

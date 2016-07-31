@@ -51,7 +51,7 @@ namespace Darcy_Backup
             if (Properties.Settings.Default.Updates == true)
                 InitializeUpdateThread();
 
-            InitializeWorkerThread();
+            InitializeWorkerThreads();
         }
 
         private void InitializeTheme()
@@ -188,12 +188,16 @@ namespace Darcy_Backup
             _ut.IsBackground = true;
             _ut.Start();
         }
-        private void InitializeWorkerThread()
+        private void InitializeWorkerThreads()
         {
             WorkerClass wc = new WorkerClass(this);
-            Thread wt = new Thread(wc.Work);
-            wt.IsBackground = true;
-            wt.Start();
+            Thread tp = new Thread(wc.ThreadPerform);
+            tp.IsBackground = true;
+            tp.Start();
+
+            Thread tq = new Thread(wc.ThreadQueue);
+            tq.IsBackground = true;
+            tq.Start();
         }
 
         private void InitializeCache()

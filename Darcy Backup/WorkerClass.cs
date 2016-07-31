@@ -17,12 +17,20 @@ namespace Darcy_Backup
             obj = fd;
         }
 
-        public void Work()
+        public void ThreadQueue()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+                obj.QueueAction();
+            }
+        }
+        public void ThreadPerform()
         {
             while (true)
             {
                 Thread.Sleep(10000);
-                obj.CheckAction();
+                obj.CheckPerform();
             }
         }
     }

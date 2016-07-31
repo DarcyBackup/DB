@@ -608,7 +608,7 @@ namespace Darcy_Backup
             
             return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
         }
-        public void CheckAction()
+        public void QueueAction()
         {
             if (_editNewOngoing == true)
                 return;
@@ -619,28 +619,12 @@ namespace Darcy_Backup
                 string process = ProcessToString(Entries[i].Process);
                 if (process == "Manual")
                 {
-                    if (Entries[i].Status == "In Queue" || Entries[i].Status == "In Progress")
-                    {
-                        /*
-                        Entries[i].Ongoing = true;
-                        Perform(i);
-                        string str = GetTimeString(DateTime.Now);
-                        Entries[i].LastPerformed = str;
-                        Entries[i].Status = "Resting";
-                        Entries[i].Ongoing = false;
-                        */
-                    }
-
                     if (Entries[i].NextScheduled != "Manual Mode") ;
                     {
                         Entries[i].NextScheduled = "Manual Mode";
+                        UpdateListItem(Entries[i], i);
                         Save();
                     }
-
-                    //int selectedIndex = GetSelectedListIndex(List_Backup);
-                    //if (RemoveFromList(Entries[i], i) == true)
-                    //AddToList(Entries[i], i, selectedIndex);
-                    UpdateListItem(Entries[i], i);
                     continue;
                 }
 
@@ -648,22 +632,15 @@ namespace Darcy_Backup
                 string status = Entries[i].Status;
                 if (process == "Scheduled" || process == "Timer")
                 {
-
                     if (Entries[i].Automated == false)
                     {
-                        //if (lp == "In Queue" || lp == "In Progress" || lp == "")
-                        //Entries[i].LastPerformed = "Manual Mode";
-
                         if (Entries[i].NextScheduled != "Manual Mode")
                         {
                             Entries[i].NextScheduled = "Manual Mode";
+                            UpdateListItem(Entries[i], i);
                             Save();
                         }
-
-                        //int selectedIndex = GetSelectedListIndex(List_Backup);
-                        //if (RemoveFromList(Entries[i], i) == true)
-                        //AddToList(Entries[i], i, selectedIndex);
-                        UpdateListItem(Entries[i], i);
+                        
                         continue;
                     }
                 }
@@ -672,7 +649,7 @@ namespace Darcy_Backup
                 {
                     DateTime now = DateTime.Now;
 
-                    if (status == "In Queue" || status ==  "In Progress")
+                    if (status != "Resting")
                     {
 
                     }
@@ -680,91 +657,24 @@ namespace Darcy_Backup
                     {
                         DateTime lastPerformed = GetDateTimeFromString(Entries[i].LastPerformed);
                         
-
                         string nextPerform = GetNextSchedulePerform(Entries[i]);
                         Entries[i].NextScheduled = nextPerform;
 
                         string nowString = GetTimeString(DateTime.Now);
 
                         if (nowString == nextPerform)
+                        {
                             if (nowString != Entries[i].LastPerformed)
+                            {
                                 Entries[i].Status = "In Queue";
+                                if (i == _currentListSel)
+                                    Button_Cancel.Enabled = true;
+                            }
+                        }
 
-                        Save();
-
-                        //int selectedIndex = GetSelectedListIndex(List_Backup);
-                        //if (RemoveFromList(Entries[i], i) == true)
-                        //AddToList(Entries[i], i, selectedIndex);
                         UpdateListItem(Entries[i], i);
 
-
-
-                        /*
-
-                        int today = now.Day - 1;
-
-                        bool found = false;
-                        int lastScheduledDay = today;
-                        for (; lastScheduledDay >= 0; lastScheduledDay--)
-                        {
-                            if (Entries[i].Days[lastScheduledDay] == true)
-                            {
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (found == false)
-                        {
-                            lastScheduledDay = 30;
-                            for (; lastScheduledDay >= 0; lastScheduledDay--)
-                            {
-                                if (Entries[i].Days[lastScheduledDay] == true)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (lastPerformed.Day - 1 <= lastScheduledDay)
-                        {
-                            if (lastPerformed.Hour >= GetHourFromTimeOfDay(Entries[i].TimeOfDay))
-                            {
-                                if (lastPerformed.Minute >= GetMinuteFromTimeOfDay(Entries[i].TimeOfDay))
-                                    continue;
-                            }
-                        }
-
-                        if (now.Hour < GetHourFromTimeOfDay(Entries[i].TimeOfDay))
-                            continue;
-                        if (now.Hour == GetHourFromTimeOfDay(Entries[i].TimeOfDay) && now.Minute < GetMinuteFromTimeOfDay(Entries[i].TimeOfDay))
-                            continue;
-                        
-                        */
-
-
-
-                    }
-
-                    bool a = false;
-                    if (Entries[i].Ongoing == false && a == true)
-                    {
-                        Entries[i].Ongoing = true;
-                        Perform(i);
-                        string str = GetTimeString(DateTime.Now);
-                        Entries[i].LastPerformed = str;
-                        Entries[i].Status = "Resting";
-                        Entries[i].Ongoing = false;
-
-                        string nextPerform = GetNextSchedulePerform(Entries[i]);
-                            
-                        Entries[i].NextScheduled = nextPerform;
-
                         Save();
-
-                        //int selectedIndex = GetSelectedListIndex(List_Backup);
-                        //if (RemoveFromList(Entries[i], i) == true)
-                        //AddToList(Entries[i], i, selectedIndex);
-                        UpdateListItem(Entries[i], i);
                     }
                 }
 
@@ -773,14 +683,10 @@ namespace Darcy_Backup
                     if (lp == "Never")
                     {
                         Entries[i].Status = "In Queue";
-
-                        //int selectedIndex = GetSelectedListIndex(List_Backup);
-                        //if (RemoveFromList(Entries[i], i) == true)
-                        //AddToList(Entries[i], i, selectedIndex);
                         UpdateListItem(Entries[i], i);
 
                     }
-                    else if (status == "In Queue" || status == "In Progress")
+                    else if (status != "Resting")
                     {
                     }
                     else
@@ -791,39 +697,23 @@ namespace Darcy_Backup
                             Entries[i].NextScheduled = nextPerform;
 
                         if (perform == true)
+                        {
                             Entries[i].Status = "In Queue";
-
-                        //int selectedIndex = GetSelectedListIndex(List_Backup);
-                        //if (RemoveFromList(Entries[i], i) == true)
-                        //AddToList(Entries[i], i, selectedIndex);
+                            if (i == _currentListSel)
+                                EnableCancel(true);
+                        }
+                        
                         UpdateListItem(Entries[i], i);
 
                         Save();
-                    }
-
-                    bool b = false;
-                    if (Entries[i].Ongoing == false && b == true)
-                    {
-                        Entries[i].Ongoing = true;
-                        Perform(i);
-                        string str = GetTimeString(DateTime.Now);
-                        Entries[i].LastPerformed = str;
-                        Entries[i].Status = "Resting";
-                        Entries[i].Ongoing = false;
-
-                        string nextPerform = "";
-                        CalculateTimeDifference(Entries[i].LastPerformed, Entries[i].Timer, out nextPerform);
-                        Entries[i].NextScheduled = nextPerform;
-
-                        Save();
-
-                        //int selectedIndex = GetSelectedListIndex(List_Backup);
-                        //if (RemoveFromList(Entries[i], i) == true)
-                        //AddToList(Entries[i], i, selectedIndex);
-                        UpdateListItem(Entries[i], i);
                     }
                 }
             }
+        }
+        public void CheckPerform()
+        {
+            if (_editNewOngoing == true)
+                return;
 
             for (int i = 0; i < Entries.Length; i++)
             {
@@ -851,17 +741,13 @@ namespace Darcy_Backup
                             CalculateTimeDifference(Entries[i].LastPerformed, Entries[i].Timer, out nextPerform);
                             Entries[i].NextScheduled = nextPerform;
                         }
-                        Save();
 
-                        //int selectedIndex = GetSelectedListIndex(List_Backup);
-                        //if (RemoveFromList(Entries[i], i) == true)
-                        //AddToList(Entries[i], i, selectedIndex);
                         UpdateListItem(Entries[i], i);
+                        Save();
+                        
                     }
                 }
             }
-
-
         }
         private string GetTimeString(DateTime dt)
         {
@@ -1058,14 +944,9 @@ namespace Darcy_Backup
                             if (Entries[i].Entry == entry.Entry)
                             {
                                 Entries[i] = entry;
-
-                                Save();
-
-                                //int selection = GetSelectedListIndex(List_Backup);
-                                //if (RemoveFromList(entry, i) == true)
-                                    //AddToList(entry, i, selection);
-                                    
                                 UpdateListItem(entry, i);
+                                Save();
+                                    
                             }
                         }
                     }
@@ -1097,16 +978,20 @@ namespace Darcy_Backup
                 return;
 
             if (Entries[i].Automated == true)
+            {
                 Entries[i].Automated = false;
+                Button_Activate.Text = "Activate";
+            }
             else
+            {
                 Entries[i].Automated = true;
+                Button_Activate.Text = "Deactivate";
+            }
 
+            UpdateListItem(Entries[i], i);
             Save();
 
-            //int selectedIndex = GetSelectedListIndex(List_Backup);
-            //if (RemoveFromList(Entries[i], i) == true)
-            //AddToList(Entries[i], i, selectedIndex);
-            UpdateListItem(Entries[i], i);
+            List_Backup.Focus();
 
         }
         public EntryClass GetEntry(int id)
@@ -1350,6 +1235,46 @@ namespace Darcy_Backup
                 Button_Cancel.Enabled = false;
             }
             */
+        }
+
+        private void Label_Settings_MouseHover(object sender, EventArgs e)
+        {
+            bool noFound = true;
+
+            for (int i = 0; i < _privateSettingsPanels.Count(); i++)
+            {
+                if (_privateSettingsPanels[i] == null)
+                    continue;
+                if (_privateSettingsLabels[i] != sender)
+                    if (_privateSettingsPanels[i].Visible == true)
+                        noFound = false;
+            }
+
+            if (noFound == true)
+                return;
+
+            Color color = Color.FromArgb(66, 66, 66);
+            int index = 0;
+
+            for (int i = 0; i < _privateSettingsPanels.Count(); i++)
+            {
+                if (_privateSettingsPanels[i] == null)
+                    continue;
+                if (_privateSettingsLabels[i] != sender)
+                {
+                    _privateSettingsPanels[i].Visible = false;
+                    _privateSettingsLabels[i].ForeColor = color;
+                }
+                else
+                    index = i;
+            }
+
+            bool visible = _privateSettingsPanels[index].Visible;
+
+            if (visible == true)
+                _privateSettingsPanels[index].Visible = false;
+            else
+                _privateSettingsPanels[index].Visible = true;
         }
     }
 }
