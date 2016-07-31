@@ -409,6 +409,8 @@ namespace Darcy_Backup
         {
             InitializeTags();
 
+            List_Backup.FocusLabel = Label_Settings;
+
             Settings_Panel.SetBounds(29, 71, Settings_Panel.Width, Settings_Panel.Height);
             Language_Panel.SetBounds(113, 71, Language_Panel.Width, Language_Panel.Height);
             Theme_Panel.SetBounds(225, 71, Theme_Panel.Width, Theme_Panel.Height);

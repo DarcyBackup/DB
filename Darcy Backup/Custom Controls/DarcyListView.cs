@@ -14,6 +14,7 @@ namespace Darcy_Backup
         {
             this.DoubleBuffered = true;
         }
+        public DarcyLabel FocusLabel { get; set; }
         protected override void WndProc(ref Message m)
         {
             if (m.Msg >= 0x201 && m.Msg <= 0x209)
@@ -27,6 +28,8 @@ namespace Darcy_Backup
                     case ListViewHitTestLocations.LeftOfClientArea:
                     case ListViewHitTestLocations.RightOfClientArea:
                     case ListViewHitTestLocations.None:
+                        if (FocusLabel != null)
+                            FocusLabel.Focus();
                         return;
                 }
             }

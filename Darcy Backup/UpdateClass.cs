@@ -19,15 +19,26 @@ namespace Darcy_Backup
         }
         public void CheckUpdate()
         {
-            
-            Thread.Sleep(10000);
 
-            /*WebClient client = new WebClient();
-            Stream stream = client.OpenRead("https://www.darcybackup.com/deploy/checkVersion.php");
-            StreamReader reader = new StreamReader(stream);
-            String content = reader.ReadToEnd();*/
+            string content = "";
+            for (int i = 0; i < 10; i++)
+            {
+                Thread.Sleep(10000);
+                try
+                {
+                    WebClient client = new WebClient();
+                    Stream stream = client.OpenRead("https://www.darcybackup.com/deploy/checkVersion.php");
+                    StreamReader reader = new StreamReader(stream);
+                    content = reader.ReadToEnd();
+                    break;
+                }
+                catch (System.Net.WebException)
+                {
+                    continue;
+                }
+            }
 
-            //if (content != _version)
+            if (content != "" && content != _version)
             {
                 DialogResult res = MessageBox.Show("There is a new version available for download.\n\nDo you want to open the download page?", "New Version", MessageBoxButtons.YesNo);
                     

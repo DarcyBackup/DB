@@ -467,34 +467,41 @@ namespace Darcy_Backup
                 Application.Exit();
 
 
-            using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(_fullPath, true))
+            try
             {
-                for (int i = 0; i < Entries.Length; i++)
+                using (System.IO.StreamWriter file =
+                    new System.IO.StreamWriter(_fullPath, true))
                 {
-
-                    string writeString = "";
-
-                    writeString += Entries[i].Entry + ";" + Entries[i].Source + ";" + Entries[i].Destination + ";" + Entries[i].Mode + ";" + Entries[i].Process + ";" + Entries[i].NextScheduled + ";" + Entries[i].LastPerformed + ";";
-                    for (int k = 0; k < Entries[i].Days.Length; k++)
-                        writeString += Entries[i].Days[k] + ";";
-                    writeString += Entries[i].TimeOfDay + ";" + Entries[i].Timer + ";" + Entries[i].TotalSize + ";" + Entries[i].Automated + ";" + Entries[i].Hash;
-
-                    try
+                    for (int i = 0; i < Entries.Length; i++)
                     {
-                        file.WriteLine(writeString);
-                    }
-                    catch (IOException error)
-                    {
-                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                        return;
-                    }
-                    catch (System.NotSupportedException error)
-                    {
-                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                        return;
+
+                        string writeString = "";
+
+                        writeString += Entries[i].Entry + ";" + Entries[i].Source + ";" + Entries[i].Destination + ";" + Entries[i].Mode + ";" + Entries[i].Process + ";" + Entries[i].NextScheduled + ";" + Entries[i].LastPerformed + ";";
+                        for (int k = 0; k < Entries[i].Days.Length; k++)
+                            writeString += Entries[i].Days[k] + ";";
+                        writeString += Entries[i].TimeOfDay + ";" + Entries[i].Timer + ";" + Entries[i].TotalSize + ";" + Entries[i].Automated + ";" + Entries[i].Hash;
+
+                        try
+                        {
+                            file.WriteLine(writeString);
+                        }
+                        catch (IOException error)
+                        {
+                            MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                            return;
+                        }
+                        catch (System.NotSupportedException error)
+                        {
+                            MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                            return;
+                        }
                     }
                 }
+            }
+            catch (IOException error)
+            {
+                return;
             }
         }
         private int GetMinuteFromTimeOfDay(string timeOfDay)
@@ -942,11 +949,8 @@ namespace Darcy_Backup
 
             ((Control)sender).ForeColor = Color.FromArgb(66, 66, 66);
         }
-        
-
-        private void Label_Settings_Click(object sender, EventArgs e)
+        private void Select_Setting(object sender)
         {
-            Label_Settings.Focus();
             Color color = Color.FromArgb(66, 66, 66);
             int index = 0;
 
@@ -962,13 +966,19 @@ namespace Darcy_Backup
                 else
                     index = i;
             }
-            
+
             bool visible = _privateSettingsPanels[index].Visible;
 
             if (visible == true)
                 _privateSettingsPanels[index].Visible = false;
             else
                 _privateSettingsPanels[index].Visible = true;
+        }
+
+        private void Label_Settings_Click(object sender, EventArgs e)
+        {
+            Label_Settings.Focus();
+            Select_Setting(sender);
         }
 
 
@@ -1341,29 +1351,8 @@ namespace Darcy_Backup
 
             if (noFound == true)
                 return;
-
-            Color color = Color.FromArgb(66, 66, 66);
-            int index = 0;
-
-            for (int i = 0; i < _privateSettingsPanels.Count(); i++)
-            {
-                if (_privateSettingsPanels[i] == null)
-                    continue;
-                if (_privateSettingsLabels[i] != sender)
-                {
-                    _privateSettingsPanels[i].Visible = false;
-                    _privateSettingsLabels[i].ForeColor = color;
-                }
-                else
-                    index = i;
-            }
-
-            bool visible = _privateSettingsPanels[index].Visible;
-
-            if (visible == true)
-                _privateSettingsPanels[index].Visible = false;
-            else
-                _privateSettingsPanels[index].Visible = true;
+            
+            Select_Setting(sender);
         }
     }
 }

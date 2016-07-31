@@ -21,7 +21,7 @@ namespace Darcy_Backup
         {
             while (true)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(4000);
                 obj.QueueAction();
             }
         }
