@@ -61,11 +61,26 @@ namespace Darcy_Backup
                 theme = "Gray";
 
             if (theme == "Gray")
-                Theme_Label_Gray.Image = Properties.Resources.Check1;
+            {
+                Theme_Img_Gray.Image = Properties.Resources.Check1;
+
+                Theme_Img_Red.Image = null;
+                Theme_Img_Blue.Image = null;
+            }
             else if (theme == "Red")
-                Theme_Label_Red.Image = Properties.Resources.Check1;
+            {
+                Theme_Img_Red.Image = Properties.Resources.Check1;
+
+                Theme_Img_Gray.Image = null;
+                Theme_Img_Blue.Image = null;
+            }
             else if (theme == "Blue")
-                Theme_Label_Blue.Image = Properties.Resources.Check1;
+            {
+                Theme_Img_Blue.Image = Properties.Resources.Check1;
+
+                Theme_Img_Gray.Image = null;
+                Theme_Img_Red.Image = null;
+            }
 
             SetTheme(theme);
         }
@@ -74,13 +89,28 @@ namespace Darcy_Backup
             string language = Properties.Settings.Default.Language;
             if (language.Length == 0)
                 language = "English";
-            
+
             if (language == "English")
-                Language_Label_English.Image = Properties.Resources.Check1;
+            {
+                Language_Img_English.Image = Properties.Resources.Check1;
+
+                Language_Img_Swedish.Image = null;
+                Language_Img_Finnish.Image = null;
+            }
             else if (language == "Swedish")
-                Language_Label_Swedish.Image = Properties.Resources.Check1;
+            {
+                Language_Img_Swedish.Image = Properties.Resources.Check1;
+
+                Language_Img_English.Image = null;
+                Language_Img_Finnish.Image = null;
+            }
             else if (language == "Finnish")
-                Language_Label_Finnish.Image = Properties.Resources.Check1;
+            {
+                Language_Img_Finnish.Image = Properties.Resources.Check1;
+
+                Language_Img_English.Image = null;
+                Language_Img_Swedish.Image = null;
+            }
         }
         /*
         //  START OF RESIZE
@@ -233,8 +263,19 @@ namespace Darcy_Backup
             {
                 string[] temp = entryString[i].Split(';');
 
-                if (temp.Length != 42)
-                    continue;
+                if (temp.Length != 43)
+                {
+                    if (temp.Length == 42)
+                    {
+                        string[] newTemp = new string[43];
+                        for (int b = 0; b < 42; b ++)
+                            newTemp[b] = temp[b];
+                        newTemp[42] = "False";
+                        temp = newTemp;
+                    }
+                    else
+                        continue;
+                }
 
                 int parsed = 0;
                 if (Int32.TryParse(temp[0], out parsed) == false)
@@ -297,8 +338,20 @@ namespace Darcy_Backup
                     readBool = false;
                 else
                     continue;
+
                 Entries[i].Automated = readBool;
 
+
+                if (temp[42] == "True" || temp[42] == "true")
+                    readBool = true;
+                else if (temp[42] == "False" || temp[42] == "false")
+                    readBool = false;
+                else
+                    continue;
+
+                Entries[i].Hash = readBool;
+
+                
                 Entries[i].Validated = true;
             }
 
@@ -314,9 +367,47 @@ namespace Darcy_Backup
         private DarcySettingsPanel[] _privateSettingsPanels;
         private Label[] _privateSettingsLabels;
 
+        private void InitializeTags()
+        {
+            //SETTINGS
+            Settings_Img_Autorun.Tag = Settings_Label_Autorun;
+            Settings_Label_Autorun.Tag = Settings_Img_Autorun;
+
+            Settings_Img_Tray.Tag = Settings_Label_Tray;
+            Settings_Label_Tray.Tag = Settings_Img_Tray;
+
+            Settings_Img_Minimized.Tag = Settings_Label_Minimized;
+            Settings_Label_Minimized.Tag = Settings_Img_Minimized;
+
+            Settings_Img_Updates.Tag = Settings_Label_Updates;
+            Settings_Label_Updates.Tag = Settings_Img_Updates;
+
+
+            //THEMES
+            Theme_Img_Gray.Tag = Theme_Label_Gray;
+            Theme_Label_Gray.Tag = Theme_Img_Gray;
+
+            Theme_Img_Red.Tag = Theme_Label_Red;
+            Theme_Label_Red.Tag = Theme_Img_Red;
+
+            Theme_Img_Blue.Tag = Theme_Label_Blue;
+            Theme_Label_Blue.Tag = Theme_Img_Blue;
+            
+
+            //LANGUAGES
+            Language_Img_English.Tag = Language_Label_English;
+            Language_Label_English.Tag = Language_Img_English;
+
+            Language_Img_Swedish.Tag = Language_Label_Swedish;
+            Language_Label_Swedish.Tag = Language_Img_Swedish;
+
+            Language_Img_Finnish.Tag = Language_Label_Finnish;
+            Language_Label_Finnish.Tag = Language_Img_Finnish;
+        }
+
         private void InitializeGUI()
         {
-            
+            InitializeTags();
 
             Settings_Panel.SetBounds(29, 71, Settings_Panel.Width, Settings_Panel.Height);
             Language_Panel.SetBounds(113, 71, Language_Panel.Width, Language_Panel.Height);
@@ -385,16 +476,27 @@ namespace Darcy_Backup
             About_Label_Version.Text = "Beta Version " + _assemblyVersion;
 
             //for (int i = 0; i < 15; i ++)
-                //AddToLog(0, "success");
+            //AddToLog(0, "success");
 
             if (_rkApp.GetValue("DarcyBackup") != null)
-                Settings_Label_Autorun.Image = Properties.Resources.Check1;
+                Settings_Img_Autorun.Image = Properties.Resources.Check1;
+            else
+                Settings_Img_Autorun.Image = null;
+
             if (Properties.Settings.Default.MinimizedOnStartup == true)
-                Settings_Label_Minimized.Image = Properties.Resources.Check1;
+                Settings_Img_Minimized.Image = Properties.Resources.Check1;
+            else
+                Settings_Img_Minimized.Image = null;
+
             if (Properties.Settings.Default.ToTray == true)
-                Settings_Label_Tray.Image = Properties.Resources.Check1;
+                Settings_Img_Tray.Image = Properties.Resources.Check1;
+            else
+                Settings_Img_Tray.Image = null;
+
             if (Properties.Settings.Default.Updates == true)
-                Settings_Label_Updates.Image = Properties.Resources.Check1;
+                Settings_Img_Updates.Image = Properties.Resources.Check1;
+            else
+                Settings_Img_Updates.Image = null;
 
             Update_SelectedEntry();
 

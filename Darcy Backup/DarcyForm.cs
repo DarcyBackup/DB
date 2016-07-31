@@ -197,6 +197,22 @@ namespace Darcy_Backup
 
             Dynamic_Mode.Text = ModeToString(Entries[i].Mode);
 
+            if (Entries[i].Mode == 0)
+            {
+                if (Entries[i].Hash == true)
+                    Dynamic_Hash.Text = "Yes";
+                else
+                    Dynamic_Hash.Text = "No";
+                Dynamic_Hash.Visible = true;
+                Label_Hash.Visible = true;
+            }
+            else
+            {
+                Dynamic_Hash.Visible = false;
+                Label_Hash.Visible = false;
+            }
+
+
             string process = ProcessToString(Entries[i].Process);
             Dynamic_Process.Text = process;
 
@@ -249,8 +265,14 @@ namespace Darcy_Backup
 
                 Rectangle rect = Label_Automated.Bounds;
                 Label_Automated.SetBounds(rect.X, _automatedLabelYSchedule, rect.Width, rect.Height);
+
+                Label_Hash.SetBounds(rect.X, _automatedLabelYSchedule + 30, rect.Width, rect.Height);
+
+
                 rect = Dynamic_Automated.Bounds;
                 Dynamic_Automated.SetBounds(rect.X, _automatedLabelYSchedule, rect.Width, rect.Height);
+
+                Dynamic_Hash.SetBounds(rect.X, _automatedLabelYSchedule + 30, rect.Width, rect.Height);
 
             }
             else if (process == "Timer")
@@ -267,8 +289,14 @@ namespace Darcy_Backup
 
                 Rectangle rect = Label_Automated.Bounds;
                 Label_Automated.SetBounds(rect.X, _automatedLabelYTimer, rect.Width, rect.Height);
+
+                Label_Hash.SetBounds(rect.X, _automatedLabelYTimer + 30, rect.Width, rect.Height);
+
+
                 rect = Dynamic_Automated.Bounds;
                 Dynamic_Automated.SetBounds(rect.X, _automatedLabelYTimer, rect.Width, rect.Height);
+
+                Dynamic_Hash.SetBounds(rect.X, _automatedLabelYTimer + 30, rect.Width, rect.Height);
             }
             else if (process == "Manual")
             {
@@ -281,6 +309,15 @@ namespace Darcy_Backup
                 Dynamic_Process_Specific1.Visible = false;
                 Dynamic_Process_Specific2.Text = "n/a";
                 Dynamic_Process_Specific2.Visible = false;
+
+
+                Rectangle rect = Label_Process.Bounds;
+                Label_Hash.SetBounds(rect.X, rect.Y + 30, rect.Width, rect.Height);
+
+                
+                rect = Dynamic_Process.Bounds;
+                Dynamic_Hash.SetBounds(rect.X, rect.Y + 30, rect.Width, rect.Height);
+
             }
         }
 
@@ -441,7 +478,7 @@ namespace Darcy_Backup
                     writeString += Entries[i].Entry + ";" + Entries[i].Source + ";" + Entries[i].Destination + ";" + Entries[i].Mode + ";" + Entries[i].Process + ";" + Entries[i].NextScheduled + ";" + Entries[i].LastPerformed + ";";
                     for (int k = 0; k < Entries[i].Days.Length; k++)
                         writeString += Entries[i].Days[k] + ";";
-                    writeString += Entries[i].TimeOfDay + ";" + Entries[i].Timer + ";" + Entries[i].TotalSize + ";" + Entries[i].Automated;
+                    writeString += Entries[i].TimeOfDay + ";" + Entries[i].Timer + ";" + Entries[i].TotalSize + ";" + Entries[i].Automated + ";" + Entries[i].Hash;
 
                     try
                     {
@@ -797,23 +834,36 @@ namespace Darcy_Backup
         
         private void Language_Label_Click(object sender, EventArgs e)
         {
-            //((Label)sender).Focus();
-            if (sender == Language_Label_English)
-                Language_Label_English.Image = Properties.Resources.Check2;
+            string language = "";
+            if (sender == Language_Label_English || sender == Language_Img_English)
+            {
+                Language_Img_English.Image = Properties.Resources.Check2;
+                language = "English";
+            }
             else
-                Language_Label_English.Image = null;
+                Language_Img_English.Image = null;
 
-            if (sender == Language_Label_Swedish)
-                Language_Label_Swedish.Image = Properties.Resources.Check2;
+            if (sender == Language_Label_Swedish || sender == Language_Img_Swedish)
+            {
+                Language_Img_Swedish.Image = Properties.Resources.Check2;
+                language = "Swedish";
+            }
             else
-                Language_Label_Swedish.Image = null;
+                Language_Img_Swedish.Image = null;
 
-            if (sender == Language_Label_Finnish)
-                Language_Label_Finnish.Image = Properties.Resources.Check2;
+            if (sender == Language_Label_Finnish || sender == Language_Img_Finnish)
+            {
+                Language_Img_Finnish.Image = Properties.Resources.Check2;
+                language = "Finnish";
+            }
             else
-                Language_Label_Finnish.Image = null;
+                Language_Img_Finnish.Image = null;
+            
+            if (language == "")
+                language = "English";
 
-            Properties.Settings.Default.Language = ((Control)sender).Text;
+
+            Properties.Settings.Default.Language = language;
             Properties.Settings.Default.Save();
         }
         
@@ -823,13 +873,26 @@ namespace Darcy_Backup
 
             if (((Control)sender).GetType() == typeof(DarcyLabel))
             {
+                if (((Control)sender).Tag != null)
+                {
+                    if (((Label)((Control)sender).Tag).Image != null)
+                    {
+                        ((Label)((Control)sender).Tag).Image = Properties.Resources.Check2;
+                        ((Label)((Control)sender).Tag).Invalidate();
+                    }
+                }
+            }
+            else if (((Control)sender).GetType() == typeof(DarcyImgLabel))
+            {
                 if (((Label)sender).Image != null)
                 {
-                    //Implement tags if multiple images are needed
                     ((Label)sender).Image = Properties.Resources.Check2;
                     ((Label)sender).Invalidate();
                 }
+                if (((Control)sender).Tag != null)
+                    ((Control)((Control)sender).Tag).ForeColor = Color.Black;
             }
+            
         }
         private void MouseEnter_LanguageLabels(object sender, EventArgs e)
         {
@@ -857,12 +920,24 @@ namespace Darcy_Backup
 
             if (((Control)sender).GetType() == typeof(DarcyLabel))
             {
+                if (((Control)sender).Tag != null)
+                {
+                    if (((Label)((Control)sender).Tag).Image != null)
+                    {
+                        ((Label)((Control)sender).Tag).Image = Properties.Resources.Check1;
+                        ((Label)((Control)sender).Tag).Invalidate();
+                    }
+                }
+            }
+            if (((Control)sender).GetType() == typeof(DarcyImgLabel))
+            {
                 if (((Label)sender).Image != null)
                 {
-                    //Implement tags if there is need for multiple images
                     ((Label)sender).Image = Properties.Resources.Check1;
                     ((Label)sender).Invalidate();
                 }
+                if (((Control)sender).Tag != null)
+                    ((Control)((Control)sender).Tag).ForeColor = Color.FromArgb(66, 66, 66); 
             }
 
             ((Control)sender).ForeColor = Color.FromArgb(66, 66, 66);
@@ -945,6 +1020,7 @@ namespace Darcy_Backup
                             {
                                 Entries[i] = entry;
                                 UpdateListItem(entry, i);
+                                Update_SelectedEntry();
                                 Save();
                                     
                             }
@@ -989,6 +1065,7 @@ namespace Darcy_Backup
             }
 
             UpdateListItem(Entries[i], i);
+            Update_SelectedEntry();
             Save();
 
             List_Backup.Focus();
@@ -1047,25 +1124,37 @@ namespace Darcy_Backup
         private void Theme_Label_Click(object sender, EventArgs e)
         {
             //((Label)sender).Focus();
-            if (sender == Theme_Label_Gray)
-                Theme_Label_Gray.Image = Properties.Resources.Check2;
+            String theme = "";
+            if (sender == Theme_Label_Gray || sender == Theme_Img_Gray)
+            {
+                Theme_Img_Gray.Image = Properties.Resources.Check2;
+                theme = "Gray";
+            }
             else
-                Theme_Label_Gray.Image = null;
+                Theme_Img_Gray.Image = null;
 
-            if (sender == Theme_Label_Red)
-                Theme_Label_Red.Image = Properties.Resources.Check2;
+            if (sender == Theme_Label_Red || sender == Theme_Img_Red)
+            {
+                Theme_Img_Red.Image = Properties.Resources.Check2;
+                theme = "Red";
+            }
             else
-                Theme_Label_Red.Image = null;
+                Theme_Img_Red.Image = null;
 
-            if (sender == Theme_Label_Blue)
-                Theme_Label_Blue.Image = Properties.Resources.Check2;
+            if (sender == Theme_Label_Blue || sender == Theme_Img_Blue)
+            {
+                Theme_Img_Blue.Image = Properties.Resources.Check2;
+                theme = "Blue";
+            }
             else
-                Theme_Label_Blue.Image = null;
+                Theme_Img_Blue.Image = null;
 
+            if (theme == "")
+                theme = "Gray";
 
-            SetTheme(((Control)sender).Text);
+            SetTheme(theme);
 
-            Properties.Settings.Default.Theme = ((Control)sender).Text;
+            Properties.Settings.Default.Theme = theme;
             Properties.Settings.Default.Save();
         }
 
@@ -1091,56 +1180,56 @@ namespace Darcy_Backup
         private void Settings_Label_Click(object sender, EventArgs e)
         {
             //((Label)sender).Focus();
-            if (sender == Settings_Label_Autorun)
+            if (sender == Settings_Label_Autorun || sender == Settings_Img_Autorun)
             {
-                if (((Label)sender).Image != null)
+                if (Settings_Img_Autorun.Image != null)
                 {
                     _rkApp.DeleteValue("DarcyBackup", false);
-                    ((Label)sender).Image = null;
+                    Settings_Img_Autorun.Image = null;
                 }
                 else
                 {
                     _rkApp.SetValue("DarcyBackup", Application.ExecutablePath);
-                    ((Label)sender).Image = Properties.Resources.Check2;
+                    Settings_Img_Autorun.Image = Properties.Resources.Check2;
                 }
             }
-            else if (sender == Settings_Label_Minimized)
+            else if (sender == Settings_Label_Minimized || sender == Settings_Img_Minimized)
             {
-                if (((Label)sender).Image != null)
+                if (Settings_Img_Minimized.Image != null)
                 {
                     Properties.Settings.Default.MinimizedOnStartup = false;
-                    ((Label)sender).Image = null;
+                    Settings_Img_Minimized.Image = null;
                 }
                 else
                 {
                     Properties.Settings.Default.MinimizedOnStartup = true;
-                    ((Label)sender).Image = Properties.Resources.Check2;
+                    Settings_Img_Minimized.Image = Properties.Resources.Check2;
                 }
             }
-            else if (sender == Settings_Label_Tray)
+            else if (sender == Settings_Label_Tray || sender == Settings_Img_Tray)
             {
-                if (((Label)sender).Image != null)
+                if (Settings_Img_Tray.Image != null)
                 {
                     Properties.Settings.Default.ToTray = false;
-                    ((Label)sender).Image = null;
+                    Settings_Img_Tray.Image = null;
                 }
                 else
                 {
                     Properties.Settings.Default.ToTray = true;
-                    ((Label)sender).Image = Properties.Resources.Check2;
+                    Settings_Img_Tray.Image = Properties.Resources.Check2;
                 }
             }
-            else if (sender == Settings_Label_Updates)
+            else if (sender == Settings_Label_Updates || sender == Settings_Img_Updates)
             {
-                if (((Label)sender).Image != null)
+                if (Settings_Img_Updates.Image != null)
                 {
                     Properties.Settings.Default.Updates = false;
-                    ((Label)sender).Image = null;
+                    Settings_Img_Updates.Image = null;
                 }
                 else
                 {
                     Properties.Settings.Default.Updates = true;
-                    ((Label)sender).Image = Properties.Resources.Check2;
+                    Settings_Img_Updates.Image = Properties.Resources.Check2;
 
                     InitializeUpdateThread();
                 }

@@ -78,6 +78,7 @@ namespace Darcy_Backup
         private TextBox Text_Timer;
         private Label Label_Help_Timer;
         private Panel Panel_Button_Panel;
+        private CheckBox Check_Hash;
         private Label Label_Entry;
 
         private void InitializeComponent()
@@ -150,6 +151,7 @@ namespace Darcy_Backup
             this.Label_Help_Timer = new System.Windows.Forms.Label();
             this.Panel_Button_Panel = new System.Windows.Forms.Panel();
             this.Combo_Mode = new Darcy_Backup.DarcyComboBox();
+            this.Check_Hash = new System.Windows.Forms.CheckBox();
             this.Panel_Schedule.SuspendLayout();
             this.Panel_Timer.SuspendLayout();
             this.Panel_Button_Panel.SuspendLayout();
@@ -1023,10 +1025,21 @@ namespace Darcy_Backup
             this.Combo_Mode.TabIndex = 4;
             this.Combo_Mode.SelectionChangeCommitted += new System.EventHandler(this.Combo_Mode_SelectionChangeCommitted);
             // 
+            // Check_Hash
+            // 
+            this.Check_Hash.AutoSize = true;
+            this.Check_Hash.Location = new System.Drawing.Point(201, 234);
+            this.Check_Hash.Name = "Check_Hash";
+            this.Check_Hash.Size = new System.Drawing.Size(96, 17);
+            this.Check_Hash.TabIndex = 65;
+            this.Check_Hash.Text = "Compare Hash";
+            this.Check_Hash.UseVisualStyleBackColor = true;
+            // 
             // Form_New_Entry
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(253)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(1219, 635);
+            this.Controls.Add(this.Check_Hash);
             this.Controls.Add(this.Panel_Button_Panel);
             this.Controls.Add(this.Label_Error);
             this.Controls.Add(this.Label_Help_Text_Mode);
@@ -1259,6 +1272,8 @@ namespace Darcy_Backup
                 Text_Destination.Text = Entry.Destination;
 
                 Combo_Mode.SelectedIndex = Entry.Mode;
+                if (Entry.Mode == 0)
+                    Check_Hash.Checked = Entry.Hash;
 
                 if (Main.ProcessToString(Entry.Process) == "Scheduled")
                 {
@@ -1441,12 +1456,20 @@ namespace Darcy_Backup
             DarcyComboBox control = (DarcyComboBox)sender;
 
             if (control.SelectedIndex == 0)
+            {
                 Label_Help_Text_Mode.Text = "Replace changed files since last backup";
+                Check_Hash.Visible = true;
+            }
             else if (control.SelectedIndex == 1)
+            {
                 Label_Help_Text_Mode.Text = "Create new copies every backup";
+                Check_Hash.Visible = false;
+            }
             else if (control.SelectedIndex == 2)
+            {
                 Label_Help_Text_Mode.Text = "Replace all files every backup";
-
+                Check_Hash.Visible = false;
+            }
         }
 
         EntryClass entry;
@@ -1512,6 +1535,9 @@ namespace Darcy_Backup
                 Label_Error.Text = "No mode selected";
                 return false;
             }
+
+            if (Combo_Mode.SelectedIndex == 0)
+                entry.Hash = Check_Hash.Checked;
 
             entry.Mode = Combo_Mode.SelectedIndex;
 

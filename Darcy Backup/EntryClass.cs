@@ -17,6 +17,9 @@ namespace Darcy_Backup
         public int Process { get; set; }
         public bool Automated { get; set; }
 
+        //Differential
+        public bool Hash { get; set; }
+
         //Info
         public string LastPerformed { get; set; }
         public string NextScheduled { get; set; }
@@ -41,6 +44,7 @@ namespace Darcy_Backup
             Destination = "null";
             Mode = -1;
             Process = -1;
+            Hash = false;
             Automated = false;
             LastPerformed = "Never";
             NextScheduled = "Processing";

@@ -28,7 +28,7 @@ namespace Darcy_Backup
             return newArray;
         }
         
-        private bool Different(string path1, string path2, out string error)
+        private bool Different(string path1, string path2, bool hash, out string error)
         {
             error = "";
             if (File.Exists(path2) == false)
@@ -47,10 +47,10 @@ namespace Darcy_Backup
             if (time1 != time2)
                 return true;
 
-
-            //bool checksum = false; //This will later be an option in the interface
-            //if (checksum == false)
-            //return false;
+            
+            //Setting in new/edit entry
+            if (hash == false)
+                return false;
 
 
             byte[] buffer;
@@ -258,7 +258,7 @@ namespace Darcy_Backup
                         destination = destination.Remove(destination.Length - 1, 1);
 
                     string hashError;
-                    bool different = Different(source, destination + "\\" + filename, out hashError);
+                    bool different = Different(source, destination + "\\" + filename, Entries[entry].Hash, out hashError);
                     if (hashError != "")
                     {
                         AddToLog(entry, "Hash Error", hashError);
@@ -380,7 +380,7 @@ namespace Darcy_Backup
 
                             if (_cancel == true)
                             {
-                                AddToLog(entry, "Aborted", "Aborted by user");
+                                AddToLog(entry, "Abort", "Aborted by user");
                                 if (_currentListSel == entry)
                                     EnableCancel(false);
                                 return;
@@ -390,7 +390,7 @@ namespace Darcy_Backup
                             string destFile = System.IO.Path.Combine(destination + destAdd + "\\", fileName);
 
                             string hashError;
-                            bool different = Different(source + destAdd + "\\" + fileName, destFile, out hashError);
+                            bool different = Different(source + destAdd + "\\" + fileName, destFile, Entries[entry].Hash, out hashError);
                             if (hashError != "")
                             {
                                 AddToLog(entry, "Hash Error", hashError);
@@ -533,7 +533,7 @@ namespace Darcy_Backup
 
             if (_cancel == true)
             {
-                AddToLog(entry, "Aborted", "Aborted by user");
+                AddToLog(entry, "Abort", "Aborted by user");
                 if (_currentListSel == entry)
                     EnableCancel(false);
                 return;
@@ -592,7 +592,7 @@ namespace Darcy_Backup
                             {
                                 if (_cancel == true)
                                 {
-                                    AddToLog(entry, "Aborted", "Aborted by user");
+                                    AddToLog(entry, "Abort", "Aborted by user");
                                     if (_currentListSel == entry)
                                         EnableCancel(false);
                                     return;
@@ -604,7 +604,7 @@ namespace Darcy_Backup
                                 if (percentage - lastPercentage > 0.1)
                                 {
                                     lastPercentage = percentage;
-                                    Entries[entry].Status = lastPercentage.ToString("#.0") + "%";
+                                    Entries[entry].Status = lastPercentage.ToString("0.0") + "%";
                                     UpdateListItem(Entries[entry], entry);
                                 }
 
