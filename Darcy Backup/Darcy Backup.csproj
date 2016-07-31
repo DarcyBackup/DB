@@ -196,6 +196,7 @@
   <ItemGroup>
     <Content Include="icon2 128x128.ico" />
     <Content Include="icon4 32x32.ico" />
+    <Content Include="License.txt" />
     <None Include="Resources\Check2.png" />
     <None Include="Resources\Check1.png" />
     <EmbeddedResource Include="Resources\SettingsArrow.bmp" />
