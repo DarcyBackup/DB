@@ -545,7 +545,7 @@ namespace Darcy_Backup
 
                 long totalSize = 0;
                 long totalBytes = 0;
-                for (int i = 0; i < copy.Items.Count(); i ++)
+                for (int i = 0; i < copy.Items.Count(); i++)
                 {
                     using (FileStream sc = new FileStream(copy.Items[i].Source, FileMode.Open, FileAccess.Read))
                     {
@@ -553,86 +553,100 @@ namespace Darcy_Backup
                     }
                 }
                 double lastPercentage = 0;
-                for (int i = 0; i < copy.Items.Count(); i ++)
+                for (int i = 0; i < copy.Items.Count(); i++)
                 {
-                    using (FileStream sc = new FileStream(copy.Items[i].Source, FileMode.Open, FileAccess.Read))
+                    try
                     {
-                        if (File.Exists(copy.Items[i].Destination) == true)
+                        using (FileStream sc = new FileStream(copy.Items[i].Source, FileMode.Open, FileAccess.Read))
                         {
-                            try
+                            if (File.Exists(copy.Items[i].Destination) == true)
                             {
-                                File.Delete(copy.Items[i].Destination);
-                            }
-                            catch (DirectoryNotFoundException error)
-                            {
-                                AddToLog(entry, "Directory not found", "Replace File\n\n" + error.Message);
-                                return;
-                            }
-                            catch (IOException error)
-                            {
-                                AddToLog(entry, "IO Exception", "Replace File\n\n" + error.Message);
-                                return;
-                            }
-                            catch (UnauthorizedAccessException error)
-                            {
-                                AddToLog(entry, "No Access", "Replace File\n\n" + error.Message);
-                                return;
-                            }
-                            catch (NotSupportedException error)
-                            {
-                                AddToLog(entry, "Not Supported", "Replace File\n\n" + error.Message);
-                                return;
-                            }
-                        }
-                        using (FileStream dest = new FileStream(copy.Items[i].Destination, FileMode.CreateNew, FileAccess.Write))
-                        {
-                            int currentBlockSize = 0;
-
-                            while ((currentBlockSize = sc.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                if (_cancel == true)
-                                {
-                                    AddToLog(entry, "Abort", "Aborted by user");
-                                    if (_currentListSel == entry)
-                                        EnableCancel(false);
-                                    return;
-                                }
-
-                                totalBytes += currentBlockSize;
-                                double percentage = (double)totalBytes * 100.0 / totalSize;
-
-                                if (percentage - lastPercentage > 0.1)
-                                {
-                                    lastPercentage = percentage;
-                                    Entries[entry].Status = lastPercentage.ToString("0.0") + "%";
-                                    UpdateListItem(Entries[entry], entry);
-                                }
-
                                 try
                                 {
-                                    dest.Write(buffer, 0, currentBlockSize);
+                                    File.Delete(copy.Items[i].Destination);
+                                }
+                                catch (DirectoryNotFoundException error)
+                                {
+                                    AddToLog(entry, "Directory not found", "Replace File\n\n" + error.Message);
+                                    return;
                                 }
                                 catch (IOException error)
                                 {
-                                    AddToLog(entry, "IO Exception", "Write Buffer\n\n" + error.Message);
-                                    failCount++;
-                                    break; 
+                                    AddToLog(entry, "IO Exception", "Replace File\n\n" + error.Message);
+                                    return;
                                 }
-                                catch (ObjectDisposedException error)
+                                catch (UnauthorizedAccessException error)
                                 {
-                                    AddToLog(entry, "Object Disposed", "Write Buffer\n\n" + error.Message);
-                                    failCount++;
-                                    break; 
+                                    AddToLog(entry, "No Access", "Replace File\n\n" + error.Message);
+                                    return;
                                 }
                                 catch (NotSupportedException error)
                                 {
-                                    AddToLog(entry, "Not Supported", "Write Buffer\n\n" + error.Message);
-                                    failCount++;
-                                    break; 
+                                    AddToLog(entry, "Not Supported", "Replace File\n\n" + error.Message);
+                                    return;
+                                }
+                            }
+                            using (FileStream dest = new FileStream(copy.Items[i].Destination, FileMode.CreateNew, FileAccess.Write))
+                            {
+                                int currentBlockSize = 0;
+
+                                while ((currentBlockSize = sc.Read(buffer, 0, buffer.Length)) > 0)
+                                {
+                                    if (_cancel == true)
+                                    {
+                                        AddToLog(entry, "Abort", "Aborted by user");
+                                        if (_currentListSel == entry)
+                                            EnableCancel(false);
+                                        return;
+                                    }
+
+                                    totalBytes += currentBlockSize;
+                                    double percentage = (double)totalBytes * 100.0 / totalSize;
+
+                                    if (percentage - lastPercentage > 0.1)
+                                    {
+                                        lastPercentage = percentage;
+                                        Entries[entry].Status = lastPercentage.ToString("0.0") + "%";
+                                        UpdateListItem(Entries[entry], entry);
+                                    }
+                                    
+                                    try
+                                    {
+                                        dest.Write(buffer, 0, currentBlockSize);
+                                    }
+                                    catch (IOException error)
+                                    {
+                                        AddToLog(entry, "IO Exception", "Write Buffer\n\n" + error.Message);
+                                        copyCount--;
+                                        failCount++;
+                                        break;
+                                    }
+                                    catch (ObjectDisposedException error)
+                                    {
+                                        AddToLog(entry, "Object Disposed", "Write Buffer\n\n" + error.Message);
+                                        copyCount--;
+                                        failCount++;
+                                        break;
+                                    }
+                                    catch (NotSupportedException error)
+                                    {
+                                        AddToLog(entry, "Not Supported", "Write Buffer\n\n" + error.Message);
+                                        copyCount--;
+                                        failCount++;
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
+                    catch (FileNotFoundException error)
+                    {
+                        AddToLog(entry, "File Not Found", "FileStream Open\n\n" + error.Message);
+                        copyCount--;
+                        failCount++;
+                        continue;
+                    }
+                    
                     try
                     {
                         File.SetLastWriteTime(copy.Items[i].Destination, File.GetLastWriteTime(copy.Items[i].Source));
@@ -640,22 +654,26 @@ namespace Darcy_Backup
                     catch (FileNotFoundException error)
                     {
                         AddToLog(entry, "File Not Found", "SetLastWriteTime\n\n" + error.Message);
+                        copyCount--;
+                        failCount++;
                         continue;
                     }
                     catch (UnauthorizedAccessException error)
                     {
                         AddToLog(entry, "Unauthorized", "SetLastWriteTime\n\n" + error.Message);
+                        copyCount--;
+                        failCount++;
                         continue;
                     }
                     catch (NotSupportedException error)
                     {
                         AddToLog(entry, "Not Supported", "SetLastWriteTime\n\n" + error.Message);
+                        copyCount--;
+                        failCount++;
                         continue;
                     }
                 }
             }
-            
-
             string tag = "";
             string subject = "Success";
 
@@ -682,7 +700,7 @@ namespace Darcy_Backup
             }
             else if (failCount > 1)
             {
-                tag += "\n" + failCount + "Files Failed";
+                tag += "\n" + failCount + " Files Failed";
                 if (copyCount == 0 && noDiffCount == 0)
                     subject = "Fail";
                 else
@@ -697,7 +715,7 @@ namespace Darcy_Backup
 
             tag += "\n\nTotal Time: " + (int)timeDiff.TotalSeconds + " Seconds";
 
-            AddToLog(entry, "Success", tag);
+            AddToLog(entry, subject, tag);
         }
     }
 }

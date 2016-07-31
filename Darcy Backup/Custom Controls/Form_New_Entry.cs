@@ -1641,6 +1641,7 @@ namespace Darcy_Backup
             {
                 entry.Entry = Entry.Entry;
                 entry.LastPerformed = Entry.LastPerformed;
+                entry.Automated = Entry.Automated;
             }
 
             return true;
