@@ -389,7 +389,7 @@ namespace Darcy_Backup
             }
         }
 
-        delegate void AddToListCallback(EntryClass entry, int index, int selection); //for thread-safe interface actions
+        delegate void AddToListCallback(EntryClass entry, int index, int selection); 
         private void AddToList(EntryClass entry, int index, int selection)
         {
             
@@ -426,8 +426,24 @@ namespace Darcy_Backup
                     List_Backup.Items[0].Selected = true;
             }
         }
+
+        private bool _isSaving = false;
         private void Save()
         {
+            int sleepCount = 0;
+            while (_isSaving == true)
+            {
+                Thread.Sleep(1);
+                sleepCount++;
+
+                if (sleepCount > 2000)
+                {
+                    MessageBox.Show("Error in Save, unable to get exclusive rights", "Error", MessageBoxButtons.OK);
+                    return;
+                }
+            }
+
+            _isSaving = true;
             for (int i = 0; i < 10; i++)
             {
                 try
@@ -440,6 +456,7 @@ namespace Darcy_Backup
                     if (i == 9)
                     {
                         MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        _isSaving = false;
                         return;
                     }
                     else
@@ -450,6 +467,7 @@ namespace Darcy_Backup
                     if (i == 9)
                     {
                         MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        _isSaving = false;
                         return;
                     }
                     else
@@ -466,11 +484,13 @@ namespace Darcy_Backup
             catch (IOException error)
             {
                 MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                _isSaving = false;
                 return;
             }
             catch (System.NotSupportedException error)
             {
                 MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                _isSaving = false;
                 return;
             }
 
@@ -500,11 +520,13 @@ namespace Darcy_Backup
                         catch (IOException error)
                         {
                             MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                            _isSaving = false;
                             return;
                         }
                         catch (System.NotSupportedException error)
                         {
                             MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                            _isSaving = false;
                             return;
                         }
                     }
@@ -512,8 +534,11 @@ namespace Darcy_Backup
             }
             catch (IOException error)
             {
+                _isSaving = false;
                 return;
             }
+
+            _isSaving = false;
         }
         private int GetMinuteFromTimeOfDay(string timeOfDay)
         {
@@ -605,12 +630,9 @@ namespace Darcy_Backup
                     if (hour < schedHour || (hour == schedHour && minute <= schedMinute))
                     {
                         //Has it already been performed this day:hour:minute?
-                        if (entry.LastPerformed != "Never" && lastDay == today && lastHour == hour && lastMinute == minute)
+                        if (!   (entry.LastPerformed != "Never" && lastDay == today && lastHour == hour && lastMinute == minute))
                         {
 
-                        }
-                        else
-                        {
                             foundDay = days[i];
                             foundMonth = DateTime.Now.Month;
                             foundYear = DateTime.Now.Year;
@@ -636,36 +658,6 @@ namespace Darcy_Backup
                 }
             }
 
-            //days[0] is not today, so it is safe to do this
-            if (days.Length == 0)
-            {
-                foundDay = days[0];
-                foundMonth = DateTime.Now.Month;
-                foundYear = DateTime.Now.Year;
-                return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
-            }
-
-
-            //Try and find the first (if any) scheduled day before today and return i + 1
-            for (int i = days.Length - 1; i >= 0; i --)
-            {
-                //Because of the break, this will be the first time a val is == or < today
-                if (days[i] == today || days[i] < today)
-                {
-                    //Since this is the first hit, i + 1 (if !null) must be > today
-                    if (i + 1 < days.Length)
-                    {
-                        foundDay = days[i + 1];
-                        foundMonth = DateTime.Now.Month;
-                        foundYear = DateTime.Now.Year;
-                        return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
-                    }
-                    //No scheduled day is < or == today
-                    else
-                        break;
-                }
-            }
-
             //Try and find the first (if any) scheduled day after today and retrn i
             for (int i = 0; i < days.Length; i ++)
             {
@@ -677,7 +669,6 @@ namespace Darcy_Backup
                     return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
                 }
             }
-            
             
             //No scheduled day today or later this month is legal. Add 1 month to the first day and return
             foundDay = days[0];
@@ -699,7 +690,6 @@ namespace Darcy_Backup
                     {
                         Entries[i].NextScheduled = "Manual Mode";
                         UpdateListItem(Entries[i], i);
-                        Save();
                     }
                     continue;
                 }
@@ -747,8 +737,8 @@ namespace Darcy_Backup
                 }
 
                 UpdateListItem(Entries[i], i);
-                Save();
             }
+            Save();
         }
         public void CheckPerform()
         {
@@ -1324,16 +1314,7 @@ namespace Darcy_Backup
             List_Backup.Focus();
             List_Backup.Focus();
         }
-
-        private void List_Backup_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            /*
-            if (List_Backup.SelectedItems.Count == 0)
-            {_currentListSel
-                Button_Cancel.Enabled = false;
-            }
-            */
-        }
+        
 
         private void Label_Settings_MouseHover(object sender, EventArgs e)
         {

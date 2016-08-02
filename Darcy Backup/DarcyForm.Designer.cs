@@ -685,7 +685,6 @@
             this.List_Backup.Size = new System.Drawing.Size(778, 343);
             this.List_Backup.TabIndex = 10;
             this.List_Backup.UseCompatibleStateImageBehavior = false;
-            this.List_Backup.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.List_Backup_ItemSelectionChanged);
             this.List_Backup.SelectedIndexChanged += new System.EventHandler(this.List_Backup_Selection_Changed);
             this.List_Backup.DoubleClick += new System.EventHandler(this.List_Backup_DoubleClick);
             // 
