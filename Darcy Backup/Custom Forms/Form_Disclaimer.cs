@@ -15,12 +15,19 @@ namespace Darcy_Backup
     public partial class Form_Disclaimer : Form
     {
         public bool Ok = false;
-        private string _fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\ini.ini";
+        private string _fullPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Darcy Backup\\ini.ini");
+        private string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
         public Form_Disclaimer()
         {
             InitializeComponent();
 
             Text_License.ReadOnly = true;
+
+            if (Directory.Exists(dirPath + "\\Darcy Backup") == false)
+            {
+                Directory.CreateDirectory(dirPath + "\\Darcy Backup");
+            }
 
             bool exists = File.Exists(_fullPath);
             if (exists == false)

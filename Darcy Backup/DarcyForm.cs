@@ -62,25 +62,21 @@ namespace Darcy_Backup
             }
             Entries = newEntries;
         }
-
-        delegate int GetSelectedListIndexCallback(ListView lv);
-        private int GetSelectedListIndex(ListView lv)
+        
+        delegate void EnableCancelCallback(bool b);
+        public void EnableCancel(bool b)
         {
             if (List_Backup.InvokeRequired == true)
             {
-                GetSelectedListIndexCallback d = new GetSelectedListIndexCallback(GetSelectedListIndex);
-                return (int)this.Invoke(d, new object[] { lv });
+                EnableCancelCallback d = new EnableCancelCallback(EnableCancel);
+                this.Invoke(d, new object[] { b });
             }
             else
             {
-                if (lv != null)
-                    if (lv.SelectedItems.Count > 0)
-                        return lv.SelectedItems[0].Index;
-                return -1;
+                Button_Cancel.Enabled = b;
             }
         }
-        
-        delegate bool RemoveFromListCallback(EntryClass entry, int index); //for thread-safe interface actions
+        delegate bool RemoveFromListCallback(EntryClass entry, int index); 
         private bool RemoveFromList(EntryClass entry, int index)
         {
             if (List_Backup.InvokeRequired == true)
@@ -170,7 +166,7 @@ namespace Darcy_Backup
                 return;
             }
 
-            int i = _currentListSel;
+            int i = CurrentListSel;
             if (i == -1)
             {
                 Button_Cancel.Enabled = false;
@@ -326,13 +322,13 @@ namespace Darcy_Backup
             if (List_Backup.SelectedItems.Count == 0)
                 return;
 
-            _currentListSel = List_Backup.SelectedItems[0].Index;
+            CurrentListSel = List_Backup.SelectedItems[0].Index;
             Update_SelectedEntry();
         }
 
 
         delegate void AddToLogCallback(int entry, string error, string tag);
-        private void AddToLog(int entry, string error, string tag)
+        public void AddToLog(int entry, string error, string tag)
         {
             string[] strArr = new string[3];
             ListViewItem item;
@@ -356,7 +352,7 @@ namespace Darcy_Backup
             }
         }
         delegate void UpdateListItemCallback(EntryClass entry, int index);
-        private void UpdateListItem(EntryClass entry, int index)
+        public void UpdateListItem(EntryClass entry, int index)
         {
             string[] strArr = new string[9];
             strArr[0] = entry.Entry.ToString();
@@ -373,7 +369,8 @@ namespace Darcy_Backup
             if (List_Backup.InvokeRequired == true)
             {
                 UpdateListItemCallback d = new UpdateListItemCallback(UpdateListItem);
-                this.Invoke(d, new object[] { entry, index });
+                if (this.IsDisposed == false)
+                    this.Invoke(d, new object[] { entry, index });
             }
             else
             {
@@ -431,19 +428,33 @@ namespace Darcy_Backup
         }
         private void Save()
         {
-            try
+            for (int i = 0; i < 10; i++)
             {
-                File.Delete(_fullPath);
-            }
-            catch (IOException error)
-            {
-                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                return;
-            }
-            catch (System.NotSupportedException error)
-            {
-                MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
-                return;
+                try
+                {
+                    File.Delete(_fullPath);
+                    break;
+                }
+                catch (IOException error)
+                {
+                    if (i == 9)
+                    {
+                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        return;
+                    }
+                    else
+                        continue;
+                }
+                catch (System.NotSupportedException error)
+                {
+                    if (i == 9)
+                    {
+                        MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK);
+                        return;
+                    }
+                    else
+                        continue;
+                }
             }
             
 
@@ -540,7 +551,11 @@ namespace Darcy_Backup
         }
         private string GetNextSchedulePerform(EntryClass entry)
         {
-            DateTime lastPerformed = GetDateTimeFromString(entry.LastPerformed);
+            DateTime lastPerformed;
+            if (entry.LastPerformed != "Never")
+                lastPerformed = GetDateTimeFromString(entry.LastPerformed);
+            else
+                lastPerformed = new DateTime();
 
             string nextPerformString = "";
 
@@ -578,92 +593,109 @@ namespace Darcy_Backup
             int foundDay = -1;
             int foundMonth = -1;
             int foundYear = -1;
-            for (int i = days.Length - 1; i >= 0; i--)
+
+
+
+            //Check if today is a scheduled day
+            for (int i = 0; i < days.Length; i ++)
             {
                 if (days[i] == today)
                 {
-                    if (schedHour <= hour)
+                    //Has the schedule hour:minute passed?
+                    if (hour < schedHour || (hour == schedHour && minute <= schedMinute))
                     {
-                        if (schedMinute <= minute)
+                        //Has it already been performed this day:hour:minute?
+                        if (entry.LastPerformed != "Never" && lastDay == today && lastHour == hour && lastMinute == minute)
                         {
-                            if (schedHour == hour && schedMinute == minute)
-                            {
-                                if (lastDay == today && lastHour == hour && lastMinute == minute)
-                                {
 
-                                }
-                                else
-                                {
-                                    foundDay = days[i];
-                                    foundMonth = DateTime.Now.Month;
-                                    foundYear = DateTime.Now.Year;
-                                    break;
-                                }
-                            }
                         }
                         else
                         {
                             foundDay = days[i];
                             foundMonth = DateTime.Now.Month;
                             foundYear = DateTime.Now.Year;
-                            break;
+                            return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
                         }
                     }
+                    //Set scheduled to next day, if there is any
+                    if (i + 1 < days.Length)
+                    {
+                        foundDay = days[i + 1];
+                        foundMonth = DateTime.Now.Month;
+                        foundYear = DateTime.Now.Year;
+                        return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
+                    }
+                    //If there is no next, the first entry must be the closest
                     else
                     {
-                        foundDay = days[i];
-                        foundMonth = DateTime.Now.Month;
-                        foundYear = DateTime.Now.Year;
-                        break;
-                    }
-                }
-                if (days[i] > today)
-                {
-                    if (days[i] <= DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
-                    {
-                        foundDay = days[i];
-                        foundMonth = DateTime.Now.Month;
-                        foundYear = DateTime.Now.Year;
-                        break;
-                    }
-                }
-            }
-            if (foundDay == -1 || foundMonth == -1 || foundYear == -1)
-            {
-                for (int i = 0; i < days.Length; i++)
-                {
-                    if (days[i] <= today)
-                    {
-                        if (days[i] <= DateTime.DaysInMonth(DateTime.Now.Year, ((DateTime)DateTime.Now.AddMonths(1)).Month))
-                        {
-                            foundDay = days[i];
-                            foundMonth = ((DateTime)DateTime.Now.AddMonths(1)).Month;
-                            foundYear = ((DateTime)DateTime.Now.AddMonths(1)).Year;
-                            break;
-                        }
+                        foundDay = days[0];
+                        foundMonth = ((DateTime)DateTime.Now.AddMonths(1)).Month;
+                        foundYear = ((DateTime)DateTime.Now.AddMonths(1)).Year;
+                        return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
                     }
                 }
             }
 
-            if (foundDay == -1 || foundMonth == -1 || foundYear == -1)
+            //days[0] is not today, so it is safe to do this
+            if (days.Length == 0)
             {
-                return "error";
+                foundDay = days[0];
+                foundMonth = DateTime.Now.Month;
+                foundYear = DateTime.Now.Year;
+                return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
+            }
+
+
+            //Try and find the first (if any) scheduled day before today and return i + 1
+            for (int i = days.Length - 1; i >= 0; i --)
+            {
+                //Because of the break, this will be the first time a val is == or < today
+                if (days[i] == today || days[i] < today)
+                {
+                    //Since this is the first hit, i + 1 (if !null) must be > today
+                    if (i + 1 < days.Length)
+                    {
+                        foundDay = days[i + 1];
+                        foundMonth = DateTime.Now.Month;
+                        foundYear = DateTime.Now.Year;
+                        return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
+                    }
+                    //No scheduled day is < or == today
+                    else
+                        break;
+                }
+            }
+
+            //Try and find the first (if any) scheduled day after today and retrn i
+            for (int i = 0; i < days.Length; i ++)
+            {
+                if (days[i] > today)
+                {
+                    foundDay = days[i];
+                    foundMonth = DateTime.Now.Month;
+                    foundYear = DateTime.Now.Year;
+                    return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
+                }
             }
             
+            
+            //No scheduled day today or later this month is legal. Add 1 month to the first day and return
+            foundDay = days[0];
+            foundMonth = ((DateTime)DateTime.Now.AddMonths(1)).Month;
+            foundYear = ((DateTime)DateTime.Now.AddMonths(1)).Year;
             return nextPerformString = foundDay + "/" + foundMonth + "/" + foundYear + "-" + entry.TimeOfDay;
         }
         public void QueueAction()
         {
             if (_editNewOngoing == true)
                 return;
-
             
             for (int i = 0; i < Entries.Length; i++)
             {
                 string process = ProcessToString(Entries[i].Process);
-                if (process == "Manual")
+                if (process == "Manual" || (Entries[i].Automated == false && (process == "Scheduled" || process == "Timer")))
                 {
-                    if (Entries[i].NextScheduled != "Manual Mode") ;
+                    if (Entries[i].NextScheduled != "Manual Mode");
                     {
                         Entries[i].NextScheduled = "Manual Mode";
                         UpdateListItem(Entries[i], i);
@@ -672,86 +704,50 @@ namespace Darcy_Backup
                     continue;
                 }
 
-                string lp = Entries[i].LastPerformed;
+                string lastPerformed = Entries[i].LastPerformed;
                 string status = Entries[i].Status;
-                if (process == "Scheduled" || process == "Timer")
-                {
-                    if (Entries[i].Automated == false)
-                    {
-                        if (Entries[i].NextScheduled != "Manual Mode")
-                        {
-                            Entries[i].NextScheduled = "Manual Mode";
-                            UpdateListItem(Entries[i], i);
-                            Save();
-                        }
-                        
-                        continue;
-                    }
-                }
+                bool perform = false;
 
                 if (process == "Scheduled")
                 {
                     DateTime now = DateTime.Now;
 
-                    if (status != "Resting")
-                    {
-
-                    }
-                    else
-                    {
-                        DateTime lastPerformed = GetDateTimeFromString(Entries[i].LastPerformed);
-                        
+                    if (status == "Resting")
+                    { 
                         string nextPerform = GetNextSchedulePerform(Entries[i]);
                         Entries[i].NextScheduled = nextPerform;
 
                         string nowString = GetTimeString(DateTime.Now);
 
                         if (nowString == nextPerform)
-                        {
                             if (nowString != Entries[i].LastPerformed)
-                            {
-                                Entries[i].Status = "In Queue";
-                                if (i == _currentListSel)
-                                    Button_Cancel.Enabled = true;
-                            }
-                        }
-
-                        UpdateListItem(Entries[i], i);
-
-                        Save();
+                                perform = true;
                     }
                 }
-
-                if (process == "Timer")
+                else if (process == "Timer")
                 {
-                    if (lp == "Never")
+                    if (lastPerformed == "Never")
                     {
                         Entries[i].Status = "In Queue";
                         UpdateListItem(Entries[i], i);
-
                     }
-                    else if (status != "Resting")
-                    {
-                    }
-                    else
+                    else if (status == "Resting")
                     {
                         string nextPerform = "";
-                        bool perform = CalculateTimeDifference(Entries[i].LastPerformed, Entries[i].Timer, out nextPerform);
-                        if (Entries[i].NextScheduled != nextPerform)
-                            Entries[i].NextScheduled = nextPerform;
-
-                        if (perform == true)
-                        {
-                            Entries[i].Status = "In Queue";
-                            if (i == _currentListSel)
-                                EnableCancel(true);
-                        }
-                        
-                        UpdateListItem(Entries[i], i);
-
-                        Save();
+                        perform = CalculateTimeDifference(Entries[i].LastPerformed, Entries[i].Timer, out nextPerform);
+                        Entries[i].NextScheduled = nextPerform;
                     }
                 }
+
+                if (perform == true)
+                {
+                    Entries[i].Status = "In Queue";
+                    if (i == CurrentListSel)
+                        EnableCancel(true);
+                }
+
+                UpdateListItem(Entries[i], i);
+                Save();
             }
         }
         public void CheckPerform()
@@ -766,7 +762,7 @@ namespace Darcy_Backup
                     if (Entries[i].Ongoing == false)
                     {
                         Entries[i].Ongoing = true;
-                        Perform(i);
+                        perform.Start(i);
                         string str = GetTimeString(DateTime.Now);
                         Entries[i].LastPerformed = str;
                         Entries[i].Status = "Resting";
@@ -901,14 +897,6 @@ namespace Darcy_Backup
             }
             
         }
-        private void MouseEnter_LanguageLabels(object sender, EventArgs e)
-        {
-            ((Control)sender).ForeColor = Color.Black;
-        }
-        private void MouseLeave_LanguageLabels(object sender, EventArgs e)
-        {
-            ((Control)sender).ForeColor = Color.FromArgb(66, 66, 66); 
-        }
 
         private void MouseLeave_Regular(object sender, EventArgs e)
         {
@@ -936,7 +924,7 @@ namespace Darcy_Backup
                     }
                 }
             }
-            if (((Control)sender).GetType() == typeof(DarcyImgLabel))
+            else if (((Control)sender).GetType() == typeof(DarcyImgLabel))
             {
                 if (((Label)sender).Image != null)
                 {
@@ -1019,6 +1007,8 @@ namespace Darcy_Backup
                         AddToList(entry, -1, -1);
 
                         Save();
+
+                        List_Backup.Focus();
                     }
 
                     //Edit
@@ -1032,7 +1022,8 @@ namespace Darcy_Backup
                                 UpdateListItem(entry, i);
                                 Update_SelectedEntry();
                                 Save();
-                                    
+
+                                List_Backup.Focus();
                             }
                         }
                     }
@@ -1088,7 +1079,11 @@ namespace Darcy_Backup
         private void Button_New_Click(object sender, EventArgs e)
         {
             if (_editNewOngoing == true)
+            {
+                if (_editNewObj != null)
+                    _editNewObj.Focus();
                 return;
+            }
 
             _editNewObj = new Form_New_Entry(this, 0, Entries.Length + 1, _themeColor);
             _editNewObj.Show();
@@ -1099,7 +1094,11 @@ namespace Darcy_Backup
             if (List_Backup.SelectedItems.Count == 0)
                 return;
             if (_editNewOngoing == true)
+            {
+                if (_editNewObj != null)
+                    _editNewObj.Focus();
                 return;
+            }
 
             int i = List_Backup.SelectedItems[0].Index;
 
@@ -1255,7 +1254,11 @@ namespace Darcy_Backup
                 if (List_Backup.SelectedItems[0].SubItems.Count != 0)
                 {
                     if (_editNewOngoing == true)
+                    {
+                        if (_editNewObj != null)
+                            _editNewObj.Focus();
                         return;
+                    }
                     if (_DarcyLogForm != null)
                         _DarcyLogForm.Dispose();
 
@@ -1277,11 +1280,7 @@ namespace Darcy_Backup
         {
             ((Panel)sender).Focus();
         }
-
-        private void Panel_Click(object sender, EventArgs e)
-        {
-            ((Panel)sender).Focus();
-        }
+        
 
         private void Label_Settings_Focus_Leave(object sender, EventArgs e)
         {
@@ -1319,7 +1318,7 @@ namespace Darcy_Backup
             }
             else
             {
-                _cancel = true;
+                perform.Cancel = true;
             }
 
             List_Backup.Focus();

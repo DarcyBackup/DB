@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -15,7 +16,33 @@ namespace Darcy_Backup
 {
     public partial class Form_Darcy_Panel
     {
-        
+        private string _fullPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Darcy Backup\\db.dbss");
+
+        RegistryKey _rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+        string _assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+        public EntryClass[] Entries { get; set; }
+
+
+        Perform perform;
+
+        private resizeStruct[] _resizeArray;
+
+        public int CurrentListSel = -1;
+
+        private bool _editNewOngoing = false;
+        private Form_New_Entry _editNewObj;
+
+        private struct resizeStruct
+        {
+            public Control control;
+            public int width;
+            public int height;
+            public bool stayX;
+            public bool stayY;
+        }
+
         public Form_Darcy_Panel()
         {
 
@@ -50,6 +77,9 @@ namespace Darcy_Backup
 
             if (Properties.Settings.Default.Updates == true)
                 InitializeUpdateThread();
+
+
+            perform = new Perform(this);
 
             InitializeWorkerThreads();
         }
@@ -265,16 +295,7 @@ namespace Darcy_Backup
 
                 if (temp.Length != 43)
                 {
-                    if (temp.Length == 42)
-                    {
-                        string[] newTemp = new string[43];
-                        for (int b = 0; b < 42; b ++)
-                            newTemp[b] = temp[b];
-                        newTemp[42] = "False";
-                        temp = newTemp;
-                    }
-                    else
-                        continue;
+                    continue;
                 }
 
                 int parsed = 0;

@@ -5,15 +5,20 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Darcy_Backup
 {
-    public partial class Form_Darcy_Panel
+    class Perform
     {
+        private Form_Darcy_Panel Main;
 
-        private bool _cancel = false;
+        public Perform(Form_Darcy_Panel main)
+        {
+            Main = main;
+        }
 
+
+        public bool Cancel = false;
 
         private string[] AddToStringArray(string[] array, string[] addArray)
         {
@@ -27,13 +32,13 @@ namespace Darcy_Backup
 
             return newArray;
         }
-        
+
         private bool Different(string path1, string path2, bool hash, out string error)
         {
             error = "";
             if (File.Exists(path2) == false)
                 return true;
-            
+
 
             long length1 = new System.IO.FileInfo(path1).Length;
             long length2 = new System.IO.FileInfo(path2).Length;
@@ -47,7 +52,7 @@ namespace Darcy_Backup
             if (time1 != time2)
                 return true;
 
-            
+
             //Setting in new/edit entry
             if (hash == false)
                 return false;
@@ -62,7 +67,7 @@ namespace Darcy_Backup
 
 
             string checksum1 = "", checksum2 = "";
-            
+
             for (int i = 0; i < 2; i++)
             {
                 string path = path1;
@@ -99,7 +104,7 @@ namespace Darcy_Backup
 
                     do
                     {
-                        if (_cancel)
+                        if (Cancel)
                             return true;
 
                         oldBytesRead = bytesRead;
@@ -124,24 +129,13 @@ namespace Darcy_Backup
                         checksum2 = hashAlgorithm.Hash.ToString();
                 }
             }
-            
+
             if (checksum1 == checksum2)
                 return false;
 
             return true;
         }
-
-        private int IndexOfEntry(int entry)
-        {
-
-            for (int i = 0; i < Entries.Length; i ++)
-            {
-                if (Entries[i].Entry == entry)
-                    return i;
-            }
-
-            return -1;
-        }
+        
 
         class CopyClass
         {
@@ -173,35 +167,55 @@ namespace Darcy_Backup
                 Items = add;
             }
         }
-
-        delegate void EnableCancelCallback(bool b);
-        private void EnableCancel(bool b)
+        
+        private bool PerformCreateDirectory(int entry, string dir)
         {
-            if (List_Backup.InvokeRequired == true)
+            try
             {
-                EnableCancelCallback d = new EnableCancelCallback(EnableCancel);
-                this.Invoke(d, new object[] { b });
+                Directory.CreateDirectory(dir);
+                return true;
             }
-            else
+            catch (System.IO.DirectoryNotFoundException)
             {
-                Button_Cancel.Enabled = b;
+                Main.AddToLog(entry, "Destination not found", "Could not find " + dir);
+                return false;
+            }
+            catch (System.NotSupportedException)
+            {
+                Main.AddToLog(entry, "Illegal destination", "Illegal destination: " + dir);
+                return false;
             }
         }
 
-        private void Perform(int entry)
+        private void PerformAbort(int entry)
         {
-            _cancel = false;
-            DateTime startTime = DateTime.Now;
-            Entries[entry].Status = "Processing";
-            UpdateListItem(Entries[entry], entry);
+            Main.AddToLog(entry, "Abort", "Aborted by user");
+            if (Main.CurrentListSel == entry)
+                Main.EnableCancel(false);
+            return;
+        }
 
-            if (_currentListSel == entry)
-                EnableCancel(true);
+
+        public void Start(int entry)
+        {
+            Cancel = false;
+            DateTime startTime = DateTime.Now;
+
+            EntryClass[] Entries = Main.Entries;
+
+            Entries[entry].Status = "Processing";
+            Main.UpdateListItem(Entries[entry], entry);
+
+            if (Main.CurrentListSel == entry)
+                Main.EnableCancel(true);
 
             int copyCount = 0;
             int noDiffCount = 0;
 
             string source = Entries[entry].Source;
+            string destination = Entries[entry].Destination;
+            string mode = Main.ModeToString(Entries[entry].Mode);
+
             bool file = false;
             bool directory = false;
 
@@ -211,112 +225,74 @@ namespace Darcy_Backup
 
             file = File.Exists(source);
             directory = Directory.Exists(source);
-            if (file == false)
+            if (file == false && directory == false)
             {
-                if (directory == false)
-                {
-                    AddToLog(entry, "Source not found", "Could not find " + source);
-                    return;
-                }
+                Main.AddToLog(entry, "Source not found", "Could not find " + source);
+                return;
             }
-            if (Directory.Exists(Entries[entry].Destination) == false)
-            {
-                try
-                {
-                    System.IO.Directory.CreateDirectory(Entries[entry].Destination);
-                }
-                catch (System.IO.DirectoryNotFoundException)
-                {
-                    AddToLog(entry, "Destination not found", "Could not find " + Entries[entry].Destination);
-                    return;
-                }
-                catch (System.NotSupportedException)
-                {
-                    AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination);
-                    return;
-                }
-            }
-            
-            string mode = ModeToString(Entries[entry].Mode);
+
+            //Remove any trailing backslash
+            string[] split = destination.Split('\\');
+            if (split[split.Length - 1] == "")
+                destination = destination.Remove(destination.Length - 1, 1);
+
+
+            //SOURCE IS A FILE
 
             if (file)
             {
                 string[] strArray = source.Split('\\');
                 string filename = strArray[strArray.Length - 1];
-                string destination = Entries[entry].Destination; 
 
 
-                
                 if (mode == "Changed Files")
                 {
-
+                    //Added, because md5 on a large file may take a time to compare.
                     Entries[entry].Status = "Comparing";
-                    UpdateListItem(Entries[entry], entry);
-
-                    string[] split = destination.Split('\\');
-                    if (split[split.Length - 1] == "")
-                        destination = destination.Remove(destination.Length - 1, 1);
+                    Main.UpdateListItem(Entries[entry], entry);
 
                     string hashError;
                     bool different = Different(source, destination + "\\" + filename, Entries[entry].Hash, out hashError);
                     if (hashError != "")
                     {
-                        AddToLog(entry, "Hash Error", hashError);
+                        Main.AddToLog(entry, "Hash Error", hashError);
                         return;
                     }
+
+                    //Has the file changed? If so, add to copy class
                     if (different)
                     {
-                        try
-                        {
-                            //System.IO.File.Copy(source, destination + "\\" + filename, true);
-                            copyCount++;
-                            copy.AddItem(source, destination + "\\" + filename);
-                        }
-                        catch (IOException error)
-                        {
-                            AddToLog(entry, "IO Exception", error.Message);
-                            return;
-                        }
-
+                        copyCount++;
+                        copy.AddItem(source, destination + "\\" + filename);
                     }
                     else
                         noDiffCount++;
                 }
                 else if (mode == "New Copies")
                 {
-                    string[] split = destination.Split('\\');
-                    if (split[split.Length - 1] == "")
-                        destination = destination.Remove(destination.Length - 1, 1);
-                    try
-                    {
-                        strArray = filename.Split('.');
-                        string extension = strArray[strArray.Length - 1];
+
+                    //Split so that we can add timestamp
+                    strArray = filename.Split('.');
+                    string extension = strArray[strArray.Length - 1];
 
 
-                        string tempString = strArray[0];
-                        for (int i = 1; i < strArray.Length-1; i++)
-                            tempString += "." + strArray[i];
-                        filename = tempString;
+                    //Re-add potential string parts, example: c:\example\text.this.file.txt will split up into 4 strings
+                    string tempString = strArray[0];
+                    for (int i = 1; i < strArray.Length - 1; i++)
+                        tempString += "." + strArray[i];
+                    filename = tempString;
 
 
-                        String timestring = DateTime.Now.ToString(" (yyyyMMdd-HH.mm)");
-                        string fullDest = destination + "\\" + filename + timestring + '.' + extension;
-                        //System.IO.File.Copy(source, fullDest, true);
-                        copyCount++;
-                        copy.AddItem(source, fullDest);
-                    }
-                    catch (IOException error)
-                    {
-                        AddToLog(entry, "IO Exception", error.Message);
-                        return;
-                    }
+                    String timestring = DateTime.Now.ToString(" (yyyyMMdd-HH.mm)");
+                    string fullDest = destination + "\\" + filename + timestring + '.' + extension;
+
+
+                    copyCount++;
+                    copy.AddItem(source, fullDest);
 
                 }
                 else if (mode == "Replace files")
                 {
-                    string[] split = destination.Split('\\');
-                    if (split[split.Length - 1] == "")
-                        destination = destination.Remove(destination.Length - 1, 1);
                     try
                     {
                         //System.IO.File.Copy(source, destination + filename, true);
@@ -325,64 +301,50 @@ namespace Darcy_Backup
                     }
                     catch (IOException error)
                     {
-                        AddToLog(entry, "IO Exception", error.Message);
+                        Main.AddToLog(entry, "IO Exception", error.Message);
                         return;
                     }
                 }
             }
+
+            //SOURCE IS A DIRECTORY
+
             else if (directory)
             {
+                //Get all the root and subdirs for the source
                 string[] folders = new string[1];
                 folders[0] = source;
 
                 string[] subFolders = System.IO.Directory.GetDirectories(source, "*", System.IO.SearchOption.AllDirectories);
-
                 folders = AddToStringArray(folders, subFolders);
-                
-                string[] files = System.IO.Directory.GetFiles(source);
-                string destination = Entries[entry].Destination;
+
 
                 if (mode == "Changed Files")
                 {
+                    //Added, because md5 on a large file may take a time to compare.
                     Entries[entry].Status = "Comparing";
-                    UpdateListItem(Entries[entry], entry);
+                    Main.UpdateListItem(Entries[entry], entry);
 
-                    string[] split = destination.Split('\\');
-                    if (split[split.Length - 1] == "")
-                        destination = destination.Remove(destination.Length - 1, 1);
 
                     for (int i = 0; i < folders.Length; i++)
                     {
+                        //example: folders[i] == c:\example\test, folders[0] == c:\example, destAdd == \test
                         string destAdd = folders[i].Remove(0, folders[0].Length);
+
+                        //Create destination dir if it does not exist, return if unsuccessful
                         if (System.IO.Directory.Exists(Entries[entry].Destination + destAdd) == false)
-                        {
-                            try
-                            {
-                                System.IO.Directory.CreateDirectory(Entries[entry].Destination + destAdd);
-                            }
-                            catch (System.IO.DirectoryNotFoundException)
-                            {
-                                AddToLog(entry, "Destination not found", "Could not find " + Entries[entry].Destination + destAdd);
+                            if (PerformCreateDirectory(entry, Entries[entry].Destination + destAdd) == false)
                                 return;
-                            }
-                            catch (System.NotSupportedException)
-                            {
-                                AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination + destAdd);
-                                return;
-                            }
-                        }
-                        
 
-                        files = System.IO.Directory.GetFiles(folders[i]);
 
+                        //Get all files for the dir
+                        string[] files = System.IO.Directory.GetFiles(folders[i]);
                         foreach (string s in files)
                         {
 
-                            if (_cancel == true)
+                            if (Cancel == true)
                             {
-                                AddToLog(entry, "Abort", "Aborted by user");
-                                if (_currentListSel == entry)
-                                    EnableCancel(false);
+                                PerformAbort(entry);
                                 return;
                             }
 
@@ -393,22 +355,15 @@ namespace Darcy_Backup
                             bool different = Different(source + destAdd + "\\" + fileName, destFile, Entries[entry].Hash, out hashError);
                             if (hashError != "")
                             {
-                                AddToLog(entry, "Hash Error", hashError);
+                                Main.AddToLog(entry, "Hash Error", hashError);
                                 return;
                             }
+
+                            //Has the file changed? If so, add to copy class
                             if (different)
                             {
-                                try
-                                {
-                                    //System.IO.File.Copy(s, destFile, true);
-                                    copyCount++;
-                                    copy.AddItem(s, destFile);
-                                }
-                                catch (IOException error)
-                                {
-                                    AddToLog(entry, "IO Exception", error.Message);
-                                    return;
-                                }
+                                copyCount++;
+                                copy.AddItem(s, destFile);
                             }
                             else
                                 noDiffCount++;
@@ -417,127 +372,62 @@ namespace Darcy_Backup
                 }
                 else if (mode == "New Copies")
                 {
-                    string[] split = destination.Split('\\');
-                    if (split[split.Length - 1] == "")
-                        destination = destination.Remove(destination.Length - 1, 1);
 
+                    //Create destination root directory with timestamp add
                     destination += DateTime.Now.ToString(" (yyyy-MM-dd HH.mm)");
-                    try
-                    {
-                        System.IO.Directory.CreateDirectory(destination);
-                    }
-                    catch (System.IO.DirectoryNotFoundException)
-                    {
-                        AddToLog(entry, "Destination not found", "Could not find " + destination);
+                    if (PerformCreateDirectory(entry, destination) == false)
                         return;
-                    }
-                    catch (System.NotSupportedException)
-                    {
-                        AddToLog(entry, "Illegal destination", "Illegal destination, " + Entries[entry].Destination);
-                        return;
-                    }
 
-
+                    //Create all subdirectories - ((Replace) c:\example -> d:\copy)
                     foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
-                    {
-                        try
-                        {
-                            Directory.CreateDirectory(dirPath.Replace(source, destination));
-                        }
-                        catch (System.IO.DirectoryNotFoundException)
-                        {
-                            AddToLog(entry, "Destination not found", "Could not find" + destination);
+                        if (PerformCreateDirectory(entry, dirPath.Replace(source, destination)))
                             return;
-                        }
-                        catch (System.NotSupportedException)
-                        {
-                            AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination);
-                            return;
-                        }
-                    }
 
+                    //Add all files from all subdirs to the copy class
                     foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
                     {
-                        try
-                        {
-                            //File.Copy(newPath, newPath.Replace(source, destination), true);
-                            copyCount++;
-                            copy.AddItem(newPath, newPath.Replace(source, destination));
-
-                        }
-                        catch (IOException error)
-                        {
-                            AddToLog(entry, "IO Exception", error.Message);
-                            return;
-                        }
+                        copyCount++;
+                        copy.AddItem(newPath, newPath.Replace(source, destination));
                     }
                 }
+
                 else if (mode == "Replace Files")
                 {
+                    //Create destination root directory, if it does not exist
                     if (System.IO.Directory.Exists(Entries[entry].Destination) == false)
-                    {
-                        try
-                        {
-                            System.IO.Directory.CreateDirectory(Entries[entry].Destination); 
-                        }
-                        catch (System.IO.DirectoryNotFoundException)
-                        {
-                            AddToLog(entry, "Destination not found", "Could not find " + Entries[entry].Destination);
+                        if (PerformCreateDirectory(entry, Entries[entry].Destination))
                             return;
-                        }
-                        catch (System.NotSupportedException)
-                        {
-                            AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination);
-                            return;
-                        }
-                    }
 
-
-
+                    //Create all subdirectories - ((Replace) c:\example -> d:\copy)
                     foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
-                    {
-                        try
-                        {
-                            Directory.CreateDirectory(dirPath.Replace(source, destination));
-                        }
-                        catch (System.IO.DirectoryNotFoundException)
-                        {
-                            AddToLog(entry, "Destination not found", "Could not find " + destination);
+                        if (PerformCreateDirectory(entry, dirPath.Replace(source, destination)))
                             return;
-                        }
-                        catch (System.NotSupportedException)
-                        {
-                            AddToLog(entry, "Illegal destination", "Illegal destination: " + Entries[entry].Destination);
-                            return;
-                        }
-                    }
 
+                    //Add all files from all subdirs to the copy class
                     foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
                     {
-                        try
-                        {
-                            //File.Copy(newPath, newPath.Replace(source, destination), true);
-                            copyCount++;
-                            copy.AddItem(newPath, newPath.Replace(source, destination));
-                        }
-                        catch (IOException error)
-                        {
-                            AddToLog(entry, "IO Exception", error.Message);
-                            return;
-                        }
+                        copyCount++;
+                        copy.AddItem(newPath, newPath.Replace(source, destination));
                     }
                 }
             }
 
-            int failCount = 0;
-
-            if (_cancel == true)
+            //Quite unlikely that this will ever trigger, but wth
+            if (Cancel == true)
             {
-                AddToLog(entry, "Abort", "Aborted by user");
-                if (_currentListSel == entry)
-                    EnableCancel(false);
+                PerformAbort(entry);
                 return;
             }
+
+
+
+            //COPY FILES
+
+
+            //How many maximum errors can be displayed for this entry
+            int failCount = 0;
+            int allowedLogErrors = 10;
+
 
             if (copy.Items.Count() != 0)
             {
@@ -567,22 +457,22 @@ namespace Darcy_Backup
                                 }
                                 catch (DirectoryNotFoundException error)
                                 {
-                                    AddToLog(entry, "Directory not found", "Replace File\n\n" + error.Message);
+                                    Main.AddToLog(entry, "Directory not found", "Replace File\n\n" + error.Message);
                                     return;
                                 }
                                 catch (IOException error)
                                 {
-                                    AddToLog(entry, "IO Exception", "Replace File\n\n" + error.Message);
+                                    Main.AddToLog(entry, "IO Exception", "Replace File\n\n" + error.Message);
                                     return;
                                 }
                                 catch (UnauthorizedAccessException error)
                                 {
-                                    AddToLog(entry, "No Access", "Replace File\n\n" + error.Message);
+                                    Main.AddToLog(entry, "No Access", "Replace File\n\n" + error.Message);
                                     return;
                                 }
                                 catch (NotSupportedException error)
                                 {
-                                    AddToLog(entry, "Not Supported", "Replace File\n\n" + error.Message);
+                                    Main.AddToLog(entry, "Not Supported", "Replace File\n\n" + error.Message);
                                     return;
                                 }
                             }
@@ -592,11 +482,9 @@ namespace Darcy_Backup
 
                                 while ((currentBlockSize = sc.Read(buffer, 0, buffer.Length)) > 0)
                                 {
-                                    if (_cancel == true)
+                                    if (Cancel == true)
                                     {
-                                        AddToLog(entry, "Abort", "Aborted by user");
-                                        if (_currentListSel == entry)
-                                            EnableCancel(false);
+                                        PerformAbort(entry);
                                         return;
                                     }
 
@@ -607,30 +495,33 @@ namespace Darcy_Backup
                                     {
                                         lastPercentage = percentage;
                                         Entries[entry].Status = lastPercentage.ToString("0.0") + "%";
-                                        UpdateListItem(Entries[entry], entry);
+                                        Main.UpdateListItem(Entries[entry], entry);
                                     }
-                                    
+
                                     try
                                     {
                                         dest.Write(buffer, 0, currentBlockSize);
                                     }
                                     catch (IOException error)
                                     {
-                                        AddToLog(entry, "IO Exception", "Write Buffer\n\n" + error.Message);
+                                        if (failCount < allowedLogErrors)
+                                            Main.AddToLog(entry, "IO Exception", "Write Buffer\n\n" + error.Message);
                                         copyCount--;
                                         failCount++;
                                         break;
                                     }
                                     catch (ObjectDisposedException error)
                                     {
-                                        AddToLog(entry, "Object Disposed", "Write Buffer\n\n" + error.Message);
+                                        if (failCount < allowedLogErrors)
+                                            Main.AddToLog(entry, "Object Disposed", "Write Buffer\n\n" + error.Message);
                                         copyCount--;
                                         failCount++;
                                         break;
                                     }
                                     catch (NotSupportedException error)
                                     {
-                                        AddToLog(entry, "Not Supported", "Write Buffer\n\n" + error.Message);
+                                        if (failCount < allowedLogErrors)
+                                            Main.AddToLog(entry, "Not Supported", "Write Buffer\n\n" + error.Message);
                                         copyCount--;
                                         failCount++;
                                         break;
@@ -641,33 +532,37 @@ namespace Darcy_Backup
                     }
                     catch (FileNotFoundException error)
                     {
-                        AddToLog(entry, "File Not Found", "FileStream Open\n\n" + error.Message);
+                        if (failCount < allowedLogErrors)
+                            Main.AddToLog(entry, "File Not Found", "FileStream Open\n\n" + error.Message);
                         copyCount--;
                         failCount++;
                         continue;
                     }
-                    
+
                     try
                     {
                         File.SetLastWriteTime(copy.Items[i].Destination, File.GetLastWriteTime(copy.Items[i].Source));
                     }
                     catch (FileNotFoundException error)
                     {
-                        AddToLog(entry, "File Not Found", "SetLastWriteTime\n\n" + error.Message);
+                        if (failCount < allowedLogErrors)
+                            Main.AddToLog(entry, "File Not Found", "SetLastWriteTime\n\n" + error.Message);
                         copyCount--;
                         failCount++;
                         continue;
                     }
                     catch (UnauthorizedAccessException error)
                     {
-                        AddToLog(entry, "Unauthorized", "SetLastWriteTime\n\n" + error.Message);
+                        if (failCount < allowedLogErrors)
+                            Main.AddToLog(entry, "Unauthorized", "SetLastWriteTime\n\n" + error.Message);
                         copyCount--;
                         failCount++;
                         continue;
                     }
                     catch (NotSupportedException error)
                     {
-                        AddToLog(entry, "Not Supported", "SetLastWriteTime\n\n" + error.Message);
+                        if (failCount < allowedLogErrors)
+                            Main.AddToLog(entry, "Not Supported", "SetLastWriteTime\n\n" + error.Message);
                         copyCount--;
                         failCount++;
                         continue;
@@ -708,14 +603,14 @@ namespace Darcy_Backup
             }
 
 
-            if (_currentListSel == entry)
-                EnableCancel(false);
-            
+            if (Main.CurrentListSel == entry)
+                Main.EnableCancel(false);
+
             TimeSpan timeDiff = DateTime.Now.Subtract(startTime);
 
             tag += "\n\nTotal Time: " + (int)timeDiff.TotalSeconds + " Seconds";
 
-            AddToLog(entry, subject, tag);
+            Main.AddToLog(entry, subject, tag);
         }
     }
 }
