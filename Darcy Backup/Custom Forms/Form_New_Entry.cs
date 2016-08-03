@@ -1275,6 +1275,9 @@ namespace Darcy_Backup
                 if (Entry.Mode == 0)
                     Check_Hash.Checked = Entry.Hash;
 
+                if (Main.ModeToString(Entry.Mode) != "Changed Files")
+                    Check_Hash.Visible = false;
+
                 if (Main.ProcessToString(Entry.Process) == "Scheduled")
                 {
                     Panel_Schedule.Visible = true;
@@ -1514,6 +1517,11 @@ namespace Darcy_Backup
                     {
                         System.IO.Directory.CreateDirectory(destination);
                         MessageBox.Show("Folder created successfully", "", MessageBoxButtons.OK);
+                    }
+                    catch (System.IO.DirectoryNotFoundException error)
+                    {
+                        MessageBox.Show(error.ToString(),"Error", MessageBoxButtons.OK);
+                        return false;
                     }
                     catch (System.NotSupportedException)
                     {

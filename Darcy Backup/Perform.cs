@@ -168,7 +168,7 @@ namespace Darcy_Backup
             }
         }
         
-        private bool PerformCreateDirectory(int entry, string dir)
+        private bool CreateDirectory(int entry, string dir)
         {
             try
             {
@@ -187,7 +187,7 @@ namespace Darcy_Backup
             }
         }
 
-        private void PerformAbort(int entry)
+        private void Abort(int entry)
         {
             Main.AddToLog(entry, "Abort", "Aborted by user");
             if (Main.CurrentListSel == entry)
@@ -291,7 +291,7 @@ namespace Darcy_Backup
                     copy.AddItem(source, fullDest);
 
                 }
-                else if (mode == "Replace files")
+                else if (mode == "Replace Files")
                 {
                     try
                     {
@@ -332,8 +332,8 @@ namespace Darcy_Backup
                         string destAdd = folders[i].Remove(0, folders[0].Length);
 
                         //Create destination dir if it does not exist, return if unsuccessful
-                        if (System.IO.Directory.Exists(Entries[entry].Destination + destAdd) == false)
-                            if (PerformCreateDirectory(entry, Entries[entry].Destination + destAdd) == false)
+                        if (System.IO.Directory.Exists(destination + "\\" + destAdd) == false)
+                            if (CreateDirectory(entry, destination + "\\" + destAdd) == false)
                                 return;
 
 
@@ -344,12 +344,12 @@ namespace Darcy_Backup
 
                             if (Cancel == true)
                             {
-                                PerformAbort(entry);
+                                Abort(entry);
                                 return;
                             }
 
                             string fileName = System.IO.Path.GetFileName(s);
-                            string destFile = System.IO.Path.Combine(destination + destAdd + "\\", fileName);
+                            string destFile = System.IO.Path.Combine(destination + "\\" + destAdd + "\\", fileName);
 
                             string hashError;
                             bool different = Different(source + destAdd + "\\" + fileName, destFile, Entries[entry].Hash, out hashError);
@@ -375,12 +375,12 @@ namespace Darcy_Backup
 
                     //Create destination root directory with timestamp add
                     destination += DateTime.Now.ToString(" (yyyy-MM-dd HH.mm)");
-                    if (PerformCreateDirectory(entry, destination) == false)
+                    if (CreateDirectory(entry, destination) == false)
                         return;
 
                     //Create all subdirectories - ((Replace) c:\example -> d:\copy)
                     foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
-                        if (PerformCreateDirectory(entry, dirPath.Replace(source, destination)))
+                        if (CreateDirectory(entry, dirPath.Replace(source, destination)) == false)
                             return;
 
                     //Add all files from all subdirs to the copy class
@@ -394,13 +394,13 @@ namespace Darcy_Backup
                 else if (mode == "Replace Files")
                 {
                     //Create destination root directory, if it does not exist
-                    if (System.IO.Directory.Exists(Entries[entry].Destination) == false)
-                        if (PerformCreateDirectory(entry, Entries[entry].Destination))
+                    if (System.IO.Directory.Exists(destination) == false)
+                        if (CreateDirectory(entry, destination) == false)
                             return;
 
                     //Create all subdirectories - ((Replace) c:\example -> d:\copy)
                     foreach (string dirPath in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
-                        if (PerformCreateDirectory(entry, dirPath.Replace(source, destination)))
+                        if (CreateDirectory(entry, dirPath.Replace(source, destination)) == false)
                             return;
 
                     //Add all files from all subdirs to the copy class
@@ -415,7 +415,7 @@ namespace Darcy_Backup
             //Quite unlikely that this will ever trigger, but wth
             if (Cancel == true)
             {
-                PerformAbort(entry);
+                Abort(entry);
                 return;
             }
 
@@ -476,57 +476,65 @@ namespace Darcy_Backup
                                     return;
                                 }
                             }
-                            using (FileStream dest = new FileStream(copy.Items[i].Destination, FileMode.CreateNew, FileAccess.Write))
+                            try
                             {
-                                int currentBlockSize = 0;
-
-                                while ((currentBlockSize = sc.Read(buffer, 0, buffer.Length)) > 0)
+                                using (FileStream dest = new FileStream(copy.Items[i].Destination, FileMode.CreateNew, FileAccess.Write))
                                 {
-                                    if (Cancel == true)
-                                    {
-                                        PerformAbort(entry);
-                                        return;
-                                    }
+                                    int currentBlockSize = 0;
 
-                                    totalBytes += currentBlockSize;
-                                    double percentage = (double)totalBytes * 100.0 / totalSize;
+                                    while ((currentBlockSize = sc.Read(buffer, 0, buffer.Length)) > 0)
+                                    {
+                                        if (Cancel == true)
+                                        {
+                                            Abort(entry);
+                                            return;
+                                        }
 
-                                    if (percentage - lastPercentage > 0.1)
-                                    {
-                                        lastPercentage = percentage;
-                                        Entries[entry].Status = lastPercentage.ToString("0.0") + "%";
-                                        Main.UpdateListItem(Entries[entry], entry);
-                                    }
+                                        totalBytes += currentBlockSize;
+                                        double percentage = (double)totalBytes * 100.0 / totalSize;
 
-                                    try
-                                    {
-                                        dest.Write(buffer, 0, currentBlockSize);
-                                    }
-                                    catch (IOException error)
-                                    {
-                                        if (failCount < allowedLogErrors)
-                                            Main.AddToLog(entry, "IO Exception", "Write Buffer\n\n" + error.Message);
-                                        copyCount--;
-                                        failCount++;
-                                        break;
-                                    }
-                                    catch (ObjectDisposedException error)
-                                    {
-                                        if (failCount < allowedLogErrors)
-                                            Main.AddToLog(entry, "Object Disposed", "Write Buffer\n\n" + error.Message);
-                                        copyCount--;
-                                        failCount++;
-                                        break;
-                                    }
-                                    catch (NotSupportedException error)
-                                    {
-                                        if (failCount < allowedLogErrors)
-                                            Main.AddToLog(entry, "Not Supported", "Write Buffer\n\n" + error.Message);
-                                        copyCount--;
-                                        failCount++;
-                                        break;
+                                        if (percentage - lastPercentage > 0.1)
+                                        {
+                                            lastPercentage = percentage;
+                                            Entries[entry].Status = lastPercentage.ToString("0.0") + "%";
+                                            Main.UpdateListItem(Entries[entry], entry);
+                                        }
+
+                                        try
+                                        {
+                                            dest.Write(buffer, 0, currentBlockSize);
+                                        }
+                                        catch (IOException error)
+                                        {
+                                            if (failCount < allowedLogErrors)
+                                                Main.AddToLog(entry, "IO Exception", "Write Buffer\n\n" + error.Message);
+                                            copyCount--;
+                                            failCount++;
+                                            break;
+                                        }
+                                        catch (ObjectDisposedException error)
+                                        {
+                                            if (failCount < allowedLogErrors)
+                                                Main.AddToLog(entry, "Object Disposed", "Write Buffer\n\n" + error.Message);
+                                            copyCount--;
+                                            failCount++;
+                                            break;
+                                        }
+                                        catch (NotSupportedException error)
+                                        {
+                                            if (failCount < allowedLogErrors)
+                                                Main.AddToLog(entry, "Not Supported", "Write Buffer\n\n" + error.Message);
+                                            copyCount--;
+                                            failCount++;
+                                            break;
+                                        }
                                     }
                                 }
+                            }
+                            catch (System.IO.DirectoryNotFoundException error)
+                            {
+                                Main.AddToLog(entry, "Directory Not Found", error.Message);
+                                return;
                             }
                         }
                     }
